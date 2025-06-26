@@ -1,0 +1,115 @@
+.contact-form-container {
+  background: var(--background-primary);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-xl);
+  padding: var(--spacing-2xl);
+  margin-bottom: var(--spacing-xl);
+  border: 1px solid var(--border-color);
+}
+
+.contact-form-header {
+  text-align: center;
+  margin-bottom: var(--spacing-2xl);
+}
+
+.contact-form-header h2 {
+  color: var(--primary-green);
+  margin-bottom: var(--spacing-md);
+}
+
+.contact-form-header p {
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+}
+
+.contact-form {
+  display: grid;
+  gap: var(--spacing-lg);
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-lg);
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.form-group.full-width {
+  grid-column: 1 / -1;
+}
+
+.form-group label {
+  font-weight: 500;
+  color: var(--text-primary);
+  font-size: 0.875rem;
+}
+
+.form-group input,
+.form-group select {
+  padding: var(--spacing-md);
+  border: 2px solid var(--border-color);
+  border-radius: var(--radius-md);
+  font-size: 1rem;
+  transition: all 0.2s ease;
+  background: var(--background-primary);
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: var(--primary-green);
+  box-shadow: 0 0 0 3px rgba(137, 179, 72, 0.1);
+}
+
+.form-group input.error,
+.form-group select.error {
+  border-color: var(--error);
+}
+
+.error-message {
+  color: var(--error);
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.continue-btn {
+  background: linear-gradient(135deg, var(--primary-green) 0%, var(--gradient-g) 100%);
+  color: white;
+  padding: var(--spacing-lg) var(--spacing-2xl);
+  border-radius: var(--radius-md);
+  font-size: 1.125rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow-md);
+  margin-top: var(--spacing-lg);
+  justify-self: center;
+}
+
+.continue-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+  background: linear-gradient(135deg, var(--gradient-g) 0%, var(--primary-green) 100%);
+}
+
+.continue-btn:active {
+  transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+  .contact-form-container {
+    padding: var(--spacing-xl);
+  }
+  
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-md);
+  }
+  
+  .continue-btn {
+    width: 100%;
+  }
+}
