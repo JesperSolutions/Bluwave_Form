@@ -3,7 +3,7 @@ import emailjs from '@emailjs/browser'
 // EmailJS configuration - Production Ready
 const EMAILJS_CONFIG = {
   serviceId: 'service_d40uip4', // Your provided service ID
-  templateId: 'template_esg_assessment', // Template ID to create in EmailJS dashboard
+  templateId: 'template_pac9jom', // Updated template ID
   publicKey: 'BCoUz6Ty8c0oza6pZ' // Your provided public key
 }
 
