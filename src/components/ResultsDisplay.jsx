@@ -68,11 +68,18 @@ const ResultsDisplay = ({ results, contactData }) => {
   return (
     <div className="results-display">
       <div className="results-header">
+        <div className="header-icon">
+          <svg width="60" height="60" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2L13.09 8.26L20 9L13.09 9.74L12 16L10.91 9.74L4 9L10.91 8.26L12 2Z" fill="#89B348"/>
+            <path d="M19 15L19.5 17.5L22 18L19.5 18.5L19 21L18.5 18.5L16 18L18.5 17.5L19 15Z" fill="#89B348"/>
+            <path d="M5 6L5.5 8.5L8 9L5.5 9.5L5 12L4.5 9.5L2 9L4.5 8.5L5 6Z" fill="#89B348"/>
+          </svg>
+        </div>
         <h2>Dit ESG-resultat, {contactData.contactPerson}!</h2>
         <p>Her er din personlige analyse baseret på {contactData.companyName}'s svar</p>
       </div>
 
-      <div className="score-card">
+      <div className="score-section">
         <div className="score-visual">
           <div 
             className="score-circle"
@@ -95,56 +102,104 @@ const ResultsDisplay = ({ results, contactData }) => {
         </div>
       </div>
 
-      <div className="next-steps">
+      <div className="next-steps-section">
         <h3>Jeres næste skridt</h3>
-        <div className="steps-list">
+        <div className="steps-grid">
           {analysis.nextSteps.map((step, index) => (
-            <div key={index} className="step-item">
-              <span className="step-text">{step}</span>
+            <div key={index} className="step-card">
+              <div className="step-number">{index + 1}</div>
+              <div className="step-content">
+                <span className="step-text">{step}</span>
+              </div>
             </div>
           ))}
         </div>
       </div>
 
-      <div className="contact-status">
-        <h3>Kontakt præference</h3>
+      <div className="contact-section">
+        <h3>Hvad sker der nu?</h3>
         {contactData.contactPreference === 'yes' ? (
-          <div className="contact-confirmation">
-            <div className="contact-icon">📞</div>
-            <div>
-              <h4>Vi kontakter jer snart!</h4>
+          <div className="contact-card will-contact">
+            <div className="contact-visual">
+              <div className="contact-icon">📞</div>
+              <div className="contact-badge">Vi kontakter jer</div>
+            </div>
+            <div className="contact-content">
+              <h4>Vi er klar til at hjælpe jer videre</h4>
               <p>
-                Baseret på jeres svar vil en af vores ESG-eksperter kontakte jer 
-                på <strong>{contactData.email}</strong> inden for 2 arbejdsdage med personlige anbefalinger 
-                og konkrete forslag til, hvordan {contactData.companyName} kan komme videre med ESG.
+                En af vores ESG-eksperter kontakter jer på <strong>{contactData.email}</strong> inden for 2 arbejdsdage. 
+                Vi kommer med konkrete forslag til, hvordan {contactData.companyName} kan tage de næste skridt på jeres ESG-rejse.
               </p>
+              <div className="contact-benefits">
+                <div className="benefit">✅ Personlig rådgivning</div>
+                <div className="benefit">✅ Skræddersyede løsninger</div>
+                <div className="benefit">✅ Konkrete handlingsplaner</div>
+              </div>
             </div>
           </div>
         ) : (
-          <div className="no-contact">
-            <div className="contact-icon">📧</div>
-            <div>
-              <h4>Resultat sendt til jer</h4>
+          <div className="contact-card no-contact">
+            <div className="contact-visual">
+              <div className="contact-icon">📧</div>
+              <div className="contact-badge">Kun resultat</div>
+            </div>
+            <div className="contact-content">
+              <h4>I har valgt kun at modtage resultatet</h4>
               <p>
-                I har valgt kun at modtage resultatet. Vi respekterer dette valg. 
-                I kan altid kontakte os på <strong>esg@bluwave.dk</strong> hvis I senere 
-                ønsker rådgivning eller har spørgsmål til jeres ESG-rejse.
+                Vi respekterer jeres valg. I kan altid kontakte os på <strong>esg@bluwave.dk</strong> 
+                hvis I senere ønsker hjælp til jeres ESG-arbejde.
               </p>
+              <div className="cta-section">
+                <h5>Hvad I går glip af:</h5>
+                <div className="missed-benefits">
+                  <div className="missed-benefit">❌ Personlig ESG-strategi</div>
+                  <div className="missed-benefit">❌ Branchespecifikke anbefalinger</div>
+                  <div className="missed-benefit">❌ Implementeringshjælp</div>
+                  <div className="missed-benefit">❌ Løbende support</div>
+                </div>
+                <button className="change-mind-btn">
+                  Jeg vil gerne kontaktes alligevel
+                </button>
+              </div>
             </div>
           </div>
         )}
       </div>
 
+      <div className="company-summary">
+        <h3>Jeres virksomhedsprofil</h3>
+        <div className="summary-grid">
+          <div className="summary-item">
+            <div className="summary-label">Virksomhed</div>
+            <div className="summary-value">{contactData.companyName}</div>
+          </div>
+          <div className="summary-item">
+            <div className="summary-label">Kontaktperson</div>
+            <div className="summary-value">{contactData.contactPerson}</div>
+          </div>
+          <div className="summary-item">
+            <div className="summary-label">Branche</div>
+            <div className="summary-value">{contactData.industry}</div>
+          </div>
+          <div className="summary-item">
+            <div className="summary-label">Medarbejdere</div>
+            <div className="summary-value">{contactData.employees}</div>
+          </div>
+        </div>
+      </div>
+
       <div className="email-confirmation">
-        <div className="confirmation-icon">📧</div>
-        <h3>Din detaljerede analyse er på vej</h3>
-        <p>
-          Vi sender en omfattende rapport til <strong>{contactData.email}</strong> inden for få minutter.
-          Rapporten indeholder konkrete anbefalinger og næste skridt for {contactData.companyName}.
-        </p>
-        <p className="email-note">
-          Tjek venligst din spam-mappe, hvis du ikke modtager emailen inden for 10 minutter.
-        </p>
+        <div className="confirmation-content">
+          <div className="confirmation-icon">📧</div>
+          <h3>Din detaljerede rapport er på vej</h3>
+          <p>
+            Vi sender en omfattende ESG-analyse til <strong>{contactData.email}</strong> inden for få minutter.
+            Rapporten indeholder alle jeres svar, detaljerede anbefalinger og konkrete næste skridt for {contactData.companyName}.
+          </p>
+          <p className="email-note">
+            Tjek venligst din spam-mappe, hvis du ikke modtager emailen inden for 10 minutter.
+          </p>
+        </div>
       </div>
     </div>
   )

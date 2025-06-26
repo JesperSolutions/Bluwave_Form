@@ -61,8 +61,8 @@ export const submitAssessment = async (data) => {
     '250+': '250+ medarbejdere'
   }
 
-  // Prepare comprehensive email data
-  const emailData = {
+  // Prepare comprehensive email data for customer
+  const customerEmailData = {
     // Recipient information
     to_email: contact.email,
     to_name: contact.contactPerson,
@@ -110,18 +110,79 @@ export const submitAssessment = async (data) => {
     score_emoji: getScoreEmoji(recommendation.level)
   }
 
-  try {
-    // Send email via EmailJS
-    console.log('📤 Sending ESG assessment email...')
+  // Prepare notification email data for Bluwave
+  const notificationEmailData = {
+    // Send to Bluwave
+    to_email: 'ja@bluwave.dk',
+    to_name: 'Jesper',
     
-    const response = await emailjs.send(
+    // Company information
+    company_name: contact.companyName,
+    contact_person: contact.contactPerson,
+    email: contact.email,
+    phone: contact.phone || 'Ikke angivet',
+    industry: industryMap[contact.industry] || contact.industry || 'Ikke angivet',
+    employees: employeeMap[contact.employees] || contact.employees || 'Ikke angivet',
+    
+    // Contact preference
+    contact_preference: contact.contactPreference === 'yes' ? 'Ja, må gerne kontaktes' : 'Nej, kun resultat ønsket',
+    may_contact: contact.contactPreference === 'yes' ? 'JA' : 'NEJ',
+    
+    // Assessment results
+    total_score: score,
+    max_score: 13,
+    score_percentage: Math.round((score / 13) * 100),
+    recommendation_title: recommendation.title,
+    recommendation_text: recommendation.text,
+    recommendation_level: recommendation.level,
+    
+    // Detailed responses
+    detailed_responses: formattedResponses,
+    
+    // Metadata
+    submission_date: new Date().toLocaleDateString('da-DK', {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    }),
+    submission_timestamp: new Date().toISOString(),
+    
+    // Additional context for email template
+    next_steps: getNextStepsText(recommendation.level),
+    score_interpretation: getScoreInterpretation(score),
+    
+    // Visual elements for email
+    score_color: getScoreColor(recommendation.level),
+    score_emoji: getScoreEmoji(recommendation.level)
+  }
+
+  try {
+    // Send email to customer
+    console.log('📤 Sending ESG assessment email to customer...')
+    
+    const customerResponse = await emailjs.send(
       EMAILJS_CONFIG.serviceId,
       EMAILJS_CONFIG.templateId,
-      emailData
+      customerEmailData
     )
     
-    console.log('✅ Email sent successfully:', response)
-    return response
+    console.log('✅ Customer email sent successfully:', customerResponse)
+
+    // Send notification email to Bluwave
+    console.log('📤 Sending notification email to Bluwave...')
+    
+    const notificationResponse = await emailjs.send(
+      EMAILJS_CONFIG.serviceId,
+      EMAILJS_CONFIG.templateId,
+      notificationEmailData
+    )
+    
+    console.log('✅ Notification email sent successfully:', notificationResponse)
+    
+    return { customerResponse, notificationResponse }
     
   } catch (error) {
     console.error('❌ Email sending failed:', error)
