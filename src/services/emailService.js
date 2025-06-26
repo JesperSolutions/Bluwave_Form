@@ -147,7 +147,7 @@ export const submitFestivalFeedback = async (data) => {
   }
 }
 
-// Helper functions
+// Helper functions for festival feedback
 function getScoreDescription(score) {
   if (score >= 80) return 'Fantastisk match! Du har meget klare præferencer som matcher specifikke festivaler perfekt.'
   if (score >= 60) return 'God kompatibilitet. Der er flere festivaler der passer godt til dine ønsker.'
@@ -195,6 +195,29 @@ export const submitAssessment = async (data) => {
     formattedResponses += `${i}. ${questions[i-1]}\n   Svar: ${answerText}\n\n`
   }
 
+  // Get industry display name
+  const industryMap = {
+    'byggeri': 'Byggeri og anlæg',
+    'energi': 'Energi og forsyning',
+    'finans': 'Finans og forsikring',
+    'handel': 'Handel og detailhandel',
+    'industri': 'Industri og produktion',
+    'it': 'IT og teknologi',
+    'konsulent': 'Konsulent og rådgivning',
+    'landbrug': 'Landbrug og fødevarer',
+    'logistik': 'Logistik og transport',
+    'sundhed': 'Sundhed og social',
+    'turisme': 'Turisme og oplevelser',
+    'anden': 'Anden branche'
+  }
+
+  const employeeMap = {
+    '1-9': '1-9 medarbejdere',
+    '10-49': '10-49 medarbejdere',
+    '50-249': '50-249 medarbejdere',
+    '250+': '250+ medarbejdere'
+  }
+
   // Prepare comprehensive email data
   const emailData = {
     // Recipient information
@@ -236,8 +259,8 @@ export const submitAssessment = async (data) => {
     score_interpretation: getScoreInterpretation(score),
     
     // Visual elements for email
-    score_color: getScoreColor(recommendation.level),
-    score_emoji: getScoreEmoji(recommendation.level)
+    score_color: getESGScoreColor(recommendation.level),
+    score_emoji: getESGScoreEmoji(recommendation.level)
   }
 
   try {
@@ -308,8 +331,8 @@ function getScoreInterpretation(score) {
   }
 }
 
-// Helper function to get score color for email styling
-function getScoreColor(level) {
+// Helper function to get score color for email styling (ESG-specific)
+function getESGScoreColor(level) {
   switch (level) {
     case 'beginner': return '#f59e0b'
     case 'intermediate': return '#10b981'
@@ -318,8 +341,8 @@ function getScoreColor(level) {
   }
 }
 
-// Helper function to get score emoji
-function getScoreEmoji(level) {
+// Helper function to get score emoji (ESG-specific)
+function getESGScoreEmoji(level) {
   switch (level) {
     case 'beginner': return '🌱'
     case 'intermediate': return '🌿'
