@@ -3,13 +3,12 @@ import './ContactForm.css'
 
 const ContactForm = ({ onSubmit }) => {
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
+    companyName: '',
+    contactPerson: '',
     email: '',
     phone: '',
-    company: '',
-    position: '',
-    companySize: ''
+    industry: '',
+    employees: ''
   })
 
   const [errors, setErrors] = useState({})
@@ -33,10 +32,11 @@ const ContactForm = ({ onSubmit }) => {
   const validateForm = () => {
     const newErrors = {}
     
-    if (!formData.firstName.trim()) newErrors.firstName = 'Fornavn er påkrævet'
-    if (!formData.lastName.trim()) newErrors.lastName = 'Efternavn er påkrævet'
-    if (!formData.email.trim()) newErrors.email = 'Email er påkrævet'
-    if (!formData.company.trim()) newErrors.company = 'Virksomhed er påkrævet'
+    if (!formData.companyName.trim()) newErrors.companyName = 'Virksomhedsnavn er påkrævet'
+    if (!formData.contactPerson.trim()) newErrors.contactPerson = 'Kontaktperson er påkrævet'
+    if (!formData.email.trim()) newErrors.email = 'E-mail er påkrævet'
+    if (!formData.industry.trim()) newErrors.industry = 'Branche er påkrævet'
+    if (!formData.employees.trim()) newErrors.employees = 'Antal medarbejdere er påkrævet'
     
     // Email validation
     if (formData.email && !/\S+@\S+\.\S+/.test(formData.email)) {
@@ -57,110 +57,145 @@ const ContactForm = ({ onSubmit }) => {
   return (
     <div className="contact-form-container">
       <div className="contact-form-header">
-        <h2>Få dit personlige resultat</h2>
-        <p>Udfyld dine kontaktoplysninger for at modtage en detaljeret analyse af din virksomheds ESG-parathed.</p>
+        <div className="step-indicator">
+          <span className="step-text">Trin 1 af 5</span>
+          <span className="progress-text">20% færdig</span>
+        </div>
+        <h2>Virksomhedsoplysninger</h2>
+        <p>Indtast jeres virksomhedsoplysninger for at modtage jeres personlige ESG-vurdering og anbefalinger.</p>
       </div>
 
       <form onSubmit={handleSubmit} className="contact-form">
         <div className="form-row">
           <div className="form-group">
-            <label htmlFor="firstName">Fornavn *</label>
+            <label htmlFor="companyName">
+              <span className="icon">🏢</span>
+              Virksomhedsnavn *
+            </label>
             <input
               type="text"
-              id="firstName"
-              name="firstName"
-              value={formData.firstName}
+              id="companyName"
+              name="companyName"
+              value={formData.companyName}
               onChange={handleChange}
-              className={errors.firstName ? 'error' : ''}
+              placeholder="Indtast virksomhedens navn"
+              className={errors.companyName ? 'error' : ''}
             />
-            {errors.firstName && <span className="error-message">{errors.firstName}</span>}
+            {errors.companyName && <span className="error-message">{errors.companyName}</span>}
           </div>
           
           <div className="form-group">
-            <label htmlFor="lastName">Efternavn *</label>
+            <label htmlFor="contactPerson">
+              <span className="icon">👤</span>
+              Kontaktperson *
+            </label>
             <input
               type="text"
-              id="lastName"
-              name="lastName"
-              value={formData.lastName}
+              id="contactPerson"
+              name="contactPerson"
+              value={formData.contactPerson}
               onChange={handleChange}
-              className={errors.lastName ? 'error' : ''}
+              placeholder="Indtast navn på kontaktperson"
+              className={errors.contactPerson ? 'error' : ''}
             />
-            {errors.lastName && <span className="error-message">{errors.lastName}</span>}
+            {errors.contactPerson && <span className="error-message">{errors.contactPerson}</span>}
           </div>
         </div>
 
         <div className="form-row">
           <div className="form-group">
-            <label htmlFor="email">Email *</label>
+            <label htmlFor="email">
+              <span className="icon">✉️</span>
+              E-mail *
+            </label>
             <input
               type="email"
               id="email"
               name="email"
               value={formData.email}
               onChange={handleChange}
+              placeholder="kontakt@virksomhed.dk"
               className={errors.email ? 'error' : ''}
             />
             {errors.email && <span className="error-message">{errors.email}</span>}
           </div>
           
           <div className="form-group">
-            <label htmlFor="phone">Telefon</label>
+            <label htmlFor="phone">
+              <span className="icon">📞</span>
+              Telefon
+            </label>
             <input
               type="tel"
               id="phone"
               name="phone"
               value={formData.phone}
               onChange={handleChange}
+              placeholder="+45 12 34 56 78"
             />
           </div>
-        </div>
-
-        <div className="form-group full-width">
-          <label htmlFor="company">Virksomhed *</label>
-          <input
-            type="text"
-            id="company"
-            name="company"
-            value={formData.company}
-            onChange={handleChange}
-            className={errors.company ? 'error' : ''}
-          />
-          {errors.company && <span className="error-message">{errors.company}</span>}
         </div>
 
         <div className="form-row">
           <div className="form-group">
-            <label htmlFor="position">Stilling</label>
-            <input
-              type="text"
-              id="position"
-              name="position"
-              value={formData.position}
+            <label htmlFor="industry">
+              <span className="icon">🏭</span>
+              Branche *
+            </label>
+            <select
+              id="industry"
+              name="industry"
+              value={formData.industry}
               onChange={handleChange}
-            />
+              className={errors.industry ? 'error' : ''}
+            >
+              <option value="">Vælg branche</option>
+              <option value="byggeri">Byggeri og anlæg</option>
+              <option value="energi">Energi og forsyning</option>
+              <option value="finans">Finans og forsikring</option>
+              <option value="handel">Handel og detailhandel</option>
+              <option value="industri">Industri og produktion</option>
+              <option value="it">IT og teknologi</option>
+              <option value="konsulent">Konsulent og rådgivning</option>
+              <option value="landbrug">Landbrug og fødevarer</option>
+              <option value="logistik">Logistik og transport</option>
+              <option value="sundhed">Sundhed og social</option>
+              <option value="turisme">Turisme og oplevelser</option>
+              <option value="anden">Anden branche</option>
+            </select>
+            {errors.industry && <span className="error-message">{errors.industry}</span>}
           </div>
           
           <div className="form-group">
-            <label htmlFor="companySize">Virksomhedsstørrelse</label>
+            <label htmlFor="employees">
+              <span className="icon">👥</span>
+              Antal medarbejdere *
+            </label>
             <select
-              id="companySize"
-              name="companySize"
-              value={formData.companySize}
+              id="employees"
+              name="employees"
+              value={formData.employees}
               onChange={handleChange}
+              className={errors.employees ? 'error' : ''}
             >
-              <option value="">Vælg størrelse</option>
-              <option value="1-10">1-10 medarbejdere</option>
-              <option value="11-50">11-50 medarbejdere</option>
-              <option value="51-250">51-250 medarbejdere</option>
+              <option value="">Vælg antal medarbejdere</option>
+              <option value="1-9">1-9 medarbejdere</option>
+              <option value="10-49">10-49 medarbejdere</option>
+              <option value="50-249">50-249 medarbejdere</option>
               <option value="250+">250+ medarbejdere</option>
             </select>
+            {errors.employees && <span className="error-message">{errors.employees}</span>}
           </div>
         </div>
 
-        <button type="submit" className="continue-btn">
-          Fortsæt til selvtest
-        </button>
+        <div className="form-navigation">
+          <button type="button" className="back-btn" disabled>
+            <span>←</span> Forrige
+          </button>
+          <button type="submit" className="next-btn">
+            Næste <span>→</span>
+          </button>
+        </div>
       </form>
     </div>
   )

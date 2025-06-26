@@ -1,10 +1,10 @@
 import emailjs from '@emailjs/browser'
 
-// EmailJS configuration - Replace with your actual values
+// EmailJS configuration
 const EMAILJS_CONFIG = {
-  serviceId: 'YOUR_SERVICE_ID',
-  templateId: 'YOUR_TEMPLATE_ID',
-  publicKey: 'YOUR_PUBLIC_KEY'
+  serviceId: 'service_d40uip4',
+  templateId: 'YOUR_TEMPLATE_ID', // You'll need to provide this
+  publicKey: 'YOUR_PUBLIC_KEY' // You'll need to provide this
 }
 
 // Initialize EmailJS
@@ -40,11 +40,11 @@ export const submitAssessment = async (data) => {
   // Prepare email data
   const emailData = {
     to_email: contact.email,
-    to_name: `${contact.firstName} ${contact.lastName}`,
-    company: contact.company,
-    position: contact.position || 'Ikke angivet',
+    to_name: contact.contactPerson,
+    company: contact.companyName,
+    industry: contact.industry || 'Ikke angivet',
     phone: contact.phone || 'Ikke angivet',
-    company_size: contact.companySize || 'Ikke angivet',
+    employees: contact.employees || 'Ikke angivet',
     score: score,
     recommendation_title: recommendation.title,
     recommendation_text: recommendation.text,
