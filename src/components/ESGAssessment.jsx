@@ -81,35 +81,33 @@ const ESGAssessment = () => {
       {currentStep === 'landing' && (
         <>
           <div className="hero-section">
-            <div className="hero-background">
-              <div className="leaf-icon">
-                <svg width="80" height="80" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M17 8C8 10 5.9 16.17 3.82 21.34L5.71 22L6.66 19.7C7.14 19.87 7.64 20 8.1 20C11.5 20 14.2 16.5 14.2 12.1V12C14.2 10.7 14.7 9.5 15.5 8.5L17 8Z" fill="currentColor"/>
-                  <path d="M18.5 2C16.5 2 14.5 3 13.5 5C12.5 3 10.5 2 8.5 2C6.5 2 5 3.5 5 5.5C5 8.5 8 12 12 16C16 12 19 8.5 19 5.5C19 3.5 17.5 2 15.5 2H18.5Z" fill="currentColor"/>
-                </svg>
-              </div>
+            <div className="hero-background"></div>
+            <div className="leaf-icon">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M17 8C8 10 5.9 16.17 3.82 21.34L5.71 22L6.66 19.7C7.14 19.87 7.64 20 8.1 20C11.5 20 14.2 16.5 14.2 12.1V12C14.2 10.7 14.7 9.5 15.5 8.5L17 8Z" fill="currentColor"/>
+              </svg>
             </div>
+            
             <div className="hero-content">
               <h1>
                 Er din virksomhed <span className="highlight">ESG-klar?</span>
               </h1>
               <p className="hero-subtitle">
-                Få et hurtigt overblik over jeres ESG-parathed med vores gratis selvtest.
-                <br />
+                Få et hurtigt overblik over jeres ESG-parathed med vores gratis selvtest.<br />
                 Perfekt til små og mellemstore virksomheder der vil være klar til fremtidens krav.
               </p>
               
               <div className="hero-features">
                 <div className="feature">
-                  <span className="feature-icon">✓</span>
+                  <div className="feature-icon">✓</div>
                   <span>100% gratis</span>
                 </div>
                 <div className="feature">
-                  <span className="feature-icon">⚡</span>
+                  <div className="feature-icon">⚡</div>
                   <span>5 minutters test</span>
                 </div>
                 <div className="feature">
-                  <span className="feature-icon">📊</span>
+                  <div className="feature-icon">📊</div>
                   <span>Personlig rapport</span>
                 </div>
               </div>
@@ -134,7 +132,7 @@ const ESGAssessment = () => {
               <div className="logo-placeholder">LOGO</div>
             </div>
             <div className="trust-icon">
-              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M17 8C8 10 5.9 16.17 3.82 21.34L5.71 22L6.66 19.7C7.14 19.87 7.64 20 8.1 20C11.5 20 14.2 16.5 14.2 12.1V12C14.2 10.7 14.7 9.5 15.5 8.5L17 8Z" fill="currentColor"/>
               </svg>
             </div>
@@ -143,14 +141,14 @@ const ESGAssessment = () => {
       )}
       
       {currentStep === 'contact' && (
-        <div className="assessment-content">
-          <div className="back-to-landing">
+        <div className="assessment-wrapper">
+          <div className="assessment-header">
             <button onClick={() => setCurrentStep('landing')} className="back-link">
               ← Tilbage til forsiden
             </button>
             <div className="assessment-title">
               <div className="leaf-icon-small">
-                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M17 8C8 10 5.9 16.17 3.82 21.34L5.71 22L6.66 19.7C7.14 19.87 7.64 20 8.1 20C11.5 20 14.2 16.5 14.2 12.1V12C14.2 10.7 14.7 9.5 15.5 8.5L17 8Z" fill="currentColor"/>
                 </svg>
               </div>
@@ -162,14 +160,14 @@ const ESGAssessment = () => {
       )}
       
       {currentStep === 'assessment' && (
-        <div className="assessment-content">
-          <div className="back-to-landing">
+        <div className="assessment-wrapper">
+          <div className="assessment-header">
             <button onClick={() => setCurrentStep('contact')} className="back-link">
               ← Tilbage til forsiden
             </button>
             <div className="assessment-title">
               <div className="leaf-icon-small">
-                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M17 8C8 10 5.9 16.17 3.82 21.34L5.71 22L6.66 19.7C7.14 19.87 7.64 20 8.1 20C11.5 20 14.2 16.5 14.2 12.1V12C14.2 10.7 14.7 9.5 15.5 8.5L17 8Z" fill="currentColor"/>
                 </svg>
               </div>
@@ -185,7 +183,7 @@ const ESGAssessment = () => {
       )}
       
       {currentStep === 'results' && (
-        <div className="assessment-content">
+        <div className="assessment-wrapper">
           <ResultsDisplay 
             results={results}
             contactData={contactData}

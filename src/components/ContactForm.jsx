@@ -56,6 +56,10 @@ const ContactForm = ({ onSubmit }) => {
 
   return (
     <div className="contact-form-container">
+      <div className="progress-bar">
+        <div className="progress-fill" style={{ width: '20%' }}></div>
+      </div>
+      
       <div className="contact-form-header">
         <div className="step-indicator">
           <span className="step-text">Trin 1 af 5</span>
