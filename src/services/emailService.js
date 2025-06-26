@@ -8,7 +8,9 @@ const EMAILJS_CONFIG = {
 }
 
 // Initialize EmailJS
-emailjs.init(EMAILJS_CONFIG.publicKey)
+if (EMAILJS_CONFIG.publicKey !== 'YOUR_PUBLIC_KEY') {
+  emailjs.init(EMAILJS_CONFIG.publicKey)
+}
 
 export const submitAssessment = async (data) => {
   const { contact, assessment, score, recommendation } = data
@@ -49,10 +51,23 @@ export const submitAssessment = async (data) => {
     recommendation_title: recommendation.title,
     recommendation_text: recommendation.text,
     responses: formattedResponses,
-    submission_date: new Date().toLocaleDateString('da-DK')
+    submission_date: new Date().toLocaleDateString('da-DK', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    })
   }
 
   try {
+    // Check if EmailJS is properly configured
+    if (EMAILJS_CONFIG.publicKey === 'YOUR_PUBLIC_KEY') {
+      console.warn('EmailJS not configured. Simulating email send...')
+      // Simulate delay for demo purposes
+      await new Promise(resolve => setTimeout(resolve, 2000))
+      console.log('Email would be sent with data:', emailData)
+      return { status: 'success', message: 'Email simulated successfully' }
+    }
+
     const response = await emailjs.send(
       EMAILJS_CONFIG.serviceId,
       EMAILJS_CONFIG.templateId,
