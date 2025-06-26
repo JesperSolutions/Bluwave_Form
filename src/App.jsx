@@ -1,11 +1,11 @@
 import React from 'react'
-import ContactFormDemo from './components/ContactFormDemo'
+import ESGAssessment from './components/ESGAssessment'
 import './App.css'
 
 function App() {
   return (
     <div className="app">
-      <ContactFormDemo />
+      <ESGAssessment />
     </div>
   )
 }
