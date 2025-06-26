@@ -117,15 +117,15 @@ export const submitAssessment = async (data) => {
     to_name: 'Jesper',
     
     // Company information
-    company_name: contact.companyName,
+    company_name: `[LEAD] ${contact.companyName}`,
     contact_person: contact.contactPerson,
     email: contact.email,
     phone: contact.phone || 'Ikke angivet',
     industry: industryMap[contact.industry] || contact.industry || 'Ikke angivet',
     employees: employeeMap[contact.employees] || contact.employees || 'Ikke angivet',
     
-    // Contact preference
-    contact_preference: contact.contactPreference === 'yes' ? 'Ja, må gerne kontaktes' : 'Nej, kun resultat ønsket',
+    // Contact preference - highlighted for business
+    contact_preference: contact.contactPreference === 'yes' ? '🟢 JA - KONTAKT ØNSKET' : '🔴 NEJ - Kun resultat',
     may_contact: contact.contactPreference === 'yes' ? 'JA' : 'NEJ',
     
     // Assessment results
@@ -160,7 +160,9 @@ export const submitAssessment = async (data) => {
   }
 
   try {
-    // Send email to customer
+    console.log('📤 Sending emails with config:', EMAILJS_CONFIG)
+    
+    // Send email to customer first
     console.log('📤 Sending ESG assessment email to customer...')
     
     const customerResponse = await emailjs.send(
@@ -186,6 +188,11 @@ export const submitAssessment = async (data) => {
     
   } catch (error) {
     console.error('❌ Email sending failed:', error)
+    console.error('Error details:', {
+      status: error.status,
+      text: error.text,
+      message: error.message
+    })
     
     // Provide more specific error messages
     if (error.status === 400) {
