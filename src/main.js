@@ -8,7 +8,7 @@ document.querySelector('#app').innerHTML = `
 `
 
 // Initialize the form after DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
   const { initializeForm } = await import('./components/FormHandler.js')
   initializeForm()
 })
