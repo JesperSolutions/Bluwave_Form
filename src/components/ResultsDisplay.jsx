@@ -25,7 +25,7 @@ const ResultsDisplay = ({ results, contactData }) => {
   return (
     <div className="results-display">
       <div className="results-header">
-        <h2>Dit ESG-resultat, {contactData.firstName}</h2>
+        <h2>Dit ESG-resultat, {contactData.contactPerson}</h2>
         <p>Her er din personlige analyse baseret på dine svar</p>
       </div>
 
@@ -117,7 +117,7 @@ const ResultsDisplay = ({ results, contactData }) => {
         <h3>Din detaljerede analyse er på vej</h3>
         <p>
           Vi sender en omfattende rapport til <strong>{contactData.email}</strong> inden for få minutter.
-          Rapporten indeholder konkrete anbefalinger og næste skridt for {contactData.company}.
+          Rapporten indeholder konkrete anbefalinger og næste skridt for {contactData.companyName}.
         </p>
         <p className="email-note">
           Tjek venligst din spam-mappe, hvis du ikke modtager emailen inden for 10 minutter.

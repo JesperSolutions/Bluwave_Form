@@ -3,8 +3,8 @@ import emailjs from '@emailjs/browser'
 // EmailJS configuration
 const EMAILJS_CONFIG = {
   serviceId: 'service_d40uip4',
-  templateId: 'YOUR_TEMPLATE_ID', // You'll need to provide this
-  publicKey: 'YOUR_PUBLIC_KEY' // You'll need to provide this
+  templateId: 'template_esg_assessment', // You'll need to create this template in EmailJS
+  publicKey: 'YOUR_PUBLIC_KEY' // You'll need to provide this from your EmailJS account
 }
 
 // Initialize EmailJS
