@@ -6,12 +6,24 @@ const ContactForm = ({ onSubmit }) => {
     companyName: '',
     contactPerson: '',
     email: '',
+    countryCode: '+45',
     phone: '',
     industry: '',
     employees: ''
   })
 
   const [errors, setErrors] = useState({})
+
+  const countryCodes = [
+    { code: '+45', country: 'DK', flag: '🇩🇰' },
+    { code: '+46', country: 'SE', flag: '🇸🇪' },
+    { code: '+47', country: 'NO', flag: '🇳🇴' },
+    { code: '+49', country: 'DE', flag: '🇩🇪' },
+    { code: '+44', country: 'UK', flag: '🇬🇧' },
+    { code: '+31', country: 'NL', flag: '🇳🇱' },
+    { code: '+33', country: 'FR', flag: '🇫🇷' },
+    { code: '+1', country: 'US', flag: '🇺🇸' },
+  ]
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -50,7 +62,12 @@ const ContactForm = ({ onSubmit }) => {
   const handleSubmit = (e) => {
     e.preventDefault()
     if (validateForm()) {
-      onSubmit(formData)
+      // Combine country code and phone number
+      const fullPhone = formData.phone ? `${formData.countryCode} ${formData.phone}` : ''
+      onSubmit({
+        ...formData,
+        phone: fullPhone
+      })
     }
   }
 
@@ -73,7 +90,9 @@ const ContactForm = ({ onSubmit }) => {
         <div className="form-row">
           <div className="form-group">
             <label htmlFor="companyName">
-              <span className="icon">🏢</span>
+              <svg className="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M3 21h18v-2H3v2zM5 10h4V8H5v2zm0 4h4v-2H5v2zM5 6h4V4H5v2zm6 4h8V8h-8v2zm0 4h8v-2h-8v2zm0-8h8V4h-8v2z" fill="currentColor"/>
+              </svg>
               Virksomhedsnavn *
             </label>
             <input
@@ -90,7 +109,9 @@ const ContactForm = ({ onSubmit }) => {
           
           <div className="form-group">
             <label htmlFor="contactPerson">
-              <span className="icon">👤</span>
+              <svg className="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" fill="currentColor"/>
+              </svg>
               Kontaktperson *
             </label>
             <input
@@ -109,7 +130,9 @@ const ContactForm = ({ onSubmit }) => {
         <div className="form-row">
           <div className="form-group">
             <label htmlFor="email">
-              <span className="icon">✉️</span>
+              <svg className="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.89 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" fill="currentColor"/>
+              </svg>
               E-mail *
             </label>
             <input
@@ -126,24 +149,43 @@ const ContactForm = ({ onSubmit }) => {
           
           <div className="form-group">
             <label htmlFor="phone">
-              <span className="icon">📞</span>
+              <svg className="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" fill="currentColor"/>
+              </svg>
               Telefon
             </label>
-            <input
-              type="tel"
-              id="phone"
-              name="phone"
-              value={formData.phone}
-              onChange={handleChange}
-              placeholder="+45 12 34 56 78"
-            />
+            <div className="phone-input-container">
+              <select
+                name="countryCode"
+                value={formData.countryCode}
+                onChange={handleChange}
+                className="country-code-select"
+              >
+                {countryCodes.map((country) => (
+                  <option key={country.code} value={country.code}>
+                    {country.flag} {country.code}
+                  </option>
+                ))}
+              </select>
+              <input
+                type="tel"
+                id="phone"
+                name="phone"
+                value={formData.phone}
+                onChange={handleChange}
+                placeholder="12 34 56 78"
+                className="phone-input"
+              />
+            </div>
           </div>
         </div>
 
         <div className="form-row">
           <div className="form-group">
             <label htmlFor="industry">
-              <span className="icon">🏭</span>
+              <svg className="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="currentColor"/>
+              </svg>
               Branche *
             </label>
             <select
@@ -172,7 +214,9 @@ const ContactForm = ({ onSubmit }) => {
           
           <div className="form-group">
             <label htmlFor="employees">
-              <span className="icon">👥</span>
+              <svg className="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M16 4c0-1.11.89-2 2-2s2 .89 2 2-.89 2-2 2-2-.89-2-2zm4 18v-6h2.5l-2.54-7.63A1.5 1.5 0 0 0 18.54 8H17c-.8 0-1.54.37-2.01.99l-2.54 3.38c-.36.48-.85.63-1.37.63s-1.01-.15-1.37-.63L7.17 8.99A2.5 2.5 0 0 0 5.16 8H3.64c-.69 0-1.32.42-1.58 1.06L0 16h2.5v6h3v-6H7l1.5-4.5L10 14v8h4v-8l1.5-2.5L17 16h1.5v6h3z" fill="currentColor"/>
+              </svg>
               Antal medarbejdere *
             </label>
             <select
@@ -194,10 +238,16 @@ const ContactForm = ({ onSubmit }) => {
 
         <div className="form-navigation">
           <button type="button" className="back-btn" disabled>
-            <span>←</span> Forrige
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" fill="currentColor"/>
+            </svg>
+            Forrige
           </button>
           <button type="submit" className="next-btn">
-            Næste <span>→</span>
+            Næste
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M4 11h12.17l-5.59-5.59L12 4l8 8-8 8-1.41-1.41L16.17 13H4v-2z" fill="currentColor"/>
+            </svg>
           </button>
         </div>
       </form>
