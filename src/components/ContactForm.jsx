@@ -1,17 +1,20 @@
 import React, { useState } from 'react'
+import PhoneInput from 'react-phone-number-input'
+import { isValidPhoneNumber } from 'libphonenumber-js'
+import 'react-phone-number-input/style.css'
 import './ContactForm.css'
 
 const ContactForm = ({ onSubmit }) => {
   const [formData, setFormData] = useState({
-    companyName: '',
-    contactPerson: '',
+    fullName: '',
     email: '',
     phone: '',
-    industry: '',
-    employees: ''
+    message: ''
   })
 
   const [errors, setErrors] = useState({})
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [touched, setTouched] = useState({})
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -29,88 +32,208 @@ const ContactForm = ({ onSubmit }) => {
     }
   }
 
+  const handlePhoneChange = (value) => {
+    setFormData(prev => ({
+      ...prev,
+      phone: value || ''
+    }))
+    
+    // Clear phone error when user starts typing
+    if (errors.phone) {
+      setErrors(prev => ({
+        ...prev,
+        phone: ''
+      }))
+    }
+  }
+
+  const handleBlur = (fieldName) => {
+    setTouched(prev => ({
+      ...prev,
+      [fieldName]: true
+    }))
+    validateField(fieldName)
+  }
+
+  const validateField = (fieldName) => {
+    const newErrors = { ...errors }
+    const value = formData[fieldName]
+
+    switch (fieldName) {
+      case 'fullName':
+        if (!value.trim()) {
+          newErrors.fullName = 'Fulde navn er påkrævet'
+        } else if (value.trim().length < 2) {
+          newErrors.fullName = 'Navn skal være mindst 2 tegn'
+        } else {
+          delete newErrors.fullName
+        }
+        break
+
+      case 'email':
+        if (!value.trim()) {
+          newErrors.email = 'E-mail er påkrævet'
+        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+          newErrors.email = 'Indtast en gyldig e-mail adresse'
+        } else {
+          delete newErrors.email
+        }
+        break
+
+      case 'phone':
+        if (!formData.phone) {
+          newErrors.phone = 'Telefonnummer er påkrævet'
+        } else if (!isValidPhoneNumber(formData.phone)) {
+          newErrors.phone = 'Indtast et gyldigt telefonnummer'
+        } else {
+          delete newErrors.phone
+        }
+        break
+
+      case 'message':
+        if (!value.trim()) {
+          newErrors.message = 'Besked er påkrævet'
+        } else if (value.trim().length < 10) {
+          newErrors.message = 'Besked skal være mindst 10 tegn'
+        } else {
+          delete newErrors.message
+        }
+        break
+
+      default:
+        break
+    }
+
+    setErrors(newErrors)
+    return Object.keys(newErrors).length === 0
+  }
+
   const validateForm = () => {
     const newErrors = {}
     
-    if (!formData.companyName.trim()) newErrors.companyName = 'Virksomhedsnavn er påkrævet'
-    if (!formData.contactPerson.trim()) newErrors.contactPerson = 'Kontaktperson er påkrævet'
-    if (!formData.email.trim()) newErrors.email = 'E-mail er påkrævet'
-    if (!formData.industry.trim()) newErrors.industry = 'Branche er påkrævet'
-    if (!formData.employees.trim()) newErrors.employees = 'Antal medarbejdere er påkrævet'
+    // Full name validation
+    if (!formData.fullName.trim()) {
+      newErrors.fullName = 'Fulde navn er påkrævet'
+    } else if (formData.fullName.trim().length < 2) {
+      newErrors.fullName = 'Navn skal være mindst 2 tegn'
+    }
     
     // Email validation
-    if (formData.email && !/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = 'Indtast en gyldig email'
+    if (!formData.email.trim()) {
+      newErrors.email = 'E-mail er påkrævet'
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = 'Indtast en gyldig e-mail adresse'
+    }
+    
+    // Phone validation
+    if (!formData.phone) {
+      newErrors.phone = 'Telefonnummer er påkrævet'
+    } else if (!isValidPhoneNumber(formData.phone)) {
+      newErrors.phone = 'Indtast et gyldigt telefonnummer'
+    }
+    
+    // Message validation
+    if (!formData.message.trim()) {
+      newErrors.message = 'Besked er påkrævet'
+    } else if (formData.message.trim().length < 10) {
+      newErrors.message = 'Besked skal være mindst 10 tegn'
     }
     
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    if (validateForm()) {
+    
+    // Mark all fields as touched
+    setTouched({
+      fullName: true,
+      email: true,
+      phone: true,
+      message: true
+    })
+
+    if (!validateForm()) {
+      return
+    }
+
+    setIsSubmitting(true)
+    
+    try {
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 2000))
+      
+      // Call parent submit handler
       onSubmit(formData)
+      
+      // Reset form
+      setFormData({
+        fullName: '',
+        email: '',
+        phone: '',
+        message: ''
+      })
+      setTouched({})
+      setErrors({})
+      
+    } catch (error) {
+      console.error('Form submission error:', error)
+      setErrors({ submit: 'Der opstod en fejl. Prøv venligst igen.' })
+    } finally {
+      setIsSubmitting(false)
     }
   }
 
   return (
-    <div className="contact-form-container">
-      <div className="progress-bar">
-        <div className="progress-fill" style={{ width: '20%' }}></div>
-      </div>
-      
-      <div className="contact-form-header">
-        <div className="step-indicator">
-          <span className="step-text">Trin 1 af 5</span>
-          <span className="progress-text">20% færdig</span>
+    <div className="contact-form-wrapper">
+      <div className="contact-form-container">
+        {/* Leaf Icon at Top */}
+        <div className="form-logo">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2L13.09 8.26L20 9L13.09 9.74L12 16L10.91 9.74L4 9L10.91 8.26L12 2Z" fill="#89B348"/>
+            <path d="M19 15L19.5 17.5L22 18L19.5 18.5L19 21L18.5 18.5L16 18L18.5 17.5L19 15Z" fill="#89B348"/>
+            <path d="M5 6L5.5 8.5L8 9L5.5 9.5L5 12L4.5 9.5L2 9L4.5 8.5L5 6Z" fill="#89B348"/>
+          </svg>
         </div>
-        <h2>Virksomhedsoplysninger</h2>
-        <p>Indtast jeres virksomhedsoplysninger for at modtage jeres personlige ESG-vurdering og anbefalinger.</p>
-      </div>
 
-      <form onSubmit={handleSubmit} className="contact-form">
-        <div className="form-row">
+        <div className="form-header">
+          <h2>Kontakt os</h2>
+          <p>Udfyld formularen nedenfor, så vender vi tilbage til dig hurtigst muligt.</p>
+        </div>
+
+        <form onSubmit={handleSubmit} className="contact-form" noValidate>
+          {/* Full Name Field */}
           <div className="form-group">
-            <label htmlFor="companyName">
-              <span className="icon">🏢</span>
-              Virksomhedsnavn *
+            <label htmlFor="fullName" className="form-label">
+              <span className="label-text">Fulde navn</span>
+              <span className="required-asterisk" aria-label="påkrævet">*</span>
             </label>
             <input
               type="text"
-              id="companyName"
-              name="companyName"
-              value={formData.companyName}
+              id="fullName"
+              name="fullName"
+              value={formData.fullName}
               onChange={handleChange}
-              placeholder="Indtast virksomhedens navn"
-              className={errors.companyName ? 'error' : ''}
+              onBlur={() => handleBlur('fullName')}
+              placeholder="Indtast dit fulde navn"
+              className={`form-input ${errors.fullName && touched.fullName ? 'error' : ''}`}
+              aria-describedby={errors.fullName ? 'fullName-error' : undefined}
+              aria-invalid={errors.fullName && touched.fullName ? 'true' : 'false'}
+              autoComplete="name"
             />
-            {errors.companyName && <span className="error-message">{errors.companyName}</span>}
+            {errors.fullName && touched.fullName && (
+              <span id="fullName-error" className="error-message" role="alert">
+                {errors.fullName}
+              </span>
+            )}
           </div>
-          
-          <div className="form-group">
-            <label htmlFor="contactPerson">
-              <span className="icon">👤</span>
-              Kontaktperson *
-            </label>
-            <input
-              type="text"
-              id="contactPerson"
-              name="contactPerson"
-              value={formData.contactPerson}
-              onChange={handleChange}
-              placeholder="Indtast navn på kontaktperson"
-              className={errors.contactPerson ? 'error' : ''}
-            />
-            {errors.contactPerson && <span className="error-message">{errors.contactPerson}</span>}
-          </div>
-        </div>
 
-        <div className="form-row">
+          {/* Email Field */}
           <div className="form-group">
-            <label htmlFor="email">
-              <span className="icon">✉️</span>
-              E-mail *
+            <label htmlFor="email" className="form-label">
+              <span className="label-text">E-mail adresse</span>
+              <span className="required-asterisk" aria-label="påkrævet">*</span>
             </label>
             <input
               type="email"
@@ -118,89 +241,107 @@ const ContactForm = ({ onSubmit }) => {
               name="email"
               value={formData.email}
               onChange={handleChange}
-              placeholder="kontakt@virksomhed.dk"
-              className={errors.email ? 'error' : ''}
+              onBlur={() => handleBlur('email')}
+              placeholder="din@email.dk"
+              className={`form-input ${errors.email && touched.email ? 'error' : ''}`}
+              aria-describedby={errors.email ? 'email-error' : undefined}
+              aria-invalid={errors.email && touched.email ? 'true' : 'false'}
+              autoComplete="email"
             />
-            {errors.email && <span className="error-message">{errors.email}</span>}
+            {errors.email && touched.email && (
+              <span id="email-error" className="error-message" role="alert">
+                {errors.email}
+              </span>
+            )}
           </div>
-          
+
+          {/* Phone Field */}
           <div className="form-group">
-            <label htmlFor="phone">
-              <span className="icon">📞</span>
-              Telefon
+            <label htmlFor="phone" className="form-label">
+              <span className="label-text">Telefonnummer</span>
+              <span className="required-asterisk" aria-label="påkrævet">*</span>
             </label>
-            <input
-              type="tel"
+            <PhoneInput
               id="phone"
-              name="phone"
               value={formData.phone}
-              onChange={handleChange}
-              placeholder="+45 12 34 56 78"
+              onChange={handlePhoneChange}
+              onBlur={() => handleBlur('phone')}
+              defaultCountry="DK"
+              placeholder="Indtast telefonnummer"
+              className={`phone-input ${errors.phone && touched.phone ? 'error' : ''}`}
+              aria-describedby={errors.phone ? 'phone-error' : undefined}
+              aria-invalid={errors.phone && touched.phone ? 'true' : 'false'}
+              autoComplete="tel"
             />
+            {errors.phone && touched.phone && (
+              <span id="phone-error" className="error-message" role="alert">
+                {errors.phone}
+              </span>
+            )}
           </div>
-        </div>
 
-        <div className="form-row">
+          {/* Message Field */}
           <div className="form-group">
-            <label htmlFor="industry">
-              <span className="icon">🏭</span>
-              Branche *
+            <label htmlFor="message" className="form-label">
+              <span className="label-text">Besked/Kommentarer</span>
+              <span className="required-asterisk" aria-label="påkrævet">*</span>
             </label>
-            <select
-              id="industry"
-              name="industry"
-              value={formData.industry}
+            <textarea
+              id="message"
+              name="message"
+              value={formData.message}
               onChange={handleChange}
-              className={errors.industry ? 'error' : ''}
-            >
-              <option value="">Vælg branche</option>
-              <option value="byggeri">Byggeri og anlæg</option>
-              <option value="energi">Energi og forsyning</option>
-              <option value="finans">Finans og forsikring</option>
-              <option value="handel">Handel og detailhandel</option>
-              <option value="industri">Industri og produktion</option>
-              <option value="it">IT og teknologi</option>
-              <option value="konsulent">Konsulent og rådgivning</option>
-              <option value="landbrug">Landbrug og fødevarer</option>
-              <option value="logistik">Logistik og transport</option>
-              <option value="sundhed">Sundhed og social</option>
-              <option value="turisme">Turisme og oplevelser</option>
-              <option value="anden">Anden branche</option>
-            </select>
-            {errors.industry && <span className="error-message">{errors.industry}</span>}
+              onBlur={() => handleBlur('message')}
+              placeholder="Skriv din besked her (minimum 10 tegn)..."
+              rows="4"
+              className={`form-textarea ${errors.message && touched.message ? 'error' : ''}`}
+              aria-describedby={errors.message ? 'message-error' : undefined}
+              aria-invalid={errors.message && touched.message ? 'true' : 'false'}
+              autoComplete="off"
+            />
+            <div className="character-count">
+              {formData.message.length}/10 minimum
+            </div>
+            {errors.message && touched.message && (
+              <span id="message-error" className="error-message" role="alert">
+                {errors.message}
+              </span>
+            )}
           </div>
-          
-          <div className="form-group">
-            <label htmlFor="employees">
-              <span className="icon">👥</span>
-              Antal medarbejdere *
-            </label>
-            <select
-              id="employees"
-              name="employees"
-              value={formData.employees}
-              onChange={handleChange}
-              className={errors.employees ? 'error' : ''}
-            >
-              <option value="">Vælg antal medarbejdere</option>
-              <option value="1-9">1-9 medarbejdere</option>
-              <option value="10-49">10-49 medarbejdere</option>
-              <option value="50-249">50-249 medarbejdere</option>
-              <option value="250+">250+ medarbejdere</option>
-            </select>
-            {errors.employees && <span className="error-message">{errors.employees}</span>}
-          </div>
-        </div>
 
-        <div className="form-navigation">
-          <button type="button" className="back-btn" disabled>
-            <span>←</span> Forrige
+          {/* Submit Error */}
+          {errors.submit && (
+            <div className="submit-error" role="alert">
+              {errors.submit}
+            </div>
+          )}
+
+          {/* Submit Button */}
+          <button
+            type="submit"
+            className="submit-button"
+            disabled={isSubmitting}
+            aria-describedby="submit-button-description"
+          >
+            {isSubmitting ? (
+              <>
+                <span className="spinner" aria-hidden="true"></span>
+                <span>Sender...</span>
+              </>
+            ) : (
+              <>
+                <span>Send besked</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </>
+            )}
           </button>
-          <button type="submit" className="next-btn">
-            Næste <span>→</span>
-          </button>
-        </div>
-      </form>
+          <p id="submit-button-description" className="sr-only">
+            Klik for at sende din besked. Vi svarer inden for 24 timer.
+          </p>
+        </form>
+      </div>
     </div>
   )
 }
