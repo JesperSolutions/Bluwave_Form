@@ -3,7 +3,7 @@ import emailjs from '@emailjs/browser'
 // EmailJS configuration - Production Ready
 const EMAILJS_CONFIG = {
   serviceId: 'service_d40uip4', // Your provided service ID
-  templateId: 'template_esg_assessment', // You'll need to create this template in EmailJS
+  templateId: 'template_esg_assessment', // Template ID to create in EmailJS dashboard
   publicKey: 'BCoUz6Ty8c0oza6pZ' // Your provided public key
 }
 
@@ -124,11 +124,13 @@ export const submitAssessment = async (data) => {
     
     // Provide more specific error messages
     if (error.status === 400) {
-      throw new Error('Ugyldig email konfiguration. Kontakt venligst support.')
+      throw new Error('Template ikke fundet. Kontakt venligst support.')
     } else if (error.status === 401) {
       throw new Error('Email service ikke autoriseret. Prøv igen senere.')
     } else if (error.status === 402) {
       throw new Error('Email service limit nået. Prøv igen senere.')
+    } else if (error.text && error.text.includes('template')) {
+      throw new Error('Email template ikke konfigureret korrekt. Kontakt support.')
     } else {
       throw new Error('Kunne ikke sende email. Tjek din internetforbindelse og prøv igen.')
     }
@@ -139,28 +141,22 @@ export const submitAssessment = async (data) => {
 function getNextStepsText(level) {
   switch (level) {
     case 'beginner':
-      return `
-• 📋 Få overblik over ESG-faktorer relevante for jeres branche
+      return `• 📋 Få overblik over ESG-faktorer relevante for jeres branche
 • 🎯 Sæt ét konkret mål at starte med
 • 📚 Uddann jer selv og teamet i ESG-grundlæggende
-• 💬 Start dialogen om bæredygtighed internt
-      `.trim()
+• 💬 Start dialogen om bæredygtighed internt`
     
     case 'intermediate':
-      return `
-• 📊 Implementer systemer til dataindsamling og dokumentation
+      return `• 📊 Implementer systemer til dataindsamling og dokumentation
 • 📋 Forbered jer på øgede rapporteringskrav
 • 💬 Kommuniker aktivt om jeres ESG-indsats
-• 🔄 Strukturer og systematiser jeres arbejde
-      `.trim()
+• 🔄 Strukturer og systematiser jeres arbejde`
     
     case 'advanced':
-      return `
-• 🚀 Optimer og effektivisér jeres ESG-processer
+      return `• 🚀 Optimer og effektivisér jeres ESG-processer
 • 💼 Integrer ESG strategisk i forretningsmodellen
 • 🏆 Bliv frontløber og del jeres erfaringer
-• 📈 Brug ESG som konkurrencefordel
-      `.trim()
+• 📈 Brug ESG som konkurrencefordel`
     
     default:
       return 'Kontakt os for personlige anbefalinger til jeres ESG-rejse.'
