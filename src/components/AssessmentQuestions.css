@@ -69,19 +69,18 @@
 }
 
 .question-card {
-  background: #f8fafc;
+  background: white;
   border-radius: 12px;
   padding: 1.5rem;
-  border-left: 4px solid #89B348;
+  border: 2px solid #e5e7eb;
   transition: all 0.2s ease;
-  border: 1px solid #e2e8f0;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
 .question-card:hover {
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
   transform: translateY(-1px);
-  background: #f1f5f9;
+  border-color: #d1d5db;
 }
 
 .question-text {
@@ -125,21 +124,9 @@
 }
 
 .option:has(input[type="radio"]:checked) {
-  background: rgba(137, 179, 72, 0.08);
+  background: white;
   border-color: #89B348;
-  box-shadow: 0 3px 12px rgba(137, 179, 72, 0.2);
-}
-
-.option:has(input[type="radio"]:checked)::before {
-  content: '';
-  position: absolute;
-  top: -2px;
-  left: -2px;
-  right: -2px;
-  bottom: -2px;
-  background: linear-gradient(135deg, #89B348, #7da63f);
-  border-radius: 12px;
-  z-index: -1;
+  box-shadow: 0 0 0 3px rgba(137, 179, 72, 0.1), 0 3px 12px rgba(137, 179, 72, 0.2);
 }
 
 .option input[type="radio"] {
@@ -252,7 +239,7 @@
 }
 
 .error-message::before {
-  content: 'ℹ️';
+  content: '⚠️';
   font-size: 1rem;
 }
 

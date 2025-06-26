@@ -23,6 +23,10 @@ In your EmailJS template, use these variables (they will be automatically popula
 - `{{industry}}` - Industry/branch
 - `{{employees}}` - Number of employees
 
+### Contact Preference
+- `{{contact_preference}}` - Contact preference text
+- `{{may_contact}}` - "JA" or "NEJ" for conditional content
+
 ### Assessment Results
 - `{{total_score}}` - Score (0-13)
 - `{{max_score}}` - Maximum possible score (13)
@@ -60,6 +64,7 @@ The email template includes:
 - Professional header with logo
 - Score visualization with colored circle
 - Company information summary
+- Contact preference status
 - Personalized recommendations
 - Next steps based on score level
 - Detailed question responses
@@ -73,6 +78,7 @@ The email template includes:
 - Professional business email appearance
 - Clean typography and spacing
 - Visual score representation
+- Conditional content based on contact preference
 
 ## 7. Testing
 
@@ -81,6 +87,7 @@ After setting up the template:
 2. Check all variables are populated correctly
 3. Verify responsive design on mobile
 4. Confirm Danish characters display properly
+5. Test both contact preference options
 
 ## 8. Template ID to Use
 

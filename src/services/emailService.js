@@ -75,6 +75,10 @@ export const submitAssessment = async (data) => {
     industry: industryMap[contact.industry] || contact.industry || 'Ikke angivet',
     employees: employeeMap[contact.employees] || contact.employees || 'Ikke angivet',
     
+    // Contact preference
+    contact_preference: contact.contactPreference === 'yes' ? 'Ja, må gerne kontaktes' : 'Nej, kun resultat ønsket',
+    may_contact: contact.contactPreference === 'yes' ? 'JA' : 'NEJ',
+    
     // Assessment results
     total_score: score,
     max_score: 13,

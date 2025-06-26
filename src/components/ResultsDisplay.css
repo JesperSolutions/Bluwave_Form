@@ -1,69 +1,94 @@
 .results-display {
-  background: var(--background-primary);
-  border-radius: var(--radius-xl);
-  box-shadow: var(--shadow-xl);
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   overflow: hidden;
-  border: 1px solid var(--border-color);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  max-width: 1000px;
+  margin: 0 auto;
 }
 
 .results-header {
-  background: linear-gradient(135deg, var(--background-secondary) 0%, var(--background-primary) 100%);
-  padding: var(--spacing-2xl);
+  background: linear-gradient(135deg, #f8fffe 0%, #ffffff 50%, #f0f9ff 100%);
+  padding: 2rem 2rem 1.5rem;
   text-align: center;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid rgba(229, 231, 235, 0.3);
+  position: relative;
+}
+
+.results-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 50% 0%, rgba(137, 179, 72, 0.03) 0%, transparent 70%);
+  pointer-events: none;
 }
 
 .results-header h2 {
-  color: var(--primary-green);
-  margin-bottom: var(--spacing-sm);
+  color: #89B348;
+  margin-bottom: 0.5rem;
+  font-size: 1.8rem;
+  font-weight: 700;
+  position: relative;
+  z-index: 1;
 }
 
 .results-header p {
-  color: var(--text-secondary);
-  font-size: 1.1rem;
+  color: #6b7280;
+  font-size: 1rem;
+  line-height: 1.6;
+  position: relative;
+  z-index: 1;
 }
 
 .score-card {
-  padding: var(--spacing-2xl);
+  padding: 2rem;
   display: flex;
   align-items: center;
-  gap: var(--spacing-2xl);
-  background: linear-gradient(135deg, var(--background-light) 0%, var(--background-primary) 100%);
-  border-bottom: 1px solid var(--border-color);
+  gap: 2rem;
+  background: linear-gradient(135deg, #f8fffe 0%, #ffffff 50%, #f0f9ff 100%);
+  border-bottom: 1px solid rgba(229, 231, 235, 0.3);
 }
 
 .score-visual {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--spacing-md);
+  gap: 1rem;
 }
 
 .score-circle {
   width: 120px;
   height: 120px;
-  border: 6px solid var(--primary-green);
+  border: 6px solid;
   border-radius: 50%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: var(--background-primary);
-  box-shadow: var(--shadow-md);
+  background: white;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
   position: relative;
 }
 
 .score-number {
   font-size: 2.5rem;
   font-weight: 700;
-  color: var(--primary-green);
   line-height: 1;
 }
 
 .score-total {
   font-size: 1rem;
-  color: var(--text-light);
+  color: #6b7280;
   font-weight: 500;
+}
+
+.score-percentage {
+  font-size: 1.25rem;
+  font-weight: 600;
 }
 
 .score-icon {
@@ -75,92 +100,128 @@
 }
 
 .recommendation-title {
-  color: var(--primary-green);
   font-size: 1.5rem;
   font-weight: 600;
-  margin-bottom: var(--spacing-md);
+  margin-bottom: 1rem;
 }
 
 .recommendation-text {
-  color: var(--text-secondary);
+  color: #4a5568;
   font-size: 1.1rem;
   line-height: 1.7;
 }
 
 .next-steps {
-  padding: var(--spacing-2xl);
-  border-bottom: 1px solid var(--border-color);
+  padding: 2rem;
+  border-bottom: 1px solid rgba(229, 231, 235, 0.3);
 }
 
 .next-steps h3 {
-  color: var(--primary-green);
-  margin-bottom: var(--spacing-xl);
+  color: #89B348;
+  margin-bottom: 1.5rem;
   text-align: center;
+  font-size: 1.5rem;
+  font-weight: 600;
 }
 
-.steps-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: var(--spacing-lg);
+.steps-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
-.step-card {
-  background: var(--background-secondary);
-  padding: var(--spacing-xl);
-  border-radius: var(--radius-lg);
-  text-align: center;
+.step-item {
+  background: #f8fafc;
+  padding: 1rem 1.5rem;
+  border-radius: 10px;
+  border-left: 4px solid #89B348;
   transition: all 0.2s ease;
-  border: 2px solid transparent;
 }
 
-.step-card:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
-  border-color: var(--primary-green);
+.step-item:hover {
+  background: #f1f5f9;
+  transform: translateX(4px);
 }
 
-.step-icon {
-  font-size: 2.5rem;
-  margin-bottom: var(--spacing-md);
-}
-
-.step-card h4 {
-  color: var(--primary-green);
-  margin-bottom: var(--spacing-sm);
-  font-size: 1.125rem;
-}
-
-.step-card p {
-  color: var(--text-secondary);
-  font-size: 0.95rem;
+.step-text {
+  color: #374151;
+  font-size: 1rem;
   line-height: 1.6;
 }
 
-.email-confirmation {
-  padding: var(--spacing-2xl);
+.contact-status {
+  padding: 2rem;
+  border-bottom: 1px solid rgba(229, 231, 235, 0.3);
+}
+
+.contact-status h3 {
+  color: #89B348;
+  margin-bottom: 1.5rem;
   text-align: center;
-  background: linear-gradient(135deg, var(--gradient-g) 0%, var(--primary-green) 100%);
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.contact-confirmation,
+.no-contact {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  background: #f8fafc;
+  padding: 1.5rem;
+  border-radius: 12px;
+  border-left: 4px solid #10B981;
+}
+
+.no-contact {
+  border-left-color: #6b7280;
+}
+
+.contact-icon {
+  font-size: 2rem;
+  flex-shrink: 0;
+}
+
+.contact-confirmation h4,
+.no-contact h4 {
+  color: #1f2937;
+  margin-bottom: 0.5rem;
+  font-size: 1.125rem;
+}
+
+.contact-confirmation p,
+.no-contact p {
+  color: #4a5568;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.email-confirmation {
+  padding: 2rem;
+  text-align: center;
+  background: linear-gradient(135deg, #89B348 0%, #7da63f 100%);
   color: white;
 }
 
 .confirmation-icon {
   font-size: 3rem;
-  margin-bottom: var(--spacing-lg);
+  margin-bottom: 1rem;
 }
 
 .email-confirmation h3 {
   color: white;
-  margin-bottom: var(--spacing-lg);
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
 }
 
 .email-confirmation p {
   color: rgba(255, 255, 255, 0.95);
-  font-size: 1.1rem;
+  font-size: 1rem;
   line-height: 1.7;
-  margin-bottom: var(--spacing-md);
+  margin-bottom: 1rem;
 }
 
-.email-confirmation p:last-child {
+.email-confirmation p:last-of-type {
   margin-bottom: 0;
 }
 
@@ -170,7 +231,7 @@
 }
 
 .email-note {
-  font-size: 0.95rem !important;
+  font-size: 0.9rem !important;
   opacity: 0.9;
 }
 
@@ -178,7 +239,7 @@
   .score-card {
     flex-direction: column;
     text-align: center;
-    gap: var(--spacing-xl);
+    gap: 1.5rem;
   }
   
   .score-circle {
@@ -190,13 +251,16 @@
     font-size: 2rem;
   }
   
-  .steps-grid {
-    grid-template-columns: 1fr;
-  }
-  
   .results-header,
   .next-steps,
+  .contact-status,
   .email-confirmation {
-    padding: var(--spacing-xl);
+    padding: 1.5rem;
+  }
+  
+  .contact-confirmation,
+  .no-contact {
+    flex-direction: column;
+    text-align: center;
   }
 }

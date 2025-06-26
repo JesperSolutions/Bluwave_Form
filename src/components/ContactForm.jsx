@@ -9,20 +9,21 @@ const ContactForm = ({ onSubmit }) => {
     countryCode: '+45',
     phone: '',
     industry: '',
-    employees: ''
+    employees: '',
+    contactPreference: ''
   })
 
   const [errors, setErrors] = useState({})
 
   const countryCodes = [
-    { code: '+45', country: 'DK', flag: '🇩🇰' },
-    { code: '+46', country: 'SE', flag: '🇸🇪' },
-    { code: '+47', country: 'NO', flag: '🇳🇴' },
-    { code: '+49', country: 'DE', flag: '🇩🇪' },
-    { code: '+44', country: 'UK', flag: '🇬🇧' },
-    { code: '+31', country: 'NL', flag: '🇳🇱' },
-    { code: '+33', country: 'FR', flag: '🇫🇷' },
-    { code: '+1', country: 'US', flag: '🇺🇸' },
+    { code: '+45', country: 'DK', flag: '🇩🇰', name: 'Danmark' },
+    { code: '+46', country: 'SE', flag: '🇸🇪', name: 'Sverige' },
+    { code: '+47', country: 'NO', flag: '🇳🇴', name: 'Norge' },
+    { code: '+49', country: 'DE', flag: '🇩🇪', name: 'Tyskland' },
+    { code: '+44', country: 'UK', flag: '🇬🇧', name: 'Storbritannien' },
+    { code: '+31', country: 'NL', flag: '🇳🇱', name: 'Holland' },
+    { code: '+33', country: 'FR', flag: '🇫🇷', name: 'Frankrig' },
+    { code: '+1', country: 'US', flag: '🇺🇸', name: 'USA' },
   ]
 
   const handleChange = (e) => {
@@ -49,6 +50,7 @@ const ContactForm = ({ onSubmit }) => {
     if (!formData.email.trim()) newErrors.email = 'E-mail er påkrævet'
     if (!formData.industry.trim()) newErrors.industry = 'Branche er påkrævet'
     if (!formData.employees.trim()) newErrors.employees = 'Antal medarbejdere er påkrævet'
+    if (!formData.contactPreference.trim()) newErrors.contactPreference = 'Kontakt præference er påkrævet'
     
     // Email validation
     if (formData.email && !/\S+@\S+\.\S+/.test(formData.email)) {
@@ -233,6 +235,29 @@ const ContactForm = ({ onSubmit }) => {
               <option value="250+">250+ medarbejdere</option>
             </select>
             {errors.employees && <span className="error-message">{errors.employees}</span>}
+          </div>
+        </div>
+
+        <div className="form-row">
+          <div className="form-group full-width">
+            <label htmlFor="contactPreference">
+              <svg className="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.89 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" fill="currentColor"/>
+              </svg>
+              Kontakt præference *
+            </label>
+            <select
+              id="contactPreference"
+              name="contactPreference"
+              value={formData.contactPreference}
+              onChange={handleChange}
+              className={errors.contactPreference ? 'error' : ''}
+            >
+              <option value="">Vælg kontakt præference</option>
+              <option value="yes">Ja, I må gerne kontakte mig med rådgivning og tilbud</option>
+              <option value="no">Nej, jeg ønsker kun at modtage resultatet</option>
+            </select>
+            {errors.contactPreference && <span className="error-message">{errors.contactPreference}</span>}
           </div>
         </div>
 
