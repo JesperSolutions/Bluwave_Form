@@ -3,13 +3,170 @@ import emailjs from '@emailjs/browser'
 // EmailJS configuration - Production Ready
 const EMAILJS_CONFIG = {
   serviceId: 'service_d40uip4', // Your provided service ID
-  templateId: 'template_esg_assessment', // Template ID to create in EmailJS dashboard
+  templateId: 'template_festival_feedback', // New template ID for festival feedback
   publicKey: 'BCoUz6Ty8c0oza6pZ' // Your provided public key
 }
 
 // Initialize EmailJS
 emailjs.init(EMAILJS_CONFIG.publicKey)
 
+export const submitFestivalFeedback = async (data) => {
+  const { contact, assessment, score, recommendations, submissionId, timestamp } = data
+
+  // Format responses for email
+  const formatResponses = () => {
+    const questionLabels = {
+      music_preference: 'Musik præference',
+      crowd_size: 'Festival størrelse',
+      atmosphere: 'Atmosfære',
+      budget: 'Budget',
+      duration: 'Varighed',
+      accommodation: 'Overnatning',
+      activities: 'Aktiviteter',
+      food_preference: 'Mad præferencer',
+      travel_distance: 'Rejse afstand',
+      contact_preference: 'Kontakt præference',
+      comments: 'Kommentarer'
+    }
+
+    return Object.entries(assessment)
+      .filter(([key, value]) => value && value !== '')
+      .map(([key, value]) => {
+        const label = questionLabels[key] || key
+        const displayValue = Array.isArray(value) ? value.join(', ') : value
+        return `${label}: ${displayValue}`
+      })
+      .join('\n')
+  }
+
+  // Format recommendations for email
+  const formatRecommendations = () => {
+    return recommendations.map((festival, index) => 
+      `${index + 1}. ${festival.name} (${festival.location}) - ${festival.match}% match\n   ${festival.reason}`
+    ).join('\n\n')
+  }
+
+  // Get industry display name
+  const industryMap = {
+    'byggeri': 'Byggeri og anlæg',
+    'energi': 'Energi og forsyning',
+    'finans': 'Finans og forsikring',
+    'handel': 'Handel og detailhandel',
+    'industri': 'Industri og produktion',
+    'it': 'IT og teknologi',
+    'konsulent': 'Konsulent og rådgivning',
+    'landbrug': 'Landbrug og fødevarer',
+    'logistik': 'Logistik og transport',
+    'sundhed': 'Sundhed og social',
+    'turisme': 'Turisme og oplevelser',
+    'anden': 'Anden branche'
+  }
+
+  const employeeMap = {
+    '1-9': '1-9 medarbejdere',
+    '10-49': '10-49 medarbejdere',
+    '50-249': '50-249 medarbejdere',
+    '250+': '250+ medarbejdere'
+  }
+
+  // Prepare comprehensive email data
+  const emailData = {
+    // Recipient information
+    to_email: contact.email,
+    to_name: contact.contactPerson,
+    
+    // Company information
+    company_name: contact.companyName,
+    contact_person: contact.contactPerson,
+    email: contact.email,
+    phone: contact.phone || 'Ikke angivet',
+    industry: industryMap[contact.industry] || contact.industry || 'Ikke angivet',
+    employees: employeeMap[contact.employees] || contact.employees || 'Ikke angivet',
+    
+    // Festival assessment results
+    compatibility_score: score,
+    score_description: getScoreDescription(score),
+    festival_recommendations: formatRecommendations(),
+    
+    // Detailed responses
+    detailed_responses: formatResponses(),
+    
+    // Metadata
+    submission_id: submissionId,
+    submission_date: new Date().toLocaleDateString('da-DK', {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    }),
+    submission_timestamp: timestamp,
+    
+    // Contact preferences
+    contact_preference: assessment.contact_preference,
+    user_comments: assessment.comments || 'Ingen kommentarer',
+    
+    // Visual elements for email
+    score_color: getScoreColor(score),
+    score_emoji: getScoreEmoji(score),
+    
+    // GDPR compliance
+    gdpr_consent: 'Bruger har givet samtykke til databehandling via formularen',
+    data_retention: 'Data opbevares i 2 år eller indtil brugeren trækker samtykke tilbage'
+  }
+
+  try {
+    // Send email via EmailJS
+    console.log('📤 Sending festival feedback email...')
+    
+    const response = await emailjs.send(
+      EMAILJS_CONFIG.serviceId,
+      EMAILJS_CONFIG.templateId,
+      emailData
+    )
+    
+    console.log('✅ Festival feedback email sent successfully:', response)
+    return response
+    
+  } catch (error) {
+    console.error('❌ Festival feedback email sending failed:', error)
+    
+    // Provide more specific error messages
+    if (error.status === 400) {
+      throw new Error('Template ikke fundet. Kontakt venligst support.')
+    } else if (error.status === 401) {
+      throw new Error('Email service ikke autoriseret. Prøv igen senere.')
+    } else if (error.status === 402) {
+      throw new Error('Email service limit nået. Prøv igen senere.')
+    } else if (error.text && error.text.includes('template')) {
+      throw new Error('Email template ikke konfigureret korrekt. Kontakt support.')
+    } else {
+      throw new Error('Kunne ikke sende email. Tjek din internetforbindelse og prøv igen.')
+    }
+  }
+}
+
+// Helper functions
+function getScoreDescription(score) {
+  if (score >= 80) return 'Fantastisk match! Du har meget klare præferencer som matcher specifikke festivaler perfekt.'
+  if (score >= 60) return 'God kompatibilitet. Der er flere festivaler der passer godt til dine ønsker.'
+  return 'Mange muligheder at udforske. Du er åben for forskellige festival oplevelser.'
+}
+
+function getScoreColor(score) {
+  if (score >= 80) return '#10B981'
+  if (score >= 60) return '#F59E0B'
+  return '#EF4444'
+}
+
+function getScoreEmoji(score) {
+  if (score >= 80) return '🎉'
+  if (score >= 60) return '🎵'
+  return '🎪'
+}
+
+// Keep the original ESG function for backward compatibility
 export const submitAssessment = async (data) => {
   const { contact, assessment, score, recommendation } = data
 
@@ -36,29 +193,6 @@ export const submitAssessment = async (data) => {
     const answer = assessment[`q${i}`]
     const answerText = answer === 'ja' ? '✅ Ja' : answer === 'nej' ? '❌ Nej' : '❓ Ved ikke'
     formattedResponses += `${i}. ${questions[i-1]}\n   Svar: ${answerText}\n\n`
-  }
-
-  // Get industry display name
-  const industryMap = {
-    'byggeri': 'Byggeri og anlæg',
-    'energi': 'Energi og forsyning',
-    'finans': 'Finans og forsikring',
-    'handel': 'Handel og detailhandel',
-    'industri': 'Industri og produktion',
-    'it': 'IT og teknologi',
-    'konsulent': 'Konsulent og rådgivning',
-    'landbrug': 'Landbrug og fødevarer',
-    'logistik': 'Logistik og transport',
-    'sundhed': 'Sundhed og social',
-    'turisme': 'Turisme og oplevelser',
-    'anden': 'Anden branche'
-  }
-
-  const employeeMap = {
-    '1-9': '1-9 medarbejdere',
-    '10-49': '10-49 medarbejdere',
-    '50-249': '50-249 medarbejdere',
-    '250+': '250+ medarbejdere'
   }
 
   // Prepare comprehensive email data

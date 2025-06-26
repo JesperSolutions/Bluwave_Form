@@ -1,11 +1,11 @@
 import React from 'react'
-import ESGAssessment from './components/ESGAssessment'
+import FestivalAssessment from './components/FestivalAssessment'
 import './App.css'
 
 function App() {
   return (
     <div className="app">
-      <ESGAssessment />
+      <FestivalAssessment />
     </div>
   )
 }
