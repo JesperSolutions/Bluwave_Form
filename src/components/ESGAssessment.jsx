@@ -80,10 +80,12 @@ const ESGAssessment = () => {
     <div className="esg-assessment">
       {currentStep === 'landing' && (
         <div className="landing-page">
-          {/* Leaf Icon */}
-          <div className="leaf-icon">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M17 8C8 10 5.9 16.17 3.82 21.34L5.71 22L6.66 19.7C7.14 19.87 7.64 20 8.1 20C11.5 20 14.2 16.5 14.2 12.1V12C14.2 10.7 14.7 9.5 15.5 8.5L17 8Z" fill="#89B348"/>
+          {/* Logo at the top */}
+          <div className="top-logo">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 2L13.09 8.26L20 9L13.09 9.74L12 16L10.91 9.74L4 9L10.91 8.26L12 2Z" fill="#89B348"/>
+              <path d="M19 15L19.5 17.5L22 18L19.5 18.5L19 21L18.5 18.5L16 18L18.5 17.5L19 15Z" fill="#89B348"/>
+              <path d="M5 6L5.5 8.5L8 9L5.5 9.5L5 12L4.5 9.5L2 9L4.5 8.5L5 6Z" fill="#89B348"/>
             </svg>
           </div>
 
@@ -132,11 +134,6 @@ const ESGAssessment = () => {
               <div className="trust-logo">LOGO</div>
               <div className="trust-logo">LOGO</div>
             </div>
-            <div className="trust-leaf">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M17 8C8 10 5.9 16.17 3.82 21.34L5.71 22L6.66 19.7C7.14 19.87 7.64 20 8.1 20C11.5 20 14.2 16.5 14.2 12.1V12C14.2 10.7 14.7 9.5 15.5 8.5L17 8Z" fill="#89B348"/>
-              </svg>
-            </div>
           </div>
         </div>
       )}
@@ -150,7 +147,7 @@ const ESGAssessment = () => {
             <div className="form-title">
               <div className="title-leaf">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M17 8C8 10 5.9 16.17 3.82 21.34L5.71 22L6.66 19.7C7.14 19.87 7.64 20 8.1 20C11.5 20 14.2 16.5 14.2 12.1V12C14.2 10.7 14.7 9.5 15.5 8.5L17 8Z" fill="#89B348"/>
+                  <path d="M12 2L13.09 8.26L20 9L13.09 9.74L12 16L10.91 9.74L4 9L10.91 8.26L12 2Z" fill="#89B348"/>
                 </svg>
               </div>
               <span>ESG Selvtest</span>
@@ -169,7 +166,7 @@ const ESGAssessment = () => {
             <div className="form-title">
               <div className="title-leaf">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M17 8C8 10 5.9 16.17 3.82 21.34L5.71 22L6.66 19.7C7.14 19.87 7.64 20 8.1 20C11.5 20 14.2 16.5 14.2 12.1V12C14.2 10.7 14.7 9.5 15.5 8.5L17 8Z" fill="#89B348"/>
+                  <path d="M12 2L13.09 8.26L20 9L13.09 9.74L12 16L10.91 9.74L4 9L10.91 8.26L12 2Z" fill="#89B348"/>
                 </svg>
               </div>
               <span>ESG Selvtest</span>
