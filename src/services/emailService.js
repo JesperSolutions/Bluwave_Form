@@ -4,13 +4,11 @@ import emailjs from '@emailjs/browser'
 const EMAILJS_CONFIG = {
   serviceId: 'service_d40uip4', // Your provided service ID
   templateId: 'template_esg_assessment', // You'll need to create this template in EmailJS
-  publicKey: 'YOUR_PUBLIC_KEY' // Replace with your actual public key from EmailJS
+  publicKey: 'BCoUz6Ty8c0oza6pZ' // Your provided public key
 }
 
-// Initialize EmailJS when public key is provided
-if (EMAILJS_CONFIG.publicKey !== 'YOUR_PUBLIC_KEY') {
-  emailjs.init(EMAILJS_CONFIG.publicKey)
-}
+// Initialize EmailJS
+emailjs.init(EMAILJS_CONFIG.publicKey)
 
 export const submitAssessment = async (data) => {
   const { contact, assessment, score, recommendation } = data
@@ -101,33 +99,15 @@ export const submitAssessment = async (data) => {
     
     // Additional context for email template
     next_steps: getNextStepsText(recommendation.level),
-    score_interpretation: getScoreInterpretation(score)
+    score_interpretation: getScoreInterpretation(score),
+    
+    // Visual elements for email
+    score_color: getScoreColor(recommendation.level),
+    score_emoji: getScoreEmoji(recommendation.level)
   }
 
   try {
-    // Check if EmailJS is properly configured
-    if (EMAILJS_CONFIG.publicKey === 'YOUR_PUBLIC_KEY') {
-      console.warn('⚠️ EmailJS not configured with real public key. Simulating email send...')
-      
-      // Enhanced simulation with realistic delay
-      await new Promise(resolve => setTimeout(resolve, 2000 + Math.random() * 1000))
-      
-      console.log('📧 Email would be sent with the following data:')
-      console.log('📊 Assessment Results:', {
-        company: emailData.company_name,
-        score: `${emailData.total_score}/${emailData.max_score}`,
-        level: emailData.recommendation_level,
-        email: emailData.to_email
-      })
-      
-      return { 
-        status: 'success', 
-        message: 'Email simulation completed successfully',
-        messageId: `sim_${Date.now()}`
-      }
-    }
-
-    // Send actual email via EmailJS
+    // Send email via EmailJS
     console.log('📤 Sending ESG assessment email...')
     
     const response = await emailjs.send(
@@ -160,26 +140,26 @@ function getNextStepsText(level) {
   switch (level) {
     case 'beginner':
       return `
-1. 📋 Få overblik over ESG-faktorer relevante for jeres branche
-2. 🎯 Sæt ét konkret mål at starte med
-3. 📚 Uddann jer selv og teamet i ESG-grundlæggende
-4. 💬 Start dialogen om bæredygtighed internt
+• 📋 Få overblik over ESG-faktorer relevante for jeres branche
+• 🎯 Sæt ét konkret mål at starte med
+• 📚 Uddann jer selv og teamet i ESG-grundlæggende
+• 💬 Start dialogen om bæredygtighed internt
       `.trim()
     
     case 'intermediate':
       return `
-1. 📊 Implementer systemer til dataindsamling og dokumentation
-2. 📋 Forbered jer på øgede rapporteringskrav
-3. 💬 Kommuniker aktivt om jeres ESG-indsats
-4. 🔄 Strukturer og systematiser jeres arbejde
+• 📊 Implementer systemer til dataindsamling og dokumentation
+• 📋 Forbered jer på øgede rapporteringskrav
+• 💬 Kommuniker aktivt om jeres ESG-indsats
+• 🔄 Strukturer og systematiser jeres arbejde
       `.trim()
     
     case 'advanced':
       return `
-1. 🚀 Optimer og effektivisér jeres ESG-processer
-2. 💼 Integrer ESG strategisk i forretningsmodellen
-3. 🏆 Bliv frontløber og del jeres erfaringer
-4. 📈 Brug ESG som konkurrencefordel
+• 🚀 Optimer og effektivisér jeres ESG-processer
+• 💼 Integrer ESG strategisk i forretningsmodellen
+• 🏆 Bliv frontløber og del jeres erfaringer
+• 📈 Brug ESG som konkurrencefordel
       `.trim()
     
     default:
@@ -195,5 +175,25 @@ function getScoreInterpretation(score) {
     return 'I har allerede fat i mange af de rigtige ting. Nu handler det om at strukturere og dokumentere jeres arbejde.'
   } else {
     return 'I er godt på vej og foran mange andre SMV\'er. I kan nu fokusere på at optimere og bruge ESG strategisk.'
+  }
+}
+
+// Helper function to get score color for email styling
+function getScoreColor(level) {
+  switch (level) {
+    case 'beginner': return '#f59e0b'
+    case 'intermediate': return '#10b981'
+    case 'advanced': return '#059669'
+    default: return '#10b981'
+  }
+}
+
+// Helper function to get score emoji
+function getScoreEmoji(level) {
+  switch (level) {
+    case 'beginner': return '🌱'
+    case 'intermediate': return '🌿'
+    case 'advanced': return '🌳'
+    default: return '🌿'
   }
 }
