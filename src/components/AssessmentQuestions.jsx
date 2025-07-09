@@ -25,9 +25,9 @@ const AssessmentQuestions = ({ onSubmit, isSubmitting, error }) => {
     {
       title: 'Del 3: Er ESG en del af jeres strategi og forretning?',
       questions: [
-        'Er ESG en del af jeres strategi og værdigrundlag – eller blot noget, I "skal" gøre?',
+        'Indgår ESG som en aktiv del af jeres strategi og værdigrundlag?',
         'Har jeres vigtigste kunder eller samarbejdspartnere spurgt ind til jeres ESG-indsats?',
-        'Har I oplevet, at ESG-krav er blevet en konkurrenceparameter (f.eks. i udbud, partnerskaber eller investeringer)?'
+        'Oplever I, at krav til bæredygtighed og ESG i stigende grad er et konkurrenceparameter (f.eks. i udbud, kundekrav, rekruttering og adgang til kapital)?'
       ]
     },
     {
@@ -36,7 +36,7 @@ const AssessmentQuestions = ({ onSubmit, isSubmitting, error }) => {
         'Ville I kunne dokumentere jeres ESG-arbejde, hvis I blev spurgt i morgen?',
         'Er I klar over, at krav til ESG-rapportering allerede gælder store virksomheder – og at de krav nu bevæger sig ud i leverandørkæden?',
         'Har I overblik over de risici, der kan ramme jeres forretning, hvis I ikke arbejder systematisk med ESG (f.eks. mistet forretning, skadet omdømme, medarbejderflugt eller højere finansieringsomkostninger)?',
-        'Ville det styrke jeres brand, rekruttering og relationer, hvis I kunne vise ansvar og resultater på ESG?'
+        'Ville det styrke jeres konkurrenceevne, rekruttering og relationer, hvis I kunne vise ansvar og resultater på ESG?'
       ]
     }
   ]
@@ -133,6 +133,12 @@ const AssessmentQuestions = ({ onSubmit, isSubmitting, error }) => {
             )
           })}
         </div>
+
+        {currentSection === sections.length - 1 && (
+          <p className="completion-hint">
+            Du er nået til sidste spørgsmål – klik på knappen nedenfor for at få dit resultat.
+          </p>
+        )}
 
         {error && (
           <div className="error-message">
