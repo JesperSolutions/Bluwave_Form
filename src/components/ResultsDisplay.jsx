@@ -3,6 +3,7 @@ import './ResultsDisplay.css'
 
 const ResultsDisplay = ({ results, contactData }) => {
   const { score, recommendation } = results
+  const MAX_SCORE = 21
 
   const getScoreColor = (level) => {
     switch (level) {
@@ -23,10 +24,9 @@ const ResultsDisplay = ({ results, contactData }) => {
   }
 
   const getScorePercentage = (score) => {
-    const percentage = Math.round((score / 17) * 100)
+    const percentage = Math.round((score / MAX_SCORE) * 100)
     return Math.min(percentage, 100)
   }
-
 
   return (
     <div className="results-display">
@@ -67,13 +67,13 @@ const ResultsDisplay = ({ results, contactData }) => {
               className="score-circle"
               style={{
                 '--score-color': getScoreColor(recommendation.level),
-                '--score-percentage': `${(score / 17) * 100}%`
+                '--score-percentage': `${getScorePercentage(score)}%`
               }}
             >
               <div className="score-progress"></div>
               <div className="score-content">
                 <span className="score-number">{score}</span>
-                <span className="score-total">/ 17</span>
+                <span className="score-total">/ {MAX_SCORE}</span>
               </div>
             </div>
 
@@ -94,7 +94,7 @@ const ResultsDisplay = ({ results, contactData }) => {
             <div className="score-breakdown">
               <div className="breakdown-item">
                 <span className="breakdown-label">Jeres score</span>
-                <span className="breakdown-value">{score} ud af 17 point</span>
+                <span className="breakdown-value">{score} ud af {MAX_SCORE} point</span>
               </div>
               <div className="breakdown-item">
                 <span className="breakdown-label">ESG-niveau</span>
