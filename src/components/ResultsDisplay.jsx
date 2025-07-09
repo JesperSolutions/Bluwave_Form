@@ -23,8 +23,10 @@ const ResultsDisplay = ({ results, contactData }) => {
   }
 
   const getScorePercentage = (score) => {
-    return Math.round((score / 17) * 100)
+    const percentage = Math.round((score / 17) * 100)
+    return Math.min(percentage, 100)
   }
+
 
   return (
     <div className="results-display">
