@@ -11,7 +11,7 @@ const EMAILJS_CONFIG = {
 emailjs.init(EMAILJS_CONFIG.publicKey)
 
 export const submitAssessment = async (data) => {
-  const { contact, assessment, score, recommendation } = data
+  const { contact, assessment, score, sectionScores, recommendation } = data
 
   // Format responses for email with Danish question text
   const questions = [
@@ -55,7 +55,8 @@ export const submitAssessment = async (data) => {
   }
 
   const employeeMap = {
-    '1-9': '1-9 medarbejdere',
+    '1-3': '1-3 medarbejdere',
+    '4-9': '4-9 medarbejdere',
     '10-49': '10-49 medarbejdere',
     '50-249': '50-249 medarbejdere',
     '250+': '250+ medarbejdere'
@@ -81,8 +82,8 @@ export const submitAssessment = async (data) => {
     
     // Assessment results
     total_score: score,
-    max_score: 13,
-    score_percentage: Math.round((score / 13) * 100),
+    max_score: 17,
+    score_percentage: Math.round((score / 17) * 100),
     recommendation_title: recommendation.title,
     recommendation_text: recommendation.text,
     recommendation_level: recommendation.level,
@@ -130,8 +131,8 @@ export const submitAssessment = async (data) => {
     
     // Assessment results
     total_score: score,
-    max_score: 13,
-    score_percentage: Math.round((score / 13) * 100),
+    max_score: 17,
+    score_percentage: Math.round((score / 17) * 100),
     recommendation_title: recommendation.title,
     recommendation_text: recommendation.text,
     recommendation_level: recommendation.level,

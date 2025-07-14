@@ -67,10 +67,10 @@
                         <div style="font-size: 14px; color: #4a5568; line-height: 1.6;">
                             {{#if (eq may_contact 'JA')}}
                             En af vores ESG-eksperter vil kontakte jer på {{email}} inden for 2 arbejdsdage med personlige anbefalinger.
-                            {{else}}
+                        En af vores ESG-eksperter vil kontakte jer inden for 2 arbejdsdage med personlige anbefalinger.
                             I har valgt kun at modtage resultatet. I kan altid kontakte os på esg@bluwave.dk hvis I senere ønsker rådgivning.
                             {{/if}}
-                        </div>
+                        {{#if (eq may_contact 'JA')}}Vi kontakter jer snart!{{else}}Kun resultat ønsket{{/if}}
                     </div>
                 </div>
             </div>
@@ -96,9 +96,12 @@
             <p style="font-size: 14px; line-height: 1.6; margin: 0 0 10px 0; color: rgba(255, 255, 255, 0.95);">Vi håber denne analyse giver jer værdifuld indsigt i jeres ESG-rejse.</p>
             <p style="font-size: 14px; line-height: 1.6; margin: 0 0 20px 0; color: rgba(255, 255, 255, 0.95);">Har I spørgsmål eller brug for hjælp til at komme videre, er I altid velkomne til at kontakte os.</p>
             <p style="font-size: 12px; opacity: 0.9; margin: 0; color: rgba(255, 255, 255, 0.9);">
+        <p style="font-size: 12px; opacity: 0.8; margin: 20px 0; color: rgba(255, 255, 255, 0.8); font-style: italic;">
+            Tænk på miljøet – print kun denne rapport, hvis det er nødvendigt.
+        </p>
                 Sendt {{submission_date}}<br>
                 ESG Selvtest - Bluwave
-            </p>
+            <strong>Reporting Progress – Power Your Business</strong>
         </div>
     </div>
     
