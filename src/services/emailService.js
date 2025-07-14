@@ -18,19 +18,19 @@ const EMAILJS_CONFIG = {
 emailjs.init(EMAILJS_CONFIG.publicKey)
 
 /**
- * Submit ESG assessment - sends lead notification to Bluwave only
- * Customer gets results on screen and can download/email themselves
+ * Submit ESG assessment - sends lead notification to Bluwave
+ * Only sends email if customer agreed to be contacted
  */
 export const submitAssessment = async (data) => {
   const { contact, assessment, score, sectionScores, recommendation } = data
 
-  // Only send if customer agreed to be contacted
+  // Only send lead notification if customer agreed to be contacted
   if (contact.contactPreference !== 'yes') {
-    console.log('📧 Customer opted out of contact - no email sent')
+    console.log('📧 Customer opted out of contact - no lead notification sent')
     return { success: true, emailSent: false }
   }
 
-  // Danish question texts for lead notification
+  // Question texts for detailed responses
   const questions = [
     'Har I i ledelsen en fælles forståelse af, hvad ESG betyder for jeres virksomhed?',
     'Har I formuleret en holdning til klima, socialt ansvar og governance?',
@@ -79,30 +79,25 @@ export const submitAssessment = async (data) => {
     '250+': '250+ medarbejdere'
   }
 
-  // Lead notification email to Bluwave
-  const leadNotificationData = {
-    // This goes to ja@bluwave.dk (configured in EmailJS)
-    company_name: `🚨 NYT LEAD: ${contact.companyName}`,
+  // Prepare email data for Bluwave lead notification
+  const emailData = {
+    to_email: 'ja@bluwave.dk',
+    to_name: 'Jesper',
+    company_name: contact.companyName,
     contact_person: contact.contactPerson,
     email: contact.email,
     phone: contact.phone || 'Ikke angivet',
     industry: industryMap[contact.industry] || contact.industry || 'Ikke angivet',
     employees: employeeMap[contact.employees] || contact.employees || 'Ikke angivet',
-    
-    // Highlight contact preference
-    contact_preference: '🟢 JA - ØNSKER KONTAKT',
-    
-    // Assessment results
+    contact_preference: 'Ja, ønsker kontakt',
+    may_contact: 'JA',
     total_score: score,
     max_score: 17,
     score_percentage: Math.round((score / 17) * 100),
     recommendation_title: recommendation.title,
     recommendation_text: recommendation.text,
-    
-    // Detailed responses for lead qualification
+    recommendation_level: recommendation.level,
     detailed_responses: formattedResponses,
-    
-    // Metadata
     submission_date: new Date().toLocaleDateString('da-DK', {
       weekday: 'long',
       year: 'numeric', 
@@ -111,31 +106,28 @@ export const submitAssessment = async (data) => {
       hour: '2-digit',
       minute: '2-digit'
     }),
-    
-    // Next steps for lead follow-up
+    submission_timestamp: new Date().toISOString(),
     next_steps: getNextStepsText(recommendation.level),
-    
-    // Visual elements
+    score_interpretation: getScoreInterpretation(score),
     score_color: getScoreColor(recommendation.level),
     score_emoji: getScoreEmoji(recommendation.level)
   }
 
   try {
-    console.log('📤 Sending lead notification to Bluwave...')
+    console.log('📤 Sending lead notification to Bluwave...', emailData)
     
     const response = await emailjs.send(
       EMAILJS_CONFIG.serviceId,
       EMAILJS_CONFIG.templateId,
-      leadNotificationData
+      emailData
     )
     
-    console.log('✅ Lead notification sent successfully:', response)
+    console.log('✅ Lead notification sent successfully to Bluwave:', response)
     return { success: true, emailSent: true, response }
     
   } catch (error) {
     console.error('❌ Lead notification failed:', error)
-    // Don't throw - user should still see results
-    return { success: true, emailSent: false, error: error.message }
+    throw new Error(`Email sending failed: ${error.message || error.text || 'Unknown error'}`)
   }
 }
 
@@ -238,5 +230,16 @@ function getScoreEmoji(level) {
     case 'intermediate': return '🌿'
     case 'advanced': return '🌳'
     default: return '🌿'
+  }
+}
+
+// Helper function for score interpretation
+function getScoreInterpretation(score) {
+  if (score <= 6) {
+    return 'I er i startfasen med ESG. Det er helt normalt, og I har gode muligheder for at komme godt i gang.'
+  } else if (score <= 12) {
+    return 'I har allerede fat i mange af de rigtige ting. Nu handler det om at strukturere og dokumentere jeres arbejde.'
+  } else {
+    return 'I er godt på vej og foran mange andre SMV\'er. I kan nu fokusere på at optimere og bruge ESG strategisk.'
   }
 }

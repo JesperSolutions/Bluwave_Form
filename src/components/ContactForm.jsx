@@ -93,7 +93,7 @@ const ContactForm = ({ onSubmit }) => {
           <div className="form-group">
             <label htmlFor="companyName">
               <svg className="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M3 21h18v-2H3v2zM5 10h4V8H5v2zm0 4h4v-2H5v2zM5 6h4V4H5v2zm6 4h8V8h-8v2zm0 4h8v-2h-8v2zm0-8h8V4h-8v2z" fill="currentColor"/>
+                <path d="M12 7V3H2v18h20V7H12zM6 19H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2zm4 12H8v-2h2v2zm0-4H8v-2h2v2zm0-4H8V9h2v2zm0-4H8V5h2v2zm10 12h-8v-2h2v-2h-2v-2h2v-2h-2V9h8v10z" fill="currentColor"/>
               </svg>
               Virksomhedsnavn *
             </label>
@@ -112,7 +112,7 @@ const ContactForm = ({ onSubmit }) => {
           <div className="form-group">
             <label htmlFor="contactPerson">
               <svg className="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" fill="currentColor"/>
+                <path d="M12 2C13.1 2 14 2.9 14 4C14 5.1 13.1 6 12 6C10.9 6 10 5.1 10 4C10 2.9 10.9 2 12 2ZM21 9V7L12 2L3 7V9H21ZM12 17.5L6.5 12H17.5L12 17.5Z" fill="currentColor"/>
               </svg>
               Kontaktperson *
             </label>
@@ -186,7 +186,7 @@ const ContactForm = ({ onSubmit }) => {
           <div className="form-group">
             <label htmlFor="industry">
               <svg className="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="currentColor"/>
+                <path d="M12 2L13.09 8.26L20 9L13.09 9.74L12 16L10.91 9.74L4 9L10.91 8.26L12 2Z" fill="currentColor"/>
               </svg>
               Branche *
             </label>
@@ -217,7 +217,7 @@ const ContactForm = ({ onSubmit }) => {
           <div className="form-group">
             <label htmlFor="employees">
               <svg className="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M16 4c0-1.11.89-2 2-2s2 .89 2 2-.89 2-2 2-2-.89-2-2zm4 18v-6h2.5l-2.54-7.63A1.5 1.5 0 0 0 18.54 8H17c-.8 0-1.54.37-2.01.99l-2.54 3.38c-.36.48-.85.63-1.37.63s-1.01-.15-1.37-.63L7.17 8.99A2.5 2.5 0 0 0 5.16 8H3.64c-.69 0-1.32.42-1.58 1.06L0 16h2.5v6h3v-6H7l1.5-4.5L10 14v8h4v-8l1.5-2.5L17 16h1.5v6h3z" fill="currentColor"/>
+                <path d="M16 4C16 2.9 16.9 2 18 2S20 2.9 20 4 19.1 6 18 6 16 5.1 16 4M6 2C7.1 2 8 2.9 8 4S7.1 6 6 6 4 5.1 4 4 4.9 2 6 2M12 2C13.1 2 14 2.9 14 4S13.1 6 12 6 10 5.1 10 4 10.9 2 12 2Z" fill="currentColor"/>
               </svg>
               Antal medarbejdere *
             </label>
@@ -244,7 +244,7 @@ const ContactForm = ({ onSubmit }) => {
           <div className="form-group full-width">
             <label htmlFor="contactPreference">
               <svg className="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.89 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" fill="currentColor"/>
+                <path d="M12 2C6.48 2 2 6.48 2 12S6.48 22 12 22 22 17.52 22 12 17.52 2 12 2M12 17L7 12H10V8H14V12H17L12 17Z" fill="currentColor"/>
               </svg>
               Kontakt præference *
             </label>
