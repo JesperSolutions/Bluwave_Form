@@ -78,21 +78,15 @@ export const submitAssessment = async (data) => {
   // Employee count mapping (Danish)
   const employeeMap = {
     '1-3': '1-3 medarbejdere',
-    '4-9': '4-9 medarbejdere',
-    '10-49': '10-49 medarbejdere',
-    '50-249': '50-249 medarbejdere',
-    '250+': '250+ medarbejdere'
   }
 
   // Prepare customer email data
   const customerEmailData = {
-    // Recipient information
     to_email: contact.email,
     to_name: contact.contactPerson,
     
     // Company information
     company_name: contact.companyName,
-    contact_person: contact.contactPerson,
     email: contact.email,
     phone: contact.phone || 'Ikke angivet',
     industry: industryMap[contact.industry] || contact.industry || 'Ikke angivet',
@@ -100,25 +94,6 @@ export const submitAssessment = async (data) => {
     
     // Contact preference
     contact_preference: contact.contactPreference === 'yes' ? 'Ja, må gerne kontaktes' : 'Nej, kun resultat ønsket',
-    
-    // Assessment results (updated max score to 17)
-    total_score: score,
-    max_score: 17,
-    score_percentage: Math.round((score / 17) * 100),
-    recommendation_title: recommendation.title,
-    recommendation_text: recommendation.text,
-    
-    // Detailed responses
-    detailed_responses: formattedResponses,
-    
-    // Metadata
-    submission_date: new Date().toLocaleDateString('da-DK', {
-      weekday: 'long',
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
     }),
     
     // Additional context for email template
@@ -127,21 +102,15 @@ export const submitAssessment = async (data) => {
     // Visual elements for email
     score_color: getScoreColor(recommendation.level),
     score_emoji: getScoreEmoji(recommendation.level)
-  }
-
-  // Prepare Bluwave notification email data
-  const notificationEmailData = {
     // Send to Bluwave
     to_email: 'ja@bluwave.dk',
     to_name: 'Jesper',
     
-    // Company information with lead indicator
     company_name: `[LEAD] ${contact.companyName}`,
     contact_person: contact.contactPerson,
     email: contact.email,
     phone: contact.phone || 'Ikke angivet',
     industry: industryMap[contact.industry] || contact.industry || 'Ikke angivet',
-    employees: employeeMap[contact.employees] || contact.employees || 'Ikke angivet',
     
     // Contact preference - highlighted for business
     contact_preference: contact.contactPreference === 'yes' ? '🟢 JA - KONTAKT ØNSKET' : '🔴 NEJ - Kun resultat',
@@ -149,25 +118,6 @@ export const submitAssessment = async (data) => {
     // Assessment results
     total_score: score,
     max_score: 17,
-    score_percentage: Math.round((score / 17) * 100),
-    recommendation_title: recommendation.title,
-    recommendation_text: recommendation.text,
-    
-    // Detailed responses
-    detailed_responses: formattedResponses,
-    
-    // Metadata
-    submission_date: new Date().toLocaleDateString('da-DK', {
-      weekday: 'long',
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
-    }),
-    
-    // Additional context
-    next_steps: getNextStepsText(recommendation.level),
     
     // Visual elements
     score_color: getScoreColor(recommendation.level),
