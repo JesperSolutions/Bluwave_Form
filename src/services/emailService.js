@@ -77,7 +77,7 @@ export const submitAssessment = async (data) => {
 
   // Employee count mapping (Danish)
   const employeeMap = {
-    '1-3': '1-3 medarbejdere',
+    '1-3': '1-3 medarbejdere'
   }
 
   // Prepare customer email data
@@ -94,7 +94,6 @@ export const submitAssessment = async (data) => {
     
     // Contact preference
     contact_preference: contact.contactPreference === 'yes' ? 'Ja, må gerne kontaktes' : 'Nej, kun resultat ønsket',
-    }),
     
     // Additional context for email template
     next_steps: getNextStepsText(recommendation.level),
@@ -102,6 +101,10 @@ export const submitAssessment = async (data) => {
     // Visual elements for email
     score_color: getScoreColor(recommendation.level),
     score_emoji: getScoreEmoji(recommendation.level)
+  }
+
+  // Prepare notification email data
+  const notificationEmailData = {
     // Send to Bluwave
     to_email: 'ja@bluwave.dk',
     to_name: 'Jesper',
