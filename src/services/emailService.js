@@ -12,7 +12,7 @@ import emailjs from '@emailjs/browser'
 
 // EmailJS configuration - Production Ready
 const EMAILJS_CONFIG = {
-  serviceId: 'service_3q3n4lr', // Bluwave EmailJS service - exact match from dashboard
+  serviceId: 'service_3q3n4lr', // Exact match from dashboard: service_3q3n4lr
   templateId: 'template_prjekf7', // ESG assessment template
   publicKey: 'IM3RvJE63x4ZIqmwg' // Public API key
 }
@@ -183,10 +183,15 @@ export const submitAssessment = async (data) => {
   }
 
   try {
-    console.log('📤 Sending emails with config:', EMAILJS_CONFIG)
+    console.log('📤 Sending emails with config:', {
+      serviceId: EMAILJS_CONFIG.serviceId,
+      templateId: EMAILJS_CONFIG.templateId,
+      publicKey: EMAILJS_CONFIG.publicKey.substring(0, 8) + '...' // Hide full key in logs
+    })
     
     // Send email to customer first
     console.log('📤 Sending ESG assessment email to customer...')
+    console.log('📤 Customer email data keys:', Object.keys(customerEmailData))
     
     const customerResponse = await emailjs.send(
       EMAILJS_CONFIG.serviceId,
@@ -198,6 +203,7 @@ export const submitAssessment = async (data) => {
 
     // Send notification email to Bluwave
     console.log('📤 Sending notification email to Bluwave...')
+    console.log('📤 Notification email data keys:', Object.keys(notificationEmailData))
     
     const notificationResponse = await emailjs.send(
       EMAILJS_CONFIG.serviceId,
@@ -214,16 +220,22 @@ export const submitAssessment = async (data) => {
     console.error('Error details:', {
       status: error.status,
       text: error.text,
-      message: error.message
+      message: error.message,
+      name: error.name,
+      stack: error.stack
     })
     
     // Provide user-friendly error messages in Danish
-    if (error.status === 400) {
+    if (error.status === 404) {
+      throw new Error('EmailJS service eller template ikke fundet. Kontakt venligst support.')
+    } else if (error.status === 400) {
       throw new Error('Template ikke fundet. Kontakt venligst support.')
     } else if (error.status === 401) {
       throw new Error('Email service ikke autoriseret. Prøv igen senere.')
     } else if (error.status === 402) {
       throw new Error('Email service limit nået. Prøv igen senere.')
+    } else if (error.text && error.text.includes('Account not found')) {
+      throw new Error('EmailJS konto ikke fundet. Kontakt venligst support.')
     } else if (error.text && error.text.includes('template')) {
       throw new Error('Email template ikke konfigureret korrekt. Kontakt support.')
     } else {
