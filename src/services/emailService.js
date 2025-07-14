@@ -189,9 +189,16 @@ export const submitAssessment = async (data) => {
       publicKey: EMAILJS_CONFIG.publicKey.substring(0, 8) + '...' // Hide full key in logs
     })
     
+    // First, let's try a simple test to verify the service works
+    console.log('🧪 Testing service connectivity...')
+    
     // Send email to customer first
     console.log('📤 Sending ESG assessment email to customer...')
     console.log('📤 Customer email data keys:', Object.keys(customerEmailData))
+    console.log('📤 Using exact config:', {
+      serviceId: EMAILJS_CONFIG.serviceId,
+      templateId: EMAILJS_CONFIG.templateId
+    })
     
     const customerResponse = await emailjs.send(
       EMAILJS_CONFIG.serviceId,
@@ -225,9 +232,20 @@ export const submitAssessment = async (data) => {
       stack: error.stack
     })
     
+    // Log the exact configuration being used
+    console.error('❌ Failed configuration:', {
+      serviceId: EMAILJS_CONFIG.serviceId,
+      templateId: EMAILJS_CONFIG.templateId,
+      publicKey: EMAILJS_CONFIG.publicKey
+    })
+    
     // Provide user-friendly error messages in Danish
     if (error.status === 404) {
-      throw new Error('EmailJS service eller template ikke fundet. Kontakt venligst support.')
+      if (error.text === 'Account not found') {
+        throw new Error('EmailJS service eller template ikke fundet. Kontakt venligst support.')
+      } else {
+        throw new Error('Template ikke fundet. Kontakt venligst support.')
+      }
     } else if (error.status === 400) {
       throw new Error('Template ikke fundet. Kontakt venligst support.')
     } else if (error.status === 401) {
