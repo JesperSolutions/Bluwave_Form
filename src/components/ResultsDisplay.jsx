@@ -225,7 +225,7 @@ const ResultsDisplay = ({ results, contactData }) => {
               </div>
               <div className="contact-feature">
                 <div className="feature-icon">✓</div>
-                <span>Skræddersyede løsninger</span>
+                <span>BluWave platform demo</span>
               </div>
               <div className="contact-feature">
                 <div className="feature-icon">✓</div>
@@ -233,30 +233,10 @@ const ResultsDisplay = ({ results, contactData }) => {
               </div>
               <div className="contact-feature">
                 <div className="feature-icon">✓</div>
-                <span>Løbende support</span>
+                <span>ESG-værktøjer og support</span>
               </div>
             </div>
           </div>
-        </div>
-      </div>
-
-      {/* BluWave CTA - Moved after contact section */}
-      <div className="bluwave-cta">
-        <div className="cta-content">
-          <h3>Vil du gøre ESG-rapportering lettere – og få reel forretningsværdi ud af det?</h3>
-          <p>Med BluWave-platformen kan I arbejde med ESG enkelt, effektivt og compliant:</p>
-          <div className="cta-features">
-            <div className="cta-feature">✅ Automatisk CO₂-beregning og klimaregnskab</div>
-            <div className="cta-feature">✅ Brugervenlig struktur til ESG-dokumentation</div>
-            <div className="cta-feature">✅ Data og indsigter til at styrke jeres forretning</div>
-          </div>
-          <p className="cta-closing">Kom i gang med ESG – med fokus på både krav og konkrete gevinster.</p>
-          <button 
-            className="demo-btn"
-            onClick={() => window.open('https://bluwave.dk', '_blank')}
-          >
-            Book en demo 👉
-          </button>
         </div>
       </div>
 
@@ -274,7 +254,9 @@ const ResultsDisplay = ({ results, contactData }) => {
           <div className="confirmation-text">
             <h3>Din detaljerede rapport er på vej</h3>
             <p>
-              Vi sender din detaljerede ESG-analyse til <strong>{contactData.email}</strong> inden for få minutter. Rapporten indeholder alle jeres svar, anbefalinger og næste skridt.
+              Vi sender din ESG-analyse til <strong>{contactData.email}</strong> inden for få minutter. Rapporten indeholder alle jeres svar, anbefalinger og næste skridt.
+              <br /><br />
+              <em>Rapporten vil også indeholde information om BluWave-platformen, som kan hjælpe jer med automatisk CO₂-beregning, ESG-dokumentation og data til at styrke jeres forretning.</em>
             </p>
             <p className="email-note">
               🌳 <strong>Tænk på miljøet</strong> – print kun denne rapport, hvis det er nødvendigt.
