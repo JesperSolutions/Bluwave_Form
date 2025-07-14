@@ -12,9 +12,9 @@ import emailjs from '@emailjs/browser'
 
 // EmailJS configuration - Production Ready
 const EMAILJS_CONFIG = {
-  serviceId: 'service_3q3n4lr', // Exact match from dashboard: service_3q3n4lr
-  templateId: 'template_prjekf7', // ESG assessment template
-  publicKey: 'IM3RvJE63x4ZIqmwg' // Public API key
+  serviceId: 'service_3q3n4lr',
+  templateId: 'template_prjekf7',
+  publicKey: 'IM3RvJE63x4ZIqmwg'
 }
 
 // Initialize EmailJS with public key
@@ -100,7 +100,6 @@ export const submitAssessment = async (data) => {
     
     // Contact preference
     contact_preference: contact.contactPreference === 'yes' ? 'Ja, må gerne kontaktes' : 'Nej, kun resultat ønsket',
-    may_contact: contact.contactPreference === 'yes' ? 'JA' : 'NEJ',
     
     // Assessment results (updated max score to 17)
     total_score: score,
@@ -108,7 +107,6 @@ export const submitAssessment = async (data) => {
     score_percentage: Math.round((score / 17) * 100),
     recommendation_title: recommendation.title,
     recommendation_text: recommendation.text,
-    recommendation_level: recommendation.level,
     
     // Detailed responses
     detailed_responses: formattedResponses,
@@ -122,11 +120,9 @@ export const submitAssessment = async (data) => {
       hour: '2-digit',
       minute: '2-digit'
     }),
-    submission_timestamp: new Date().toISOString(),
     
     // Additional context for email template
     next_steps: getNextStepsText(recommendation.level),
-    score_interpretation: getScoreInterpretation(score),
     
     // Visual elements for email
     score_color: getScoreColor(recommendation.level),
@@ -149,7 +145,6 @@ export const submitAssessment = async (data) => {
     
     // Contact preference - highlighted for business
     contact_preference: contact.contactPreference === 'yes' ? '🟢 JA - KONTAKT ØNSKET' : '🔴 NEJ - Kun resultat',
-    may_contact: contact.contactPreference === 'yes' ? 'JA' : 'NEJ',
     
     // Assessment results
     total_score: score,
@@ -157,7 +152,6 @@ export const submitAssessment = async (data) => {
     score_percentage: Math.round((score / 17) * 100),
     recommendation_title: recommendation.title,
     recommendation_text: recommendation.text,
-    recommendation_level: recommendation.level,
     
     // Detailed responses
     detailed_responses: formattedResponses,
@@ -171,11 +165,9 @@ export const submitAssessment = async (data) => {
       hour: '2-digit',
       minute: '2-digit'
     }),
-    submission_timestamp: new Date().toISOString(),
     
     // Additional context
     next_steps: getNextStepsText(recommendation.level),
-    score_interpretation: getScoreInterpretation(score),
     
     // Visual elements
     score_color: getScoreColor(recommendation.level),
