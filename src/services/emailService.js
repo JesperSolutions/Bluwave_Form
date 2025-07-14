@@ -13,7 +13,7 @@ import emailjs from '@emailjs/browser'
 // EmailJS configuration - Production Ready
 const EMAILJS_CONFIG = {
   serviceId: 'service_d40uip4', // Bluwave EmailJS service
-  templateId: 'template_pac9jom', // ESG assessment template
+  templateId: 'template_prjekf7', // ESG assessment template
   publicKey: 'BCoUz6Ty8c0oza6pZ' // Public API key
 }
 
