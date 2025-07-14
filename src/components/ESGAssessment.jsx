@@ -23,7 +23,6 @@ const ESGAssessment = () => {
   }
 
   const calculateScore = (responses) => {
-  const weights = {
     // New weighted scoring system
     const weights = {
       q3: 2,  // Identificeret væsentlige ESG-faktorer
