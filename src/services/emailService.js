@@ -9,7 +9,7 @@ import emailjs from '@emailjs/browser'
 
 // EmailJS configuration
 const EMAILJS_CONFIG = {
-  serviceId: 'service_d40uip4',
+  serviceId: 'service_3q3n4lr',
   templateId: 'template_pac9jom', 
   publicKey: 'BCoUz6Ty8c0oza6pZ'
 }
