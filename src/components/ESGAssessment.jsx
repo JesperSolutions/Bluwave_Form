@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import ContactForm from './ContactForm'
 import AssessmentQuestions from './AssessmentQuestions'
 import ResultsDisplay from './ResultsDisplay'
-import { submitAssessment } from '../services/emailService'
+import { submitAssessment, generateDownloadableResults } from '../services/emailService'
 import './ESGAssessment.css'
 
 /**
@@ -29,6 +29,7 @@ const ESGAssessment = () => {
   const [results, setResults] = useState(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState('')
+  const [downloadableData, setDownloadableData] = useState(null)
 
   /**
    * Navigate from landing page to contact form
@@ -167,12 +168,17 @@ const ESGAssessment = () => {
       }
 
       // Try to send email, but don't fail if it doesn't work
+      let emailResult = { emailSent: false }
       try {
-        await submitAssessment(submissionData)
-        console.log('✅ Assessment submitted and emails sent successfully')
+        emailResult = await submitAssessment(submissionData)
+        console.log('✅ Assessment submitted:', emailResult)
       } catch (emailError) {
-        console.error('⚠️ Email sending failed, but showing results anyway:', emailError)
+        console.error('⚠️ Lead notification failed, but showing results anyway:', emailError)
       }
+
+      // Generate downloadable data for customer
+      const downloadData = generateDownloadableResults(submissionData)
+      setDownloadableData(downloadData)
 
       // Update state and show results
       setAssessmentData(data)
@@ -286,6 +292,7 @@ const ESGAssessment = () => {
           <ResultsDisplay
             results={results}
             contactData={contactData}
+            downloadableData={downloadableData}
           />
         </div>
       )}

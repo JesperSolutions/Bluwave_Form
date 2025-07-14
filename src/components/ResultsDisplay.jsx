@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import './ResultsDisplay.css'
 
-const ResultsDisplay = ({ results, contactData }) => {
+const ResultsDisplay = ({ results, contactData, downloadableData }) => {
   const { score, sectionScores, recommendation } = results
   const MAX_SCORE = 17
   const [showDemo, setShowDemo] = useState(false)
@@ -49,6 +49,46 @@ const ResultsDisplay = ({ results, contactData }) => {
       section4: 'Få overblik over ESG-risici og forbered jer på kommende rapporteringskrav.'
     }
     return recommendations[sectionKey]
+  }
+
+  // Download results as JSON
+  const handleDownloadJSON = () => {
+    const dataStr = JSON.stringify(downloadableData, null, 2)
+    const dataBlob = new Blob([dataStr], { type: 'application/json' })
+    const url = URL.createObjectURL(dataBlob)
+    const link = document.createElement('a')
+    link.href = url
+    link.download = `ESG-Selvtest-${contactData.companyName}-${new Date().toISOString().split('T')[0]}.json`
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+    URL.revokeObjectURL(url)
+  }
+
+  // Download results as text report
+  const handleDownloadReport = () => {
+    const report = generateTextReport(downloadableData)
+    const dataBlob = new Blob([report], { type: 'text/plain;charset=utf-8' })
+    const url = URL.createObjectURL(dataBlob)
+    const link = document.createElement('a')
+    link.href = url
+    link.download = `ESG-Rapport-${contactData.companyName}-${new Date().toISOString().split('T')[0]}.txt`
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+    URL.revokeObjectURL(url)
+  }
+
+  // Generate email content for manual sending
+  const handleEmailContent = () => {
+    const emailContent = generateEmailContent(downloadableData)
+    navigator.clipboard.writeText(emailContent).then(() => {
+      alert('Email indhold kopieret til udklipsholder! Du kan nu indsætte det i din email.')
+    }).catch(() => {
+      // Fallback - show in new window
+      const newWindow = window.open('', '_blank')
+      newWindow.document.write(`<pre style="font-family: Arial; padding: 20px; white-space: pre-wrap;">${emailContent}</pre>`)
+    })
   }
 
   return (
@@ -254,26 +294,40 @@ const ResultsDisplay = ({ results, contactData }) => {
           <div className="confirmation-visual">
             <div className="confirmation-icon">
               <svg width="64" height="64" viewBox="0 0 24 24" fill="none">
-                <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.89 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" fill="currentColor" />
+                <path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.89 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11z" fill="currentColor" />
               </svg>
             </div>
           </div>
 
           <div className="confirmation-text">
-            <h3>Din detaljerede rapport er på vej</h3>
+            <h3>Download eller del dine resultater</h3>
             <p>
-              Vi sender din ESG-analyse til <strong>{contactData.email}</strong> inden for få minutter. Rapporten indeholder alle jeres svar, anbefalinger og næste skridt.
-              <br /><br />
-              <em>
-                {contactData.contactPreference === 'yes' 
-                  ? 'Rapporten vil også indeholde information om BluWave-platformen, som kan hjælpe jer med automatisk CO₂-beregning, ESG-dokumentation og data til at styrke jeres forretning.'
-                  : 'Rapporten indeholder jeres komplette ESG-analyse og anbefalinger til næste skridt.'
-                }
-              </em>
+              {contactData.contactPreference === 'yes' ? (
+                <>
+                  <strong>Vi kontakter jer snart!</strong> I mellemtiden kan I downloade jeres detaljerede ESG-rapport eller dele den med jeres team.
+                </>
+              ) : (
+                <>
+                  Download jeres komplette ESG-analyse eller del den med jeres team. Rapporten indeholder alle jeres svar og personlige anbefalinger.
+                </>
+              )}
             </p>
-            <p className="email-note">
-              🌳 <strong>Tænk på miljøet</strong> – print kun denne rapport, hvis det er nødvendigt.
-              <em>Tjek venligst din spam-mappe, hvis du ikke modtager mailen inden for 10 minutter.</em>
+            
+            {/* Download Options */}
+            <div className="download-options">
+              <button onClick={handleDownloadReport} className="download-btn primary">
+                📄 Download Rapport (TXT)
+              </button>
+              <button onClick={handleDownloadJSON} className="download-btn secondary">
+                💾 Download Data (JSON)
+              </button>
+              <button onClick={handleEmailContent} className="download-btn secondary">
+                📧 Kopier Email Indhold
+              </button>
+            </div>
+            
+            <p className="download-note">
+              🌳 <strong>Tænk på miljøet</strong> – del digitalt når det er muligt.
             </p>
           </div>
         </div>
@@ -289,4 +343,85 @@ const ResultsDisplay = ({ results, contactData }) => {
   )
 }
 
+// Helper function to generate text report
+function generateTextReport(data) {
+  const { company, results, sectionBreakdown, detailedAnswers, submissionDate } = data
+  
+  return `
+ESG SELVTEST RESULTAT
+=====================
+
+VIRKSOMHEDSOPLYSNINGER
+----------------------
+Virksomhed: ${company.name}
+Kontaktperson: ${company.contactPerson}
+Email: ${company.email}
+Telefon: ${company.phone || 'Ikke angivet'}
+Branche: ${company.industry}
+Medarbejdere: ${company.employees}
+
+RESULTAT OVERSIGT
+-----------------
+Total Score: ${results.totalScore}/${results.maxScore} point (${results.percentage}%)
+Niveau: ${results.level === 'beginner' ? 'Opstartsfasen' : results.level === 'intermediate' ? 'Har fat i tingene' : 'Godt i gang'}
+
+${results.title}
+${results.description}
+
+NÆSTE SKRIDT
+------------
+${results.nextSteps}
+
+DETALJEREDE SVAR
+----------------
+${detailedAnswers.map((qa, index) => 
+  `${index + 1}. ${qa.question}
+   Svar: ${qa.answer === 'ja' ? '✅ Ja' : qa.answer === 'nej' ? '❌ Nej' : '❓ Ved ikke'}`
+).join('\n\n')}
+
+SEKTION BREAKDOWN
+-----------------
+${Object.entries(sectionBreakdown).map(([key, section]) => {
+  const sectionNames = {
+    section1: 'Forståelse og bevidsthed',
+    section2: 'Mål og data', 
+    section3: 'Strategi og forretning',
+    section4: 'Risici og fremtidssikring'
+  }
+  return `${sectionNames[key]}: ${section.score}/${section.max} point (${section.percentage}%)`
+}).join('\n')}
+
+Genereret: ${submissionDate}
+ESG Selvtest - Bluwave
+Reporting Progress – Power Your Business
+`.trim()
+}
+
+// Helper function to generate email content
+function generateEmailContent(data) {
+  const { company, results, submissionDate } = data
+  
+  return `Emne: ESG Selvtest Resultat - ${company.name}
+
+Hej ${company.contactPerson},
+
+Her er resultatet af jeres ESG selvtest:
+
+🏢 VIRKSOMHED: ${company.name}
+📊 RESULTAT: ${results.totalScore}/${results.maxScore} point (${results.percentage}%)
+🎯 NIVEAU: ${results.level === 'beginner' ? 'Opstartsfasen 🌱' : results.level === 'intermediate' ? 'Har fat i tingene 🌿' : 'Godt i gang 🌳'}
+
+${results.title}
+${results.description}
+
+NÆSTE SKRIDT:
+${results.nextSteps}
+
+Med venlig hilsen,
+ESG Selvtest Team
+
+---
+Genereret: ${submissionDate}
+Reporting Progress – Power Your Business`
+}
 export default ResultsDisplay
