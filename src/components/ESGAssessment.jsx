@@ -143,6 +143,7 @@ const ESGAssessment = () => {
   /**
    * Handle final assessment submission
    * Calculates scores, generates recommendations, and sends email
+   * Always shows results to user, regardless of email success/failure
    * 
    * @param {Object} data - Assessment responses
    */
@@ -168,9 +169,9 @@ const ESGAssessment = () => {
       // Try to send email, but don't fail if it doesn't work
       try {
         await submitAssessment(submissionData)
-        console.log('✅ Email sent successfully')
+        console.log('✅ Assessment submitted and emails sent successfully')
       } catch (emailError) {
-        console.error('⚠️ Email failed, but showing results anyway:', emailError)
+        console.error('⚠️ Email sending failed, but showing results anyway:', emailError)
       }
 
       // Update state and show results
@@ -178,7 +179,7 @@ const ESGAssessment = () => {
       setResults({ score, sectionScores, recommendation })
       setCurrentStep('results')
     } catch (err) {
-      // This should rarely happen now since we don't throw email errors
+      // This should rarely happen since we don't throw email errors
       console.error('Submission error:', err)
       setError('Der opstod en fejl ved indsendelse. Prøv venligst igen.')
     } finally {

@@ -214,7 +214,15 @@ const ResultsDisplay = ({ results, contactData }) => {
           <h3>Vi er klar til at hjælpe jer videre</h3>
           
           <p className="contact-description">
-            En af vores ESG-eksperter kontakter jer på <strong>{contactData.email}</strong> inden for 2 arbejdsdage. Vi kommer med konkrete forslag til, hvordan BibiLiebmann, Strategisk Forretningsudvikling kan tage de næste skridt på jeres ESG-rejse.
+            {contactData.contactPreference === 'yes' ? (
+              <>
+                En af vores ESG-eksperter kontakter jer på <strong>{contactData.email}</strong> inden for 2 arbejdsdage. Vi kommer med konkrete forslag til, hvordan {contactData.companyName} kan tage de næste skridt på jeres ESG-rejse.
+              </>
+            ) : (
+              <>
+                I har valgt kun at modtage resultatet. Hvis I senere ønsker personlig rådgivning, er I altid velkomne til at kontakte os på <strong>ja@bluwave.dk</strong>.
+              </>
+            )}
           </p>
           
           <div className="contact-features">
@@ -256,7 +264,12 @@ const ResultsDisplay = ({ results, contactData }) => {
             <p>
               Vi sender din ESG-analyse til <strong>{contactData.email}</strong> inden for få minutter. Rapporten indeholder alle jeres svar, anbefalinger og næste skridt.
               <br /><br />
-              <em>Rapporten vil også indeholde information om BluWave-platformen, som kan hjælpe jer med automatisk CO₂-beregning, ESG-dokumentation og data til at styrke jeres forretning.</em>
+              <em>
+                {contactData.contactPreference === 'yes' 
+                  ? 'Rapporten vil også indeholde information om BluWave-platformen, som kan hjælpe jer med automatisk CO₂-beregning, ESG-dokumentation og data til at styrke jeres forretning.'
+                  : 'Rapporten indeholder jeres komplette ESG-analyse og anbefalinger til næste skridt.'
+                }
+              </em>
             </p>
             <p className="email-note">
               🌳 <strong>Tænk på miljøet</strong> – print kun denne rapport, hvis det er nødvendigt.
