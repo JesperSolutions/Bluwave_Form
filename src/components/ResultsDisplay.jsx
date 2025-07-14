@@ -159,28 +159,88 @@ const ResultsDisplay = ({ results, contactData }) => {
         </div>
       </div>
 
-      {/* CTA Section */}
+      {/* Next Steps Section - Enhanced */}
       <div className="next-steps-section">
         <div className="section-header">
+          <div className="steps-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+              <path d="M12 2L13.09 8.26L20 9L13.09 9.74L12 16L10.91 9.74L4 9L10.91 8.26L12 2Z" fill="#89B348"/>
+            </svg>
+          </div>
           <h3>Jeres næste skridt på ESG-rejsen</h3>
-          <p>👉 {recommendation.cta}</p>
+          <div className="main-recommendation">
+            <div className="recommendation-icon">👉</div>
+            <p>{recommendation.cta}</p>
+          </div>
         </div>
         
-        {/* Section-specific recommendations */}
-        <div className="section-recommendations">
-          {Object.entries(sectionScores).map(([sectionKey, sectionData]) => {
-            const rec = getSectionRecommendation(sectionKey, sectionData)
-            if (!rec) return null
-            return (
-              <div key={sectionKey} className="section-recommendation">
-                <strong>{getSectionName(sectionKey)}:</strong> {rec}
+        {/* Section-specific recommendations - Enhanced */}
+        {Object.entries(sectionScores).some(([sectionKey, sectionData]) => 
+          getSectionRecommendation(sectionKey, sectionData)
+        ) && (
+          <div className="section-recommendations">
+            <h4>Specifikke anbefalinger baseret på jeres svar:</h4>
+            <div className="recommendations-grid">
+              {Object.entries(sectionScores).map(([sectionKey, sectionData]) => {
+                const rec = getSectionRecommendation(sectionKey, sectionData)
+                if (!rec) return null
+                return (
+                  <div key={sectionKey} className="section-recommendation">
+                    <div className="rec-header">
+                      <div className="rec-icon">💡</div>
+                      <strong>{getSectionName(sectionKey)}</strong>
+                    </div>
+                    <p>{rec}</p>
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Contact Section - Moved here for better flow */}
+      <div className="contact-section">
+        <div className="contact-container">
+          <div className="contact-header">
+            <div className="contact-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+                <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" fill="white"/>
+              </svg>
+            </div>
+            <div className="contact-badge">VI KONTAKTER JER</div>
+          </div>
+          
+          <h3>Vi er klar til at hjælpe jer videre</h3>
+          
+          <p className="contact-description">
+            En af vores ESG-eksperter kontakter jer på <strong>{contactData.email}</strong> inden for 2 arbejdsdage. Vi kommer med konkrete forslag til, hvordan BibiLiebmann, Strategisk Forretningsudvikling kan tage de næste skridt på jeres ESG-rejse.
+          </p>
+          
+          <div className="contact-features">
+            <div className="feature-grid">
+              <div className="contact-feature">
+                <div className="feature-icon">✓</div>
+                <span>Personlig rådgivning</span>
               </div>
-            )
-          })}
+              <div className="contact-feature">
+                <div className="feature-icon">✓</div>
+                <span>Skræddersyede løsninger</span>
+              </div>
+              <div className="contact-feature">
+                <div className="feature-icon">✓</div>
+                <span>Konkrete handlingsplaner</span>
+              </div>
+              <div className="contact-feature">
+                <div className="feature-icon">✓</div>
+                <span>Løbende support</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* BluWave CTA */}
+      {/* BluWave CTA - Moved after contact section */}
       <div className="bluwave-cta">
         <div className="cta-content">
           <h3>Vil du gøre ESG-rapportering lettere – og få reel forretningsværdi ud af det?</h3>
@@ -220,47 +280,6 @@ const ResultsDisplay = ({ results, contactData }) => {
               🌳 <strong>Tænk på miljøet</strong> – print kun denne rapport, hvis det er nødvendigt.
               <em>Tjek venligst din spam-mappe, hvis du ikke modtager mailen inden for 10 minutter.</em>
             </p>
-          </div>
-        </div>
-      </div>
-
-      {/* Contact Section - Simplified Design */}
-      <div className="contact-section">
-        <div className="contact-container">
-          <div className="contact-header">
-            <div className="contact-icon">
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
-                <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" fill="white"/>
-              </svg>
-            </div>
-            <div className="contact-badge">VI KONTAKTER JER</div>
-          </div>
-          
-          <h3>Vi er klar til at hjælpe jer videre</h3>
-          
-          <p className="contact-description">
-            En af vores ESG-eksperter kontakter jer på <strong>kontakt@biblieliebmann.dk</strong> inden for 2 arbejdsdage. Vi kommer med konkrete forslag til, hvordan BibiLiebmann, Strategisk Forretningsudvikling kan tage de næste skridt på jeres ESG-rejse.
-          </p>
-          
-          <div className="contact-features">
-            <div className="feature-grid">
-              <div className="contact-feature">
-                <div className="feature-icon">✓</div>
-                <span>Personlig rådgivning</span>
-              </div>
-              <div className="contact-feature">
-                <div className="feature-icon">✓</div>
-                <span>Skræddersyede løsninger</span>
-              </div>
-              <div className="contact-feature">
-                <div className="feature-icon">✓</div>
-                <span>Konkrete handlingsplaner</span>
-              </div>
-              <div className="contact-feature">
-                <div className="feature-icon">✓</div>
-                <span>Løbende support</span>
-              </div>
-            </div>
           </div>
         </div>
       </div>
