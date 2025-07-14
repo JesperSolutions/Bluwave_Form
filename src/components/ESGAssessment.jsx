@@ -165,16 +165,22 @@ const ESGAssessment = () => {
         recommendation
       }
 
-      // Send email with results
-      await submitAssessment(submissionData)
+      // Try to send email, but don't fail if it doesn't work
+      try {
+        await submitAssessment(submissionData)
+        console.log('✅ Email sent successfully')
+      } catch (emailError) {
+        console.error('⚠️ Email failed, but showing results anyway:', emailError)
+      }
 
       // Update state and show results
       setAssessmentData(data)
       setResults({ score, sectionScores, recommendation })
       setCurrentStep('results')
     } catch (err) {
-      setError('Der opstod en fejl ved indsendelse. Prøv venligst igen.')
+      // This should rarely happen now since we don't throw email errors
       console.error('Submission error:', err)
+      setError('Der opstod en fejl ved indsendelse. Prøv venligst igen.')
     } finally {
       setIsSubmitting(false)
     }
