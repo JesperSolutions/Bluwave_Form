@@ -90,13 +90,13 @@ npm run build
 1. Opret konto på [EmailJS](https://www.emailjs.com/)
 2. Konfigurer service med ID: `service_3q3n4lr`
 3. Opret template med ID: `template_pac9jom`
-4. Brug public key: `BCoUz6Ty8c0oza6pZ`
+4. Brug public key: `lM3RvJE63x4ZIqmwg`
 
 ### Environment Variables
 ```env
 VITE_EMAILJS_SERVICE_ID=service_3q3n4lr
 VITE_EMAILJS_TEMPLATE_ID=template_pac9jom
-VITE_EMAILJS_PUBLIC_KEY=BCoUz6Ty8c0oza6pZ
+VITE_EMAILJS_PUBLIC_KEY=lM3RvJE63x4ZIqmwg
 ```
 
 ## 📱 Responsive Design
