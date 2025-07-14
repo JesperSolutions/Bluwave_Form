@@ -418,6 +418,70 @@
   font-size: 0.9rem;
 }
 
+/* Download Options */
+.download-options {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 2rem 0;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.download-btn {
+  padding: 1rem 1.5rem;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.download-btn.primary {
+  background: linear-gradient(135deg, #89B348 0%, #7da63f 100%);
+  color: white;
+  box-shadow: 0 4px 12px rgba(137, 179, 72, 0.3);
+}
+
+.download-btn.primary:hover {
+  background: linear-gradient(135deg, #7da63f 0%, #89B348 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(137, 179, 72, 0.4);
+}
+
+.download-btn.secondary {
+  background: white;
+  color: #89B348;
+  border: 2px solid #89B348;
+  box-shadow: 0 2px 8px rgba(137, 179, 72, 0.1);
+}
+
+.download-btn.secondary:hover {
+  background: #89B348;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(137, 179, 72, 0.3);
+}
+
+.download-note {
+  font-style: italic;
+  font-size: 0.9rem;
+  opacity: 0.9;
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.download-note strong {
+  font-weight: 700;
+  font-style: normal;
+}
+
 /* Contact Section - New Design */
 .contact-section {
   background: #ffffff;
@@ -663,5 +727,18 @@
   
   .company-summary {
     padding: 2rem 1.5rem;
+  }
+  
+  .download-note {
+    font-size: 0.8rem;
+  }
+  
+  .download-options {
+    max-width: 100%;
+  }
+  
+  .download-btn {
+    padding: 0.875rem 1.25rem;
+    font-size: 0.9rem;
   }
 }
