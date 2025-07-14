@@ -42,6 +42,18 @@ const ResultsDisplay = ({ results, contactData, downloadableData }) => {
     return names[sectionKey]
   }
 
+  const getSectionRecommendation = (sectionKey, sectionData) => {
+    if (sectionData.score >= 4) return null // No recommendation needed if score is max
+    
+    const recommendations = {
+      section1: 'Identificer de ESG-faktorer der er mest relevante for jeres branche og forening.',
+      section2: 'Vælg få først - det får det lettere at komme i gang.',
+      section3: 'Sørg for at hele teamet forstår ESG og gør det til en del af virksomheden.',
+      section4: 'Få overblik over ESG-risici og forbered jer på kommende rapporteringskrav.'
+    }
+    return recommendations[sectionKey]
+  }
+
   // Generate PDF of the results
   const handleDownloadPDF = async () => {
     if (!resultsRef.current) return
@@ -154,8 +166,8 @@ ESG Selvtest - Bluwave
             <div className="logo-icon">🌿</div>
           </div>
         </div>
-        <h1 className="hero-title">Jeres ESG Selvtest Resultat</h1>
-        <p className="hero-subtitle">Dit ESG-resultat, {contactData.companyName}!</p>
+        <h1 className="hero-title">ESG-resultat for <strong>{contactData.companyName}</strong></h1>
+        <p className="hero-subtitle">Her er dit personlige testresultat samt anbefalinger til næste skridt, baseret på dine svar.</p>
       </div>
 
       {/* Score Section - Matching Email Design */}
@@ -177,60 +189,92 @@ ESG Selvtest - Bluwave
         <p className="recommendation-text">{recommendation.text}</p>
       </div>
 
-      {/* Company Info - Matching Email Grid */}
-      <div className="company-info-section">
-        <h3>Virksomhedsoplysninger</h3>
-        <div className="info-grid">
-          <div className="info-card">
-            <div className="info-label">VIRKSOMHED</div>
-            <div className="info-value">{contactData.companyName}</div>
-          </div>
-          <div className="info-card">
-            <div className="info-label">KONTAKTPERSON</div>
-            <div className="info-value">{contactData.contactPerson}</div>
-          </div>
-          <div className="info-card">
-            <div className="info-label">BRANCHE</div>
-            <div className="info-value">{contactData.industry}</div>
-          </div>
-          <div className="info-card">
-            <div className="info-label">MEDARBEJDERE</div>
-            <div className="info-value">{contactData.employees}</div>
-          </div>
-        </div>
-      </div>
-
-      {/* Contact Preference - Matching Email Style */}
-      <div className="contact-preference-section">
-        <h3>Kontakt præference</h3>
-        <div className="preference-card">
-          <div className="preference-icon">
-            {contactData.contactPreference === 'yes' ? '📞' : '📧'}
-          </div>
-          <div className="preference-content">
-            <div className="preference-title">
-              {contactData.contactPreference === 'yes' 
-                ? 'Vi kontakter jer snart!' 
-                : 'Kun resultat ønsket'}
-            </div>
-            <div className="preference-description">
-              {contactData.contactPreference === 'yes'
-                ? `En af vores ESG-eksperter vil kontakte jer på ${contactData.email} inden for 2 arbejdsdage med personlige anbefalinger.`
-                : 'I har valgt kun at modtage resultatet. I kan altid kontakte os på ja@bluwave.dk hvis I senere ønsker rådgivning.'}
-            </div>
+      {/* Section Scores - New Addition */}
+      <div className="section-scores">
+        <div className="section-scores-container">
+          <h2>Jeres resultat pr. kategori</h2>
+          <div className="sections-grid">
+            {Object.entries(sectionScores).map(([sectionKey, sectionData]) => (
+              <div key={sectionKey} className="section-card">
+                <h3>{getSectionName(sectionKey)}</h3>
+                <div className="section-score">
+                  <span className="section-points">{sectionData.score}</span>
+                  <span className="section-max">/ {sectionData.max}</span>
+                </div>
+                <div className="section-percentage">{sectionData.percentage}%</div>
+                <div className="section-bar" style={{
+                  background: `linear-gradient(90deg, ${getScoreColor(recommendation.level)} ${sectionData.percentage}%, #e5e7eb ${sectionData.percentage}%)`
+                }}></div>
+              </div>
+            ))}
           </div>
         </div>
       </div>
 
-      {/* Next Steps - Matching Email Style */}
+      {/* Next Steps - Enhanced with Section Recommendations */}
       <div className="next-steps-section">
-        <h3>Jeres næste skridt</h3>
-        <div className="next-steps-content">
-          {downloadableData.results.nextSteps}
+        <div className="section-header">
+          <div className="steps-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+              <path d="M12 2L13.09 8.26L20 9L13.09 9.74L12 16L10.91 9.74L4 9L10.91 8.26L12 2Z" fill="#89B348"/>
+            </svg>
+          </div>
+          <h3>Jeres næste skridt på ESG-rejsen</h3>
+          <div className="main-recommendation">
+            <div className="recommendation-icon">👉</div>
+            <p>{recommendation.cta}</p>
+          </div>
         </div>
+
+        {/* Section-specific recommendations for areas needing improvement */}
+        {Object.entries(sectionScores).some(([key, data]) => getSectionRecommendation(key, data)) && (
+          <div className="section-recommendations">
+            <h4>Specifikke anbefalinger baseret på jeres svar:</h4>
+            <div className="recommendations-grid">
+              {Object.entries(sectionScores).map(([sectionKey, sectionData]) => {
+                const recommendation = getSectionRecommendation(sectionKey, sectionData)
+                if (!recommendation) return null
+                
+                return (
+                  <div key={sectionKey} className="section-recommendation">
+                    <div className="rec-header">
+                      <div className="rec-icon">💡</div>
+                      <strong>{getSectionName(sectionKey)}</strong>
+                    </div>
+                    <p>{recommendation}</p>
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+        )}
       </div>
 
-      {/* Download & Share Section - New Branded Design */}
+      {/* BluWave CTA Section */}
+      <div className="bluwave-cta-section">
+        <h3>Vil du gøre ESG-rapportering lettere – og få reel forretningsværdi ud af det?</h3>
+        <p>Med <strong>BluWave</strong>-platformen kan I arbejde med ESG enkelt, effektivt og compliant:</p>
+        
+        <div className="cta-features">
+          <div className="cta-feature">
+            <span className="feature-check">✅</span>
+            <span>Automatisk CO₂-beregning og klimaregnskab</span>
+          </div>
+          <div className="cta-feature">
+            <span className="feature-check">✅</span>
+            <span>Brugervenlig struktur til ESG-dokumentation</span>
+          </div>
+          <div className="cta-feature">
+            <span className="feature-check">✅</span>
+            <span>Data og indsigter til at styrke jeres forretning</span>
+          </div>
+        </div>
+        
+        <p className="cta-closing">Kom i gang med ESG – med fokus på både krav og konkrete gevinster.</p>
+        <p className="cta-action">Book en demo 👉 <a href="https://bluwave.dk" target="_blank" rel="noopener noreferrer">bluwave.dk</a></p>
+      </div>
+
+      {/* Download & Share Section */}
       <div className="download-share-section">
         <div className="download-header">
           <div className="download-icon">
@@ -239,17 +283,7 @@ ESG Selvtest - Bluwave
             </svg>
           </div>
           <h3>Download og del dine resultater</h3>
-          <p>
-            {contactData.contactPreference === 'yes' ? (
-              <>
-                <strong>Vi kontakter jer snart!</strong> I mellemtiden kan I downloade jeres ESG-rapport eller dele den med jeres team.
-              </>
-            ) : (
-              <>
-                Download jeres ESG-rapport eller del den med jeres team. Rapporten indeholder alle jeres svar og anbefalinger.
-              </>
-            )}
-          </p>
+          <p>Vi sender din ESG-analyse til <strong>{contactData.email}</strong> inden for få minutter. Rapporten indeholder alle jeres svar, anbefalinger og næste skridt.</p>
         </div>
 
         {/* Download Options */}
@@ -274,41 +308,16 @@ ESG Selvtest - Bluwave
           </button>
         </div>
 
-        {/* Social Share */}
-        <div className="social-share">
-          <p className="share-label">Del på sociale medier:</p>
-          <div className="social-buttons">
-            <button 
-              onClick={() => {
-                const text = `Vi har netop gennemført en ESG-selvtest og scorede ${score}/${MAX_SCORE} point! 🌿 #ESG #Bæredygtighed`
-                const url = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}&summary=${encodeURIComponent(text)}`
-                window.open(url, '_blank')
-              }}
-              className="social-btn linkedin"
-            >
-              LinkedIn
-            </button>
-            
-            <button 
-              onClick={() => {
-                const text = `Vi scorede ${score}/${MAX_SCORE} point i ESG-selvtest! 🌱 Se hvordan jeres virksomhed klarer sig:`
-                const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(window.location.href)}`
-                window.open(url, '_blank')
-              }}
-              className="social-btn twitter"
-            >
-              Twitter
-            </button>
-          </div>
-        </div>
-
+        <p className="email-note">
+          <em>Tjek venligst din spam-mappe, hvis du ikke modtager mailen inden for 10 minutter.</em>
+        </p>
       </div>
 
       {/* Branded Footer - Matching Email Template */}
       <div className="branded-footer">
-        <h3>Tak for jeres deltagelse!</h3>
-        <p>Vi håber denne analyse giver jer værdifuld indsigt i jeres ESG-rejse.</p>
-        <p>Har I spørgsmål eller brug for hjælp til at komme videre, er I altid velkomne til at kontakte os.</p>
+        <p className="environment-note">
+          🌳 <strong>Tænk på miljøet</strong> – <em>print kun denne rapport, hvis det er nødvendigt.</em>
+        </p>
         
         <p className="footer-date">
           Genereret {downloadableData.submissionDate}<br />

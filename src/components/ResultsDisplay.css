@@ -112,114 +112,298 @@
   margin: 0 auto;
 }
 
-/* Company Info - Matching Email Grid */
-.company-info-section {
-  padding: 30px;
+/* Section Scores */
+.section-scores {
   background: #f8fafc;
+  padding: 40px 30px;
   border-bottom: 1px solid #e2e8f0;
 }
 
-.company-info-section h3 {
+.section-scores-container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.section-scores h2 {
+  text-align: center;
   color: #89B348;
-  font-size: 18px;
-  font-weight: 600;
-  margin: 0 0 15px 0;
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 30px;
 }
 
-.info-grid {
+.sections-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 15px;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  max-width: 1000px;
+  margin: 0 auto;
 }
 
-.info-card {
+.section-card {
   background: white;
-  padding: 15px;
-  border-radius: 8px;
-  border-left: 3px solid #89B348;
+  padding: 20px 15px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e2e8f0;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.info-label {
-  font-size: 12px;
-  color: #6b7280;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin-bottom: 5px;
+.section-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
 }
 
-.info-value {
+.section-card h3 {
   font-size: 14px;
-  color: #1f2937;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 15px;
+  line-height: 1.3;
+}
+
+.section-score {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+.section-points {
+  font-size: 32px;
+  font-weight: 700;
+  color: #89B348;
+}
+
+.section-max {
+  font-size: 16px;
+  color: #6b7280;
   font-weight: 500;
 }
 
-/* Contact Preference - Matching Email Style */
-.contact-preference-section {
-  padding: 30px;
-  background: white;
-  border-bottom: 1px solid #e2e8f0;
-}
-
-.contact-preference-section h3 {
-  color: #89B348;
-  font-size: 18px;
+.section-percentage {
+  font-size: 14px;
   font-weight: 600;
-  margin: 0 0 15px 0;
+  color: #89B348;
+  margin-bottom: 15px;
 }
 
-.preference-card {
-  background: #f8fafc;
-  padding: 20px;
-  border-radius: 8px;
-  border-left: 4px solid #89B348;
+.section-bar {
+  height: 6px;
+  border-radius: 3px;
+  background: #e5e7eb;
+}
+
+/* Next Steps Section */
+.next-steps-section {
+  background: linear-gradient(135deg, #f8fffe 0%, #ffffff 50%, #f0f9ff 100%);
+  padding: 40px 30px;
+  text-align: center;
+  position: relative;
+}
+
+.next-steps-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 50% 0%, rgba(137, 179, 72, 0.03) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.section-header {
+  position: relative;
+  z-index: 1;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.steps-icon {
+  width: 60px;
+  height: 60px;
+  background: rgba(137, 179, 72, 0.1);
+  border-radius: 50%;
   display: flex;
   align-items: center;
-  gap: 15px;
+  justify-content: center;
+  margin: 0 auto 20px;
+  border: 2px solid rgba(137, 179, 72, 0.2);
 }
 
-.preference-icon {
-  font-size: 24px;
-}
-
-.preference-title {
-  font-size: 16px;
-  font-weight: 600;
+.section-header h3 {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 20px;
   color: #1f2937;
-  margin-bottom: 5px;
+  line-height: 1.3;
 }
 
-.preference-description {
-  font-size: 14px;
-  color: #4a5568;
+.main-recommendation {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 15px;
+  background: rgba(137, 179, 72, 0.08);
+  padding: 20px;
+  border-radius: 16px;
+  border: 2px solid rgba(137, 179, 72, 0.15);
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 30px;
+}
+
+.recommendation-icon {
+  font-size: 24px;
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+
+.main-recommendation p {
+  font-size: 18px;
+  color: #1f2937;
+  font-weight: 600;
+  margin: 0;
+  text-align: left;
   line-height: 1.6;
 }
 
-/* Next Steps - Matching Email Style */
-.next-steps-section {
-  padding: 30px;
-  background: white;
+.section-recommendations {
+  max-width: 1000px;
+  margin: 0 auto;
 }
 
-.next-steps-section h3 {
-  color: #89B348;
+.section-recommendations h4 {
   font-size: 20px;
   font-weight: 600;
-  margin: 0 0 20px 0;
+  color: #374151;
+  margin-bottom: 20px;
   text-align: center;
 }
 
-.next-steps-content {
-  background: #f8fafc;
-  padding: 20px;
-  border-radius: 8px;
-  border-left: 4px solid #89B348;
-  font-size: 14px;
-  line-height: 1.8;
-  white-space: pre-line;
+.recommendations-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 15px;
 }
 
-/* Download & Share Section - New Branded Design */
+.section-recommendation {
+  background: white;
+  padding: 15px;
+  border-radius: 12px;
+  border: 2px solid rgba(137, 179, 72, 0.15);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  text-align: left;
+  transition: all 0.3s ease;
+}
+
+.section-recommendation:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(137, 179, 72, 0.15);
+  border-color: rgba(137, 179, 72, 0.25);
+}
+
+.rec-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.rec-icon {
+  font-size: 20px;
+}
+
+.rec-header strong {
+  font-size: 16px;
+  font-weight: 600;
+  color: #89B348;
+}
+
+.section-recommendation p {
+  font-size: 15px;
+  line-height: 1.6;
+  color: #4b5563;
+  margin: 0;
+}
+
+/* BluWave CTA Section */
+.bluwave-cta-section {
+  background: white;
+  padding: 40px 30px;
+  text-align: center;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.bluwave-cta-section h3 {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 15px;
+  line-height: 1.3;
+}
+
+.bluwave-cta-section p {
+  font-size: 16px;
+  color: #4a5568;
+  line-height: 1.7;
+  margin-bottom: 25px;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.cta-features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 15px;
+  max-width: 800px;
+  margin: 0 auto 25px;
+}
+
+.cta-feature {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #f8fafc;
+  padding: 15px 20px;
+  border-radius: 10px;
+  font-weight: 500;
+  color: #1f2937;
+  border: 1px solid rgba(137, 179, 72, 0.1);
+}
+
+.feature-check {
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.cta-closing {
+  font-style: italic;
+  font-weight: 500;
+  margin-bottom: 15px !important;
+}
+
+.cta-action {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 !important;
+}
+
+.cta-action a {
+  color: #89B348;
+  text-decoration: none;
+}
+
+.cta-action a:hover {
+  text-decoration: underline;
+}
+
+/* Download & Share Section */
 .download-share-section {
   padding: 40px 30px;
   background: linear-gradient(135deg, #f8fffe 0%, #ffffff 50%, #f0f9ff 100%);
@@ -322,57 +506,11 @@
   font-size: 16px;
 }
 
-/* Social Share */
-.social-share {
-  margin: 30px 0;
-  padding: 20px;
-  background: rgba(255, 255, 255, 0.8);
-  border-radius: 12px;
-  border: 1px solid rgba(137, 179, 72, 0.1);
-}
-
-.share-label {
+.email-note {
+  font-style: italic;
   font-size: 14px;
   color: #6b7280;
-  margin-bottom: 15px;
-  font-weight: 500;
-}
-
-.social-buttons {
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-}
-
-.social-btn {
-  padding: 10px 20px;
-  border-radius: 8px;
-  font-weight: 600;
-  font-size: 14px;
-  border: none;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  text-decoration: none;
-}
-
-.social-btn.linkedin {
-  background: #0077b5;
-  color: white;
-}
-
-.social-btn.linkedin:hover {
-  background: #005885;
-  transform: translateY(-1px);
-}
-
-.social-btn.twitter {
-  background: #1da1f2;
-  color: white;
-}
-
-.social-btn.twitter:hover {
-  background: #0d8bd9;
-  transform: translateY(-1px);
+  margin-top: 20px;
 }
 
 /* Branded Footer - Matching Email Template */
@@ -383,18 +521,14 @@
   text-align: center;
 }
 
-.branded-footer h3 {
-  font-size: 20px;
-  font-weight: 600;
-  margin: 0 0 15px 0;
-  color: white;
+.environment-note {
+  font-size: 14px;
+  margin-bottom: 20px !important;
+  color: rgba(255, 255, 255, 0.95);
 }
 
-.branded-footer p {
-  font-size: 14px;
-  line-height: 1.6;
-  margin: 0 0 10px 0;
-  color: rgba(255, 255, 255, 0.95);
+.environment-note strong {
+  font-weight: 700;
 }
 
 .footer-date {
@@ -423,9 +557,9 @@
   
   .results-hero,
   .score-section,
-  .company-info-section,
-  .contact-preference-section,
+  .section-scores,
   .next-steps-section,
+  .bluwave-cta-section,
   .branded-footer {
     break-inside: avoid;
   }
@@ -435,9 +569,9 @@
 @media (max-width: 768px) {
   .results-hero,
   .score-section,
-  .company-info-section,
-  .contact-preference-section,
+  .section-scores,
   .next-steps-section,
+  .bluwave-cta-section,
   .download-share-section,
   .branded-footer {
     padding: 20px 15px;
@@ -456,9 +590,13 @@
     font-size: 28px;
   }
 
-  .info-grid {
+  .sections-grid {
     grid-template-columns: 1fr;
-    gap: 10px;
+    gap: 15px;
+  }
+
+  .section-card {
+    padding: 15px;
   }
 
   .download-options {
@@ -466,19 +604,36 @@
     gap: 10px;
   }
 
-  .social-buttons {
-    flex-direction: column;
-    align-items: center;
+  .cta-features {
+    grid-template-columns: 1fr;
+    gap: 10px;
   }
 
-  .social-btn {
-    width: 200px;
-  }
-
-  .preference-card {
+  .main-recommendation {
     flex-direction: column;
     text-align: center;
+    padding: 15px;
+  }
+
+  .main-recommendation p {
+    text-align: center;
+  }
+
+  .recommendations-grid {
+    grid-template-columns: 1fr;
     gap: 10px;
+  }
+
+  .section-recommendation {
+    padding: 12px;
+  }
+
+  .section-header h3 {
+    font-size: 24px;
+  }
+
+  .bluwave-cta-section h3 {
+    font-size: 20px;
   }
 }
 
@@ -497,6 +652,18 @@
   }
 
   .download-header h3 {
+    font-size: 18px;
+  }
+
+  .section-scores h2 {
     font-size: 20px;
+  }
+
+  .section-header h3 {
+    font-size: 20px;
+  }
+
+  .bluwave-cta-section h3 {
+    font-size: 18px;
   }
 }

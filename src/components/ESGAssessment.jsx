@@ -184,6 +184,11 @@ const ESGAssessment = () => {
       setAssessmentData(data)
       setResults({ score, sectionScores, recommendation })
       setCurrentStep('results')
+      
+      // Scroll to top of results page
+      setTimeout(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+      }, 100)
     } catch (err) {
       // This should rarely happen since we don't throw email errors
       console.error('Submission error:', err)

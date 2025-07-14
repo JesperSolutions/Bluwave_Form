@@ -232,13 +232,13 @@ function getScoreEmoji(level) {
     default: return '🌿'
   }
 }
-
+      title: 'I er i opstartsfasen',
 // Helper function for score interpretation
-function getScoreInterpretation(score) {
-  if (score <= 6) {
-    return 'I er i startfasen med ESG. Det er helt normalt, og I har gode muligheder for at komme godt i gang.'
-  } else if (score <= 12) {
-    return 'I har allerede fat i mange af de rigtige ting. Nu handler det om at strukturere og dokumentere jeres arbejde.'
+      title: 'I har fat i mange af de rigtige ting',
+      text: 'måske uden at kalde det ESG. Det er nu, I skal systematisere arbejdet og begynde at dokumentere det.',
+      title: 'I er godt i gang',
+      text: 'I er længere end mange andre SMV\'er. I har mulighed for at bruge ESG strategisk og differentiere jer.',
+      cta: 'Tag næste skridt: Overvej at kommunikere jeres ESG-indsats aktivt i tilbud, branding og rekruttering.',
   } else {
     return 'I er godt på vej og foran mange andre SMV\'er. I kan nu fokusere på at optimere og bruge ESG strategisk.'
   }

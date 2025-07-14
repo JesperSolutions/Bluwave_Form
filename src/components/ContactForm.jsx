@@ -93,7 +93,7 @@ const ContactForm = ({ onSubmit }) => {
           <div className="form-group">
             <label htmlFor="companyName">
               <svg className="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 7V3H2v18h20V7H12zM6 19H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2zm4 12H8v-2h2v2zm0-4H8v-2h2v2zm0-4H8V9h2v2zm0-4H8V5h2v2zm10 12h-8v-2h2v-2h-2v-2h2v-2h-2V9h8v10z" fill="currentColor"/>
+                <path d="M3 21h18v-2H3v2zM5 10h4V8H5v2zm0 4h4v-2H5v2zM5 6h4V4H5v2zm6 4h8V8h-8v2zm0 4h8v-2h-8v2zm0-8h8V4h-8v2z" fill="currentColor"/>
               </svg>
               Virksomhedsnavn *
             </label>
