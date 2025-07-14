@@ -1,6 +1,6 @@
 .results-display {
   background: linear-gradient(135deg, #e0f2f1 0%, #f0fdf4 100%);
-  padding-bottom: 4rem;
+  padding-bottom: 6rem;
   font-family: 'Inter', sans-serif;
   color: #1f2937;
 }
@@ -8,7 +8,7 @@
 /* Hero Section */
 .results-hero {
   text-align: center;
-  padding: 3rem 1rem 2rem;
+  padding: 4rem 2rem 3rem;
   position: relative;
   background: linear-gradient(135deg, #e0f7fa 0%, #f0fdf4 100%);
 }
@@ -19,10 +19,11 @@
 }
 
 .hero-title {
-  font-size: 2rem;
+  font-size: 2.5rem;
   font-weight: 700;
-  margin-bottom: 0.5rem;
+  margin-bottom: 1rem;
   color: #111827;
+  line-height: 1.2;
 }
 
 .hero-title .highlight {
@@ -30,14 +31,17 @@
 }
 
 .hero-subtitle {
-  font-size: 1rem;
+  font-size: 1.125rem;
   color: #4b5563;
+  line-height: 1.6;
+  max-width: 800px;
+  margin: 0 auto;
 }
 
 /* Section Scores */
 .section-scores {
   background: #f8fafc;
-  padding: 3rem 1.5rem;
+  padding: 4rem 2rem;
   border-bottom: 1px solid #e2e8f0;
 }
 
@@ -49,24 +53,32 @@
 .section-scores h2 {
   text-align: center;
   color: #89B348;
-  font-size: 1.5rem;
+  font-size: 1.75rem;
   font-weight: 700;
-  margin-bottom: 2rem;
+  margin-bottom: 3rem;
 }
 
 .sections-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1.5rem;
+  gap: 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
 }
 
 .section-card {
   background: white;
-  padding: 1.5rem;
+  padding: 2rem 1.5rem;
   border-radius: 12px;
   text-align: center;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   border: 1px solid #e2e8f0;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.section-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
 }
 
 .section-card h3 {
@@ -113,7 +125,7 @@
 /* Score Section */
 .score-section {
   background: #ffffff;
-  padding: 3rem 1.5rem;
+  padding: 4rem 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -123,7 +135,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 3rem;
+  gap: 4rem;
   max-width: 1000px;
   width: 100%;
 }
@@ -135,14 +147,15 @@
 }
 
 .score-circle {
-  width: 150px;
-  height: 150px;
+  width: 180px;
+  height: 180px;
   border: 6px solid var(--score-color, #10b981);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
 }
 
 .score-content {
@@ -154,53 +167,56 @@
 }
 
 .score-number {
-  font-size: 2rem;
+  font-size: 2.5rem;
   font-weight: 800;
 }
 
 .score-total {
-  font-size: 0.875rem;
+  font-size: 1rem;
   color: #6b7280;
   font-weight: 400;
 }
 
 .score-percentage {
-  margin-top: 1rem;
+  margin-top: 1.5rem;
   font-weight: 600;
+  font-size: 1.125rem;
 }
 
 .score-icon {
-  font-size: 1.75rem;
-  margin-top: 0.5rem;
+  font-size: 2rem;
+  margin-top: 1rem;
 }
 
 /* Score Analysis */
 .score-analysis {
-  max-width: 400px;
+  max-width: 500px;
 }
 
 .analysis-title {
-  font-size: 1.5rem;
+  font-size: 1.75rem;
   font-weight: 700;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
+  line-height: 1.3;
 }
 
 .analysis-description {
-  font-size: 1rem;
+  font-size: 1.125rem;
   color: #374151;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
+  line-height: 1.7;
 }
 
 .score-breakdown {
   border-top: 1px solid #e5e7eb;
-  padding-top: 1rem;
+  padding-top: 1.5rem;
 }
 
 .breakdown-item {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 0.5rem;
-  font-size: 0.95rem;
+  margin-bottom: 0.75rem;
+  font-size: 1rem;
 }
 
 .breakdown-label {
@@ -216,98 +232,106 @@
   background: #f0fdf4;
   border-top: 1px solid #e0e7ff;
   border-bottom: 1px solid #e0e7ff;
-  padding: 2rem 1rem;
+  padding: 3rem 2rem;
   text-align: center;
 }
 
 .section-header h3 {
-  font-size: 1.25rem;
+  font-size: 1.5rem;
   font-weight: 700;
-  margin-bottom: 0.5rem;
+  margin-bottom: 1rem;
   color: #14532d;
 }
 
 .section-header p {
-  font-size: 1rem;
+  font-size: 1.125rem;
   color: #111827;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
+  font-weight: 500;
 }
 
 .section-recommendations {
   max-width: 800px;
   margin: 0 auto;
   text-align: left;
+  display: grid;
+  gap: 1rem;
 }
 
 .section-recommendation {
   background: rgba(137, 179, 72, 0.1);
-  padding: 1rem;
+  padding: 1.25rem;
   border-radius: 8px;
-  margin-bottom: 0.75rem;
   border-left: 3px solid #89B348;
-  font-size: 0.9rem;
-  line-height: 1.5;
+  font-size: 1rem;
+  line-height: 1.6;
 }
 
 /* BluWave CTA */
 .bluwave-cta {
   background: linear-gradient(135deg, #89B348 0%, #7da63f 100%);
   color: white;
-  padding: 3rem 1.5rem;
+  padding: 4rem 2rem;
   text-align: center;
 }
 
 .cta-content {
-  max-width: 800px;
+  max-width: 900px;
   margin: 0 auto;
 }
 
 .cta-content h3 {
-  font-size: 1.5rem;
+  font-size: 1.75rem;
   font-weight: 700;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
   color: white;
+  line-height: 1.3;
 }
 
 .cta-content p {
-  font-size: 1rem;
-  margin-bottom: 1.5rem;
+  font-size: 1.125rem;
+  margin-bottom: 2rem;
   color: rgba(255, 255, 255, 0.95);
+  line-height: 1.6;
 }
 
 .cta-features {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
-  margin-bottom: 1.5rem;
+  gap: 1rem;
+  margin-bottom: 2rem;
   text-align: left;
-  max-width: 600px;
+  max-width: 700px;
   margin-left: auto;
   margin-right: auto;
 }
 
 .cta-feature {
-  font-size: 0.95rem;
+  font-size: 1.125rem;
   color: rgba(255, 255, 255, 0.95);
   font-weight: 500;
+  padding: 0.5rem 0;
 }
 
 .cta-closing {
   font-weight: 600;
-  margin-bottom: 2rem !important;
+  margin-bottom: 2.5rem !important;
+  font-size: 1.125rem;
 }
 
 .demo-btn {
   background: white;
   color: #89B348;
-  padding: 1rem 2rem;
-  border-radius: 10px;
-  font-size: 1rem;
+  padding: 1.25rem 2.5rem;
+  border-radius: 12px;
+  font-size: 1.125rem;
   font-weight: 600;
   border: none;
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+  text-decoration: none;
+  display: inline-block;
 }
 
 .demo-btn:hover {
@@ -319,7 +343,7 @@
 /* Email Confirmation Section */
 .email-confirmation {
   background: #89B348;
-  padding: 3rem 1.5rem;
+  padding: 4rem 2rem;
   color: white;
   text-align: center;
 }
@@ -328,7 +352,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1rem;
+  gap: 1.5rem;
+  max-width: 800px;
+  margin: 0 auto;
 }
 
 .confirmation-icon svg {
@@ -340,71 +366,136 @@
 }
 
 .confirmation-text h3 {
-  font-size: 1.5rem;
+  font-size: 1.75rem;
   font-weight: 700;
-  margin-bottom: 0.5rem;
+  margin-bottom: 1rem;
 }
 
 .confirmation-text p {
-  font-size: 1rem;
+  font-size: 1.125rem;
+  line-height: 1.6;
+  margin-bottom: 1rem;
 }
 
 .email-note {
   font-style: italic;
-  font-size: 0.875rem;
+  font-size: 1rem;
   opacity: 0.9;
 }
 
 /* Footer */
 .company-summary {
   text-align: center;
-  padding: 2rem 1rem;
-  font-size: 0.875rem;
+  padding: 3rem 2rem;
+  font-size: 1rem;
   color: #9ca3af;
 }
 
 .company-summary p:last-child {
   font-weight: 600;
   color: #4b5563;
-  margin-top: 0.5rem;
+  margin-top: 1rem;
+  font-size: 1.125rem;
 }
 
 /* Responsive */
 @media (max-width: 768px) {
+  .results-hero {
+    padding: 3rem 1.5rem 2rem;
+  }
+  
+  .hero-title {
+    font-size: 2rem;
+  }
+  
+  .hero-subtitle {
+    font-size: 1rem;
+  }
+  
+  .section-scores {
+    padding: 3rem 1.5rem;
+  }
+  
+  .section-scores h2 {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  
   .sections-grid {
     grid-template-columns: 1fr;
-    gap: 1rem;
+    gap: 1.5rem;
   }
   
   .section-card {
-    padding: 1.25rem;
+    padding: 1.5rem;
+  }
+  
+  .score-section {
+    padding: 3rem 1.5rem;
   }
   
   .score-container {
     flex-direction: column;
     align-items: center;
+    gap: 2rem;
   }
 
   .score-circle {
-    width: 120px;
-    height: 120px;
+    width: 150px;
+    height: 150px;
   }
 
   .score-number {
-    font-size: 1.5rem;
+    font-size: 2rem;
   }
 
   .score-analysis {
     text-align: center;
   }
 
+  .analysis-title {
+    font-size: 1.5rem;
+  }
+  
+  .analysis-description {
+    font-size: 1rem;
+  }
+  
   .breakdown-item {
     justify-content: center;
     gap: 0.5rem;
   }
 
+  .next-steps-section {
+    padding: 2rem 1.5rem;
+  }
+  
+  .bluwave-cta {
+    padding: 3rem 1.5rem;
+  }
+  
+  .cta-content h3 {
+    font-size: 1.5rem;
+  }
+  
+  .cta-content p {
+    font-size: 1rem;
+  }
+  
+  .cta-feature {
+    font-size: 1rem;
+  }
+  
   .email-confirmation {
-    padding: 2rem 1rem;
+    padding: 3rem 1.5rem;
+  }
+  
+  .confirmation-text h3 {
+    font-size: 1.5rem;
+  }
+  
+  .confirmation-text p {
+    font-size: 1rem;
   }
   
   .cta-features {
@@ -413,5 +504,9 @@
   
   .section-recommendations {
     text-align: center;
+  }
+  
+  .company-summary {
+    padding: 2rem 1.5rem;
   }
 }

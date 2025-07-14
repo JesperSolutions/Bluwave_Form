@@ -5,7 +5,24 @@ import ResultsDisplay from './ResultsDisplay'
 import { submitAssessment } from '../services/emailService'
 import './ESGAssessment.css'
 
+/**
+ * Main ESG Assessment Component
+ * 
+ * This component manages the entire ESG assessment flow:
+ * 1. Landing page with introduction
+ * 2. Contact form for company information
+ * 3. Assessment questions (13 questions across 4 sections)
+ * 4. Results display with scoring and recommendations
+ * 
+ * Features:
+ * - Multi-step form with progress tracking
+ * - Weighted scoring system (17 points max)
+ * - Section-based results breakdown
+ * - Email delivery of results
+ * - Responsive design
+ */
 const ESGAssessment = () => {
+  // State management for the multi-step form
   const [currentStep, setCurrentStep] = useState('landing')
   const [contactData, setContactData] = useState({})
   const [assessmentData, setAssessmentData] = useState({})
@@ -13,17 +30,32 @@ const ESGAssessment = () => {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState('')
 
+  /**
+   * Navigate from landing page to contact form
+   */
   const handleStartTest = () => {
     setCurrentStep('contact')
   }
 
+  /**
+   * Handle contact form submission and proceed to assessment
+   * @param {Object} data - Contact form data
+   */
   const handleContactSubmit = (data) => {
     setContactData(data)
     setCurrentStep('assessment')
   }
 
+  /**
+   * Calculate total score using weighted system
+   * Critical questions (Q3, Q5, Q8, Q10) have weight 2, others weight 1
+   * Maximum possible score: 17 points
+   * 
+   * @param {Object} responses - Assessment responses object
+   * @returns {number} Total weighted score
+   */
   const calculateScore = (responses) => {
-    // New weighted scoring system
+    // Critical questions with double weight
     const weights = {
       q3: 2,  // Identificeret væsentlige ESG-faktorer
       q5: 2,  // Processer til dataindsamling
@@ -37,6 +69,16 @@ const ESGAssessment = () => {
     }, 0)
   }
 
+  /**
+   * Calculate scores for each of the 4 sections
+   * Section 1: Forståelse og bevidsthed (Q1-3, max 4 points)
+   * Section 2: Mål og data (Q4-6, max 4 points)
+   * Section 3: Strategi og forretning (Q7-9, max 4 points)
+   * Section 4: Risici og fremtidssikring (Q10-13, max 5 points)
+   * 
+   * @param {Object} responses - Assessment responses object
+   * @returns {Object} Section scores with percentages
+   */
   const calculateSectionScores = (responses) => {
     const sections = {
       section1: { questions: ['q1', 'q2', 'q3'], weights: { q3: 2 }, max: 4 },
@@ -63,7 +105,16 @@ const ESGAssessment = () => {
     return sectionScores
   }
 
-
+  /**
+   * Generate recommendation based on total score
+   * Score ranges:
+   * - 0-6: Beginner (opstartsfasen)
+   * - 7-12: Intermediate (har fat i tingene)
+   * - 13-17: Advanced (godt i gang)
+   * 
+   * @param {number} score - Total weighted score
+   * @returns {Object} Recommendation object with title, text, CTA, and level
+   */
   const getRecommendation = (score) => {
     if (score <= 6) {
       return {
@@ -89,15 +140,23 @@ const ESGAssessment = () => {
     }
   }
 
+  /**
+   * Handle final assessment submission
+   * Calculates scores, generates recommendations, and sends email
+   * 
+   * @param {Object} data - Assessment responses
+   */
   const handleAssessmentSubmit = async (data) => {
     setIsSubmitting(true)
     setError('')
 
     try {
+      // Calculate all scores and recommendations
       const score = calculateScore(data)
       const sectionScores = calculateSectionScores(data)
       const recommendation = getRecommendation(score)
 
+      // Prepare submission data
       const submissionData = {
         contact: contactData,
         assessment: data,
@@ -106,8 +165,10 @@ const ESGAssessment = () => {
         recommendation
       }
 
+      // Send email with results
       await submitAssessment(submissionData)
 
+      // Update state and show results
       setAssessmentData(data)
       setResults({ score, sectionScores, recommendation })
       setCurrentStep('results')
@@ -119,8 +180,10 @@ const ESGAssessment = () => {
     }
   }
 
+  // Render current step
   return (
     <div className="esg-assessment">
+      {/* Landing Page - Introduction and CTA */}
       {currentStep === 'landing' && (
         <div className="landing-page">
           {/* Logo at the top */}
@@ -139,7 +202,7 @@ const ESGAssessment = () => {
             </h1>
 
             <p className="landing-subtitle">
-              Få et hurtigt overblik over jeres ESG-parathed med vores gratis selvtest – og få resultatet tilsendt direkte i din indbakke.
+              Få et hurtigt overblik over jeres ESG-parathed med vores gratis selvtest og få resultatet tilsendt direkte i din indbakke.
             </p>
 
             <div className="features-row">
@@ -161,24 +224,12 @@ const ESGAssessment = () => {
               <button onClick={handleStartTest} className="primary-cta">
                 Start ESG-test nu →
               </button>
-              {/* <button className="secondary-cta">Læs mere om ESG</button> */}
             </div>
-          </div>
-
-          {/* Trust Section */}
-          <div className="trust-section">
-            <p className="trust-text">Tillid fra virksomheder i hele Danmark</p>
-            {/* Fjern eller vis kun ved 4+ logoer */}
-            {/* <div className="trust-logos">
-              <div className="trust-logo">LOGO</div>
-              <div className="trust-logo">LOGO</div>
-              <div className="trust-logo">LOGO</div>
-              <div className="trust-logo">LOGO</div>
-            </div> */}
           </div>
         </div>
       )}
 
+      {/* Contact Form Step */}
       {currentStep === 'contact' && (
         <div className="form-page">
           <div className="form-header">
@@ -198,6 +249,7 @@ const ESGAssessment = () => {
         </div>
       )}
 
+      {/* Assessment Questions Step */}
       {currentStep === 'assessment' && (
         <div className="form-page">
           <div className="form-header">
@@ -221,6 +273,7 @@ const ESGAssessment = () => {
         </div>
       )}
 
+      {/* Results Display Step */}
       {currentStep === 'results' && (
         <div className="form-page">
           <ResultsDisplay
