@@ -73,11 +73,11 @@ const ResultsDisplay = ({ results, contactData }) => {
           </div>
 
           <h1 className="hero-title">
-            Resultat for <span className="highlight">{contactData.companyName}</span>
+            Dit ESG-resultat, <span className="highlight">{contactData.companyName}!</span>
           </h1>
 
           <p className="hero-subtitle">
-            Her er dit resultat for testen samt anbefalinger til handling mod en styrket ESG-rapportering
+            Her er dit personlige testresultat samt anbefalinger til næste skridt, baseret på dine svar.
           </p>
         </div>
       </div>
@@ -209,25 +209,66 @@ const ResultsDisplay = ({ results, contactData }) => {
                 <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.89 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" fill="currentColor" />
               </svg>
             </div>
-            <div className="pulse-ring"></div>
           </div>
 
           <div className="confirmation-text">
-            <h3>Din ESG-analyse er på vej</h3>
+            <h3>Din detaljerede rapport er på vej</h3>
             <p>
-              Vi sender din ESG-analyse til <strong>{contactData.email}</strong> inden for få minutter. Rapporten indeholder alle jeres svar, anbefalinger og næste skridt.
+              Vi sender din detaljerede ESG-analyse til <strong>{contactData.email}</strong> inden for få minutter. Rapporten indeholder alle jeres svar, anbefalinger og næste skridt.
             </p>
             <p className="email-note">
-              Tjek venligst din spam-mappe, hvis du ikke modtager mailen inden for 10 minutter.
+              🌳 <strong>Tænk på miljøet</strong> – print kun denne rapport, hvis det er nødvendigt.
+              <em>Tjek venligst din spam-mappe, hvis du ikke modtager mailen inden for 10 minutter.</em>
             </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Contact Section - Simplified Design */}
+      <div className="contact-section">
+        <div className="contact-container">
+          <div className="contact-header">
+            <div className="contact-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+                <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" fill="white"/>
+              </svg>
+            </div>
+            <div className="contact-badge">VI KONTAKTER JER</div>
+          </div>
+          
+          <h3>Vi er klar til at hjælpe jer videre</h3>
+          
+          <p className="contact-description">
+            En af vores ESG-eksperter kontakter jer på <strong>kontakt@biblieliebmann.dk</strong> inden for 2 arbejdsdage. Vi kommer med konkrete forslag til, hvordan BibiLiebmann, Strategisk Forretningsudvikling kan tage de næste skridt på jeres ESG-rejse.
+          </p>
+          
+          <div className="contact-features">
+            <div className="feature-grid">
+              <div className="contact-feature">
+                <div className="feature-icon">✓</div>
+                <span>Personlig rådgivning</span>
+              </div>
+              <div className="contact-feature">
+                <div className="feature-icon">✓</div>
+                <span>Skræddersyede løsninger</span>
+              </div>
+              <div className="contact-feature">
+                <div className="feature-icon">✓</div>
+                <span>Konkrete handlingsplaner</span>
+              </div>
+              <div className="contact-feature">
+                <div className="feature-icon">✓</div>
+                <span>Løbende support</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
       {/* Footer */}
       <div className="company-summary">
-        <p style={{ textAlign: 'center', fontWeight: 600, marginTop: '1rem' }}>
-          Reporting Progress – Power Your Business
+        <p style={{ textAlign: 'center', fontWeight: 600, color: '#4b5563' }}>
+          <strong>Reporting Progress – Power Your Business</strong>
         </p>
       </div>
     </div>

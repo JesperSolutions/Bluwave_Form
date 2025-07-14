@@ -37,9 +37,9 @@ export const submitAssessment = async (data) => {
   // Danish question texts for email formatting
   const questions = [
     'Har I i ledelsen en fælles forståelse af, hvad ESG betyder for jeres virksomhed?',
-    'Har I formuleret en holdning til klima, sociale ansvar og governance?',
+    'Har I formuleret en holdning til klima, socialt ansvar og governance?',
     'Har I identificeret, hvilke ESG-faktorer der er væsentlige for jeres virksomhed og jeres branche?',
-    'Har I konkrete mål for fx CO₂-reduktion, diversitet, medarbejdertrivsel eller ansvarlig leverandørstyring?',
+    'Har I konkrete mål for fx CO₂-reduktion, diversitet, medarbejdertrivsel og ansvarlig leverandørstyring?',
     'Har I processer til at indsamle og dokumentere data om jeres ESG-indsats?',
     'Kommunikerer I allerede i dag om jeres ansvar og resultater – fx på hjemmeside, i tilbud eller i dialog med kunder?',
     'Indgår ESG som en aktiv del af jeres strategi og værdigrundlag?',
