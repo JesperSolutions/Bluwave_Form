@@ -11,7 +11,7 @@ import emailjs from '@emailjs/browser'
 const EMAILJS_CONFIG = {
   serviceId: 'service_3q3n4lr',
   templateId: 'template_pac9jom', 
-  publicKey: 'BCoUz6Ty8c0oza6pZ'
+  publicKey: 'lM3RvJE63x4ZIqmwg'
 }
 
 // Initialize EmailJS
