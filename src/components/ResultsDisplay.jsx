@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './ResultsDisplay.css'
 
 const ResultsDisplay = ({ results, contactData }) => {
-  const { score, recommendation } = results
-  const MAX_SCORE = 21
+  const { score, sectionScores, recommendation } = results
+  const MAX_SCORE = 17
+  const [showDemo, setShowDemo] = useState(false)
 
   const getScoreColor = (level) => {
     switch (level) {
@@ -28,6 +29,28 @@ const ResultsDisplay = ({ results, contactData }) => {
     return Math.min(percentage, 100)
   }
 
+  const getSectionName = (sectionKey) => {
+    const names = {
+      section1: 'Forståelse og bevidsthed',
+      section2: 'Mål og data',
+      section3: 'Strategi og forretning',
+      section4: 'Risici og fremtidssikring'
+    }
+    return names[sectionKey]
+  }
+
+  const getSectionRecommendation = (sectionKey, sectionData) => {
+    if (sectionData.score >= 4) return null
+    
+    const recommendations = {
+      section1: 'Start med at definere, hvad ESG betyder for jeres virksomhed og identificer de mest relevante faktorer.',
+      section2: 'Implementer systemer til at måle og dokumentere jeres ESG-indsats systematisk.',
+      section3: 'Integrer ESG i jeres forretningsstrategi og kommuniker aktivt om jeres indsats.',
+      section4: 'Få overblik over ESG-risici og forbered jer på kommende rapporteringskrav.'
+    }
+    return recommendations[sectionKey]
+  }
+
   return (
     <div className="results-display">
       {/* Hero Section */}
@@ -50,12 +73,37 @@ const ResultsDisplay = ({ results, contactData }) => {
           </div>
 
           <h1 className="hero-title">
-            Dit ESG-resultat, <span className="highlight">{contactData.contactPerson}!</span>
+            Resultat for <span className="highlight">{contactData.companyName}</span>
           </h1>
 
           <p className="hero-subtitle">
-            Her er din personlige analyse baseret på <strong>{contactData.companyName}</strong>'s svar
+            Her er dit resultat for testen samt anbefalinger til handling mod en styrket ESG-rapportering
           </p>
+        </div>
+      </div>
+
+      {/* Section Scores */}
+      <div className="section-scores">
+        <div className="section-scores-container">
+          <h2>Jeres resultat pr. kategori</h2>
+          <div className="sections-grid">
+            {Object.entries(sectionScores).map(([sectionKey, sectionData]) => (
+              <div key={sectionKey} className="section-card">
+                <h3>{getSectionName(sectionKey)}</h3>
+                <div className="section-score">
+                  <span className="section-points">{sectionData.score}</span>
+                  <span className="section-max">/ {sectionData.max}</span>
+                </div>
+                <div className="section-percentage">{sectionData.percentage}%</div>
+                <div 
+                  className="section-bar"
+                  style={{ 
+                    background: `linear-gradient(90deg, ${getScoreColor(recommendation.level)} ${sectionData.percentage}%, #e5e7eb ${sectionData.percentage}%)` 
+                  }}
+                ></div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
@@ -115,7 +163,40 @@ const ResultsDisplay = ({ results, contactData }) => {
       <div className="next-steps-section">
         <div className="section-header">
           <h3>Jeres næste skridt på ESG-rejsen</h3>
-          <p>{recommendation.cta}</p>
+          <p>👉 {recommendation.cta}</p>
+        </div>
+        
+        {/* Section-specific recommendations */}
+        <div className="section-recommendations">
+          {Object.entries(sectionScores).map(([sectionKey, sectionData]) => {
+            const rec = getSectionRecommendation(sectionKey, sectionData)
+            if (!rec) return null
+            return (
+              <div key={sectionKey} className="section-recommendation">
+                <strong>{getSectionName(sectionKey)}:</strong> {rec}
+              </div>
+            )
+          })}
+        </div>
+      </div>
+
+      {/* BluWave CTA */}
+      <div className="bluwave-cta">
+        <div className="cta-content">
+          <h3>Vil du gøre ESG-rapportering lettere – og få reel forretningsværdi ud af det?</h3>
+          <p>Med BluWave-platformen kan I arbejde med ESG enkelt, effektivt og compliant:</p>
+          <div className="cta-features">
+            <div className="cta-feature">✅ Automatisk CO₂-beregning og klimaregnskab</div>
+            <div className="cta-feature">✅ Brugervenlig struktur til ESG-dokumentation</div>
+            <div className="cta-feature">✅ Data og indsigter til at styrke jeres forretning</div>
+          </div>
+          <p className="cta-closing">Kom i gang med ESG – med fokus på både krav og konkrete gevinster.</p>
+          <button 
+            className="demo-btn"
+            onClick={() => window.open('https://bluwave.dk', '_blank')}
+          >
+            Book en demo 👉
+          </button>
         </div>
       </div>
 
@@ -145,9 +226,6 @@ const ResultsDisplay = ({ results, contactData }) => {
 
       {/* Footer */}
       <div className="company-summary">
-        <p style={{ fontSize: '0.85rem', opacity: 0.7, textAlign: 'center' }}>
-          Tænk på miljøet – print kun denne rapport, hvis det er nødvendigt.
-        </p>
         <p style={{ textAlign: 'center', fontWeight: 600, marginTop: '1rem' }}>
           Reporting Progress – Power Your Business
         </p>

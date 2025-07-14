@@ -136,7 +136,7 @@ const AssessmentQuestions = ({ onSubmit, isSubmitting, error }) => {
 
         {currentSection === sections.length - 1 && (
           <p className="completion-hint">
-            Du er nået til sidste spørgsmål – klik på knappen nedenfor for at få dit resultat.
+            🎉 Du er færdig med testen! Klik på knappen nedenfor for at få dit resultat.
           </p>
         )}
 

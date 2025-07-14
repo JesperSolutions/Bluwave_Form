@@ -230,7 +230,8 @@ const ContactForm = ({ onSubmit }) => {
             >
               <option value="">Vælg antal medarbejdere</option>
               <option value="1-3">1-3 medarbejdere</option>
-              <option value="1-9">1-9 medarbejdere</option>
+              <option value="1-3">1-3 medarbejdere</option>
+              <option value="4-9">4-9 medarbejdere</option>
               <option value="10-49">10-49 medarbejdere</option>
               <option value="50-249">50-249 medarbejdere</option>
               <option value="250+">250+ medarbejdere</option>
