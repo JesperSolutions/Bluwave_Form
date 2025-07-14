@@ -12,9 +12,9 @@ import emailjs from '@emailjs/browser'
 
 // EmailJS configuration - Production Ready
 const EMAILJS_CONFIG = {
-  serviceId: 'service_d40uip4', // Bluwave EmailJS service
+  serviceId: 'service_3q3n4lr', // Bluwave EmailJS service
   templateId: 'template_prjekf7', // ESG assessment template
-  publicKey: 'BCoUz6Ty8c0oza6pZ' // Public API key
+  publicKey: 'IM3RvJE63x4ZIqmwg' // Public API key
 }
 
 // Initialize EmailJS with public key
