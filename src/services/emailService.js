@@ -1,5 +1,5 @@
 /**
- * Email Service for ESG Assessment - Dual Email System
+ * Email Service for ESG Assessment - Dual Email System (Check ID's)
  * 
  * Sends assessment results to both customer and Bluwave:
  * 1. Customer gets professional report with results and recommendations
