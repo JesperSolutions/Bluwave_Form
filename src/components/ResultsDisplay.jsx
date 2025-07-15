@@ -286,7 +286,7 @@ ESG Selvtest - Bluwave
             </svg>
           </div>
           <h3>Download og del dine resultater</h3>
-          <p>Vi sender din ESG-analyse til <strong>{contactData.email}</strong> inden for få minutter. Rapporten indeholder alle jeres svar, anbefalinger og næste skridt.</p>
+          <p>Din ESG-rapport er sendt til <strong>{contactData.email}</strong>. Du kan også downloade eller dele den her:</p>
         </div>
 
         {/* Download Options */}

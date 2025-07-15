@@ -1,16 +1,18 @@
-import emailjs from '@emailjs/browser'
-
 /**
- * Email Service for ESG Assessment - Lead Notification Only
+ * Email Service for ESG Assessment - Dual Email System
  * 
- * Sends assessment results to Bluwave as lead notifications.
- * Customers can download their results or email them manually.
+ * Sends assessment results to both customer and Bluwave:
+ * 1. Customer gets professional report with results and recommendations
+ * 2. Bluwave gets lead notification with contact details and assessment data
  */
+
+import emailjs from '@emailjs/browser'
 
 // EmailJS configuration
 const EMAILJS_CONFIG = {
   serviceId: 'service_3q3n4lr',
-  templateId: 'template_prjekf7', 
+  customerTemplateId: 'template_customer', // New customer template
+  leadTemplateId: 'template_prjekf7',      // Existing lead template
   publicKey: 'lM3RvJE63x4ZIqmwg'
 }
 
@@ -18,17 +20,10 @@ const EMAILJS_CONFIG = {
 emailjs.init(EMAILJS_CONFIG.publicKey)
 
 /**
- * Submit ESG assessment - sends lead notification to Bluwave
- * Only sends email if customer agreed to be contacted
+ * Submit ESG assessment - sends emails to both customer and Bluwave
  */
 export const submitAssessment = async (data) => {
   const { contact, assessment, score, sectionScores, recommendation } = data
-
-  // Only send lead notification if customer agreed to be contacted
-  if (contact.contactPreference !== 'yes') {
-    console.log('📧 Customer opted out of contact - no lead notification sent')
-    return { success: true, emailSent: false }
-  }
 
   // Question texts for detailed responses
   const questions = [
@@ -47,7 +42,7 @@ export const submitAssessment = async (data) => {
     'Ville det styrke jeres konkurrenceevne, rekruttering og relationer, hvis I kunne vise ansvar og resultater på ESG?'
   ]
 
-  // Format responses for lead notification
+  // Format responses for detailed display
   let formattedResponses = ''
   for (let i = 1; i <= 13; i++) {
     const answer = assessment[`q${i}`]
@@ -79,8 +74,17 @@ export const submitAssessment = async (data) => {
     '250+': '250+ medarbejdere'
   }
 
-  // Prepare email data for Bluwave lead notification
-  const emailData = {
+  const submissionDate = new Date().toLocaleDateString('da-DK', {
+    weekday: 'long',
+    year: 'numeric', 
+    month: 'long',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit'
+  })
+
+  // Common data for both emails
+  const commonData = {
     company_name: contact.companyName,
     contact_person: contact.contactPerson,
     email: contact.email,
@@ -92,34 +96,103 @@ export const submitAssessment = async (data) => {
     recommendation_title: recommendation.title,
     recommendation_text: recommendation.text,
     detailed_responses: formattedResponses,
-    submission_date: new Date().toLocaleDateString('da-DK', {
-      weekday: 'long',
-      year: 'numeric', 
-      month: 'long',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
-    }),
+    submission_date: submissionDate,
     next_steps: getNextStepsText(recommendation.level),
     score_color: getScoreColor(recommendation.level),
     score_emoji: getScoreEmoji(recommendation.level)
   }
 
+  // Customer email data (professional report focus)
+  const customerEmailData = {
+    ...commonData,
+    to_email: contact.email,
+    to_name: contact.contactPerson,
+    phone: contact.phone || 'Ikke angivet',
+    may_contact: contact.contactPreference === 'yes' ? 'JA' : 'NEJ',
+    contact_preference: contact.contactPreference === 'yes' ? 
+      'Ja, I må gerne kontakte mig med rådgivning og tilbud' : 
+      'Nej, jeg ønsker kun at modtage resultatet'
+  }
+
+  // Lead notification data (internal Bluwave focus)
+  const leadEmailData = {
+    ...commonData,
+    to_email: 'ja@bluwave.dk',
+    to_name: 'Jesper',
+    company_name: `[LEAD] ${contact.companyName}`,
+    phone: contact.phone || 'Ikke angivet',
+    contact_preference: contact.contactPreference === 'yes' ? 
+      '🟢 JA - KONTAKT ØNSKET' : 
+      '🔴 NEJ - Kun resultat',
+    may_contact: contact.contactPreference === 'yes' ? 'JA' : 'NEJ'
+  }
+
+  const results = {
+    customerEmailSent: false,
+    leadEmailSent: false,
+    errors: []
+  }
+
   try {
-    console.log('📤 Sending lead notification to Bluwave...', emailData)
+    console.log('📤 Sending dual emails...')
+
+    // Send customer email
+    try {
+      console.log('📧 Sending customer report email...')
+      const customerResponse = await emailjs.send(
+        EMAILJS_CONFIG.serviceId,
+        EMAILJS_CONFIG.customerTemplateId,
+        customerEmailData
+      )
+      console.log('✅ Customer email sent successfully:', customerResponse)
+      results.customerEmailSent = true
+      results.customerResponse = customerResponse
+    } catch (customerError) {
+      console.error('❌ Customer email failed:', customerError)
+      results.errors.push({
+        type: 'customer',
+        error: customerError.message || customerError.text || 'Unknown error'
+      })
+    }
+
+    // Send lead notification (only if customer agreed to contact)
+    if (contact.contactPreference === 'yes') {
+      try {
+        console.log('📧 Sending lead notification email...')
+        const leadResponse = await emailjs.send(
+          EMAILJS_CONFIG.serviceId,
+          EMAILJS_CONFIG.leadTemplateId,
+          leadEmailData
+        )
+        console.log('✅ Lead notification sent successfully:', leadResponse)
+        results.leadEmailSent = true
+        results.leadResponse = leadResponse
+      } catch (leadError) {
+        console.error('❌ Lead notification failed:', leadError)
+        results.errors.push({
+          type: 'lead',
+          error: leadError.message || leadError.text || 'Unknown error'
+        })
+      }
+    } else {
+      console.log('📧 Customer opted out - no lead notification sent')
+    }
+
+    // Determine overall success
+    const success = results.customerEmailSent || results.leadEmailSent
     
-    const response = await emailjs.send(
-      EMAILJS_CONFIG.serviceId,
-      EMAILJS_CONFIG.templateId,
-      emailData
-    )
-    
-    console.log('✅ Lead notification sent successfully to Bluwave:', response)
-    return { success: true, emailSent: true, response }
+    if (!success) {
+      throw new Error('Both customer and lead emails failed')
+    }
+
+    return {
+      success: true,
+      ...results
+    }
     
   } catch (error) {
-    console.error('❌ Lead notification failed:', error)
-    throw new Error(`Email sending failed: ${error.message || error.text || 'Unknown error'}`)
+    console.error('❌ Email system failed:', error)
+    throw new Error(`Email sending failed: ${error.message || 'Unknown error'}`)
   }
 }
 
@@ -224,6 +297,7 @@ function getScoreEmoji(level) {
     default: return '🌿'
   }
 }
+
 // Helper function for score interpretation
 function getScoreInterpretation(score) {
   if (score <= 6) {

@@ -170,10 +170,21 @@ const ESGAssessment = () => {
       // Try to send email, but don't fail if it doesn't work
       let emailResult = { emailSent: false }
       try {
-        emailResult = await submitAssessment(submissionData)
-        console.log('✅ Assessment submitted:', emailResult)
+        const emailResult = await submitAssessment(submissionData)
+        console.log('✅ Emails sent:', emailResult)
+        
+        // Log email results for debugging
+        if (emailResult.customerEmailSent) {
+          console.log('✅ Customer report delivered')
+        }
+        if (emailResult.leadEmailSent) {
+          console.log('✅ Lead notification sent to Bluwave')
+        }
+        if (emailResult.errors.length > 0) {
+          console.warn('⚠️ Some email errors occurred:', emailResult.errors)
+        }
       } catch (emailError) {
-        console.error('⚠️ Lead notification failed, but showing results anyway:', emailError)
+        console.error('⚠️ Email system failed, but showing results anyway:', emailError)
       }
 
       // Generate downloadable data for customer
