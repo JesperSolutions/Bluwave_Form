@@ -11,8 +11,8 @@ import emailjs from '@emailjs/browser'
 // EmailJS configuration
 const EMAILJS_CONFIG = {
   serviceId: 'service_3q3n4lr',
-  templateId: 'template_prjekf7',    // Customer template (new)
-  leadTemplateId: 'template_71juzbb', // Lead template (working)
+  templateId: 'template_71juzbb',       // ✅ Customer template (corrected)
+  leadTemplateId: 'template_prjekf7',   // ✅ Lead template (corrected)
   publicKey: 'lM3RvJE63x4ZIqmwg'
 }
 
@@ -116,8 +116,13 @@ export const submitAssessment = async (data) => {
 
   // Lead notification data (internal Bluwave focus)
   const leadEmailData = {
-    ...commonData
-    // Lead template has ja@bluwave.dk hardcoded, no to_email needed
+  ...commonData,
+  to_email: 'ja@bluwave.dk',
+  phone: contact.phone || 'Ikke angivet',
+  contact_preference: contact.contactPreference === 'yes'
+    ? '🟢 JA - KONTAKT ØNSKET'
+    : '🔴 NEJ - Kun resultat',
+  may_contact: contact.contactPreference === 'yes' ? 'JA' : 'NEJ'
   }
 
   const results = {
