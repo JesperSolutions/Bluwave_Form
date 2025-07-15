@@ -192,7 +192,7 @@ const AssessmentQuestions = ({ onSubmit, isSubmitting, error }) => {
             <div className="completion-message">
               🎉 <strong>Du er færdig med testen!</strong>
             </div>
-            <p>Klik på knappen nedenfor for at få dit resultat tilsendt på email.</p>
+            <p>Tak for dine svar - du er nu færdig med testen.<br/>Klik på knappen nedenfor, for at få dit resultat tilsendt på e-mail.</p>
           </div>
         )}
 

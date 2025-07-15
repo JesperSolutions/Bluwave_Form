@@ -403,6 +403,20 @@
   text-decoration: underline;
 }
 
+.cta-action-box {
+  background: rgba(137, 179, 72, 0.1);
+  border: 2px solid #89B348;
+  border-radius: 12px;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.cta-action-box p:first-child {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 10px !important;
+}
+
 /* Download & Share Section */
 .download-share-section {
   padding: 40px 30px;

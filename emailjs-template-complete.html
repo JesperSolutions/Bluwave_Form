@@ -15,8 +15,8 @@
                     <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; font-size: 12px; font-weight: bold;">🌿</div>
                 </div>
             </div>
-            <h1 style="color: #1a1a1a; font-size: 28px; font-weight: 700; margin: 0 0 10px 0;">Jeres ESG Selvtest Resultat</h1>
-            <p style="color: #4a5568; font-size: 16px; font-weight: 400; margin: 0;">Dit ESG-resultat, {{company_name}}!</p>
+            <h1 style="color: #1a1a1a; font-size: 28px; font-weight: 700; margin: 0 0 10px 0;">ESG-resultat for {{company_name}}</h1>
+            <p style="color: #4a5568; font-size: 16px; font-weight: 400; margin: 0;">Her er dit personlige testresultat samt anbefalinger til næste skridt, baseret på dine svar.</p>
         </div>
         
         <!-- Score Section -->
@@ -57,13 +57,19 @@
         <!-- Contact Preference -->
         <div style="padding: 30px; background: white; border-bottom: 1px solid #e2e8f0;">
             <h3 style="color: #89B348; font-size: 18px; font-weight: 600; margin: 0 0 15px 0;">Kontakt præference</h3>
-            <div style="background: #f8fafc; padding: 20px; border-radius: 8px; border-left: 4px solid #89B348;">
+            <div style="background: #f8fafc; padding: 20px; border-radius: 8px; border-left: 4px solid {{#if (eq may_contact 'JA')}}#10B981{{else}}#6b7280{{/if}};">
                 <div style="display: flex; align-items: center; gap: 15px;">
-                    <div style="font-size: 24px;">📞</div>
+                    <div style="font-size: 24px;">{{#if (eq may_contact 'JA')}}📞{{else}}📧{{/if}}</div>
                     <div>
-                        <div style="font-size: 16px; font-weight: 600; color: #1f2937; margin-bottom: 5px;">{{contact_preference}}</div>
+                        <div style="font-size: 16px; font-weight: 600; color: #1f2937; margin-bottom: 5px;">
+                            {{#if (eq may_contact 'JA')}}Vi kontakter jer snart!{{else}}Kun resultat ønsket{{/if}}
+                        </div>
                         <div style="font-size: 14px; color: #4a5568; line-height: 1.6;">
+                            {{#if (eq may_contact 'JA')}}
                             En af vores ESG-eksperter vil kontakte jer på {{email}} inden for 2 arbejdsdage med personlige anbefalinger.
+                            {{else}}
+                            I har valgt kun at modtage resultatet. I kan altid kontakte os på esg@bluwave.dk hvis I senere ønsker rådgivning.
+                            {{/if}}
                         </div>
                     </div>
                 </div>
@@ -75,6 +81,33 @@
             <h3 style="color: #89B348; font-size: 20px; font-weight: 600; margin: 0 0 20px 0; text-align: center;">Jeres næste skridt</h3>
             <div style="background: #f8fafc; padding: 20px; border-radius: 8px; border-left: 4px solid #89B348;">
                 <div style="font-size: 14px; line-height: 1.8; white-space: pre-line;">{{next_steps}}</div>
+            </div>
+        </div>
+        
+        <!-- BluWave CTA Section -->
+        <div style="padding: 30px; background: #f8fafc; border-bottom: 1px solid #e2e8f0;">
+            <h3 style="color: #89B348; font-size: 20px; font-weight: 600; margin: 0 0 20px 0; text-align: center;">Vil du gøre ESG-rapportering lettere – og få reel forretningsværdi ud af det?</h3>
+            <p style="text-align: center; color: #4a5568; font-size: 16px; margin-bottom: 20px;">Med <strong>BluWave</strong>-platformen kan I arbejde med ESG <strong>enkelt, effektivt og compliant</strong>:</p>
+            
+            <div style="display: grid; grid-template-columns: 1fr; gap: 10px; margin-bottom: 20px;">
+                <div style="display: flex; align-items: center; gap: 12px; background: white; padding: 15px 20px; border-radius: 10px; border: 1px solid rgba(137, 179, 72, 0.1);">
+                    <span style="font-size: 16px;">✅</span>
+                    <span style="color: #1f2937; font-weight: 500;">Automatisk CO₂-beregning og klimaregnskab</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 12px; background: white; padding: 15px 20px; border-radius: 10px; border: 1px solid rgba(137, 179, 72, 0.1);">
+                    <span style="font-size: 16px;">✅</span>
+                    <span style="color: #1f2937; font-weight: 500;">Brugervenlig struktur til ESG-dokumentation</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 12px; background: white; padding: 15px 20px; border-radius: 10px; border: 1px solid rgba(137, 179, 72, 0.1);">
+                    <span style="font-size: 16px;">✅</span>
+                    <span style="color: #1f2937; font-weight: 500;">Data og indsigter til at styrke jeres forretning</span>
+                </div>
+            </div>
+            
+            <p style="text-align: center; color: #4a5568; font-style: italic; margin-bottom: 15px;">Kom i gang med ESG – med fokus på både krav og konkrete gevinster.</p>
+            
+            <div style="background: rgba(137, 179, 72, 0.1); border: 2px solid #89B348; border-radius: 12px; padding: 20px; text-align: center;">
+                <p style="color: #4a5568; font-size: 18px; font-weight: 600; margin: 0;">Book en demo 👉 <a href="https://bluwave.dk" style="color: #89B348; text-decoration: none;">bluwave.dk</a></p>
             </div>
         </div>
         

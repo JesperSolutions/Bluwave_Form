@@ -253,7 +253,7 @@ ESG Selvtest - Bluwave
       {/* BluWave CTA Section */}
       <div className="bluwave-cta-section">
         <h3>Vil du gøre ESG-rapportering lettere – og få reel forretningsværdi ud af det?</h3>
-        <p>Med <strong>BluWave</strong>-platformen kan I arbejde med ESG enkelt, effektivt og compliant:</p>
+        <p>Med <strong>BluWave</strong>-platformen kan I arbejde med ESG <strong>enkelt, effektivt og compliant</strong>:</p>
         
         <div className="cta-features">
           <div className="cta-feature">
@@ -271,7 +271,10 @@ ESG Selvtest - Bluwave
         </div>
         
         <p className="cta-closing">Kom i gang med ESG – med fokus på både krav og konkrete gevinster.</p>
-        <p className="cta-action">Book en demo 👉 <a href="https://bluwave.dk" target="_blank" rel="noopener noreferrer">bluwave.dk</a></p>
+        <div className="cta-action-box">
+          <p><strong>Denne del må godt være mere tydelig – fx i en boks</strong></p>
+          <p className="cta-action">Book en demo 👉 <a href="https://bluwave.dk" target="_blank" rel="noopener noreferrer">bluwave.dk</a></p>
+        </div>
       </div>
 
       {/* Download & Share Section */}
