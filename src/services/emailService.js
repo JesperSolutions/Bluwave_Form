@@ -11,9 +11,9 @@ import emailjs from '@emailjs/browser'
 // EmailJS configuration
 const EMAILJS_CONFIG = {
   serviceId: 'service_d40uip4',
-  customerTemplateId: 'template_71juzbb', // Customer template ID from EmailJS
+  templateId: 'template_pac9jom', // Use the working template for both
   leadTemplateId: 'template_prjekf7',      // Existing lead template
-  publicKey: 'lM3RvJE63x4ZIqmwg'
+  publicKey: 'BCoUz6Ty8c0oza6pZ'
 }
 
 // Initialize EmailJS
@@ -141,7 +141,7 @@ export const submitAssessment = async (data) => {
       console.log('📧 Sending customer report email...')
       const customerResponse = await emailjs.send(
         EMAILJS_CONFIG.serviceId,
-        EMAILJS_CONFIG.customerTemplateId,
+        EMAILJS_CONFIG.templateId,
         customerEmailData
       )
       console.log('✅ Customer email sent successfully:', customerResponse)
@@ -149,6 +149,11 @@ export const submitAssessment = async (data) => {
       results.customerResponse = customerResponse
     } catch (customerError) {
       console.error('❌ Customer email failed:', customerError)
+      console.error('Error details:', {
+        status: customerError.status,
+        text: customerError.text,
+        message: customerError.message
+      })
       results.errors.push({
         type: 'customer',
         error: customerError.message || customerError.text || 'Unknown error'
@@ -161,7 +166,7 @@ export const submitAssessment = async (data) => {
         console.log('📧 Sending lead notification email...')
         const leadResponse = await emailjs.send(
           EMAILJS_CONFIG.serviceId,
-          EMAILJS_CONFIG.leadTemplateId,
+          EMAILJS_CONFIG.templateId,
           leadEmailData
         )
         console.log('✅ Lead notification sent successfully:', leadResponse)
@@ -169,6 +174,11 @@ export const submitAssessment = async (data) => {
         results.leadResponse = leadResponse
       } catch (leadError) {
         console.error('❌ Lead notification failed:', leadError)
+        console.error('Error details:', {
+          status: leadError.status,
+          text: leadError.text,
+          message: leadError.message
+        })
         results.errors.push({
           type: 'lead',
           error: leadError.message || leadError.text || 'Unknown error'
@@ -178,21 +188,26 @@ export const submitAssessment = async (data) => {
       console.log('📧 Customer opted out - no lead notification sent')
     }
 
-    // Determine overall success
-    const success = results.customerEmailSent || results.leadEmailSent
-    
-    if (!success) {
-      throw new Error('Both customer and lead emails failed')
-    }
-
     return {
-      success: true,
+      success: results.customerEmailSent || results.leadEmailSent,
       ...results
     }
     
   } catch (error) {
     console.error('❌ Email system failed:', error)
-    throw new Error(`Email sending failed: ${error.message || 'Unknown error'}`)
+    
+    // Enhanced error handling
+    if (error.status === 400) {
+      throw new Error('Template ikke fundet. Kontakt venligst support.')
+    } else if (error.status === 401) {
+      throw new Error('Email service ikke autoriseret. Prøv igen senere.')
+    } else if (error.status === 402) {
+      throw new Error('Email service limit nået. Prøv igen senere.')
+    } else if (error.text && error.text.includes('template')) {
+      throw new Error('Email template ikke konfigureret korrekt. Kontakt support.')
+    } else {
+      throw new Error('Kunne ikke sende email. Tjek din internetforbindelse og prøv igen.')
+    }
   }
 }
 
