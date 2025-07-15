@@ -10,8 +10,8 @@ import emailjs from '@emailjs/browser'
 
 // EmailJS configuration
 const EMAILJS_CONFIG = {
-  serviceId: 'service_3q3n4lr',
-  customerTemplateId: 'template_customer', // New customer template
+  serviceId: 'service_d40uip4',
+  customerTemplateId: 'template_71juzbb', // Customer template ID from EmailJS
   leadTemplateId: 'template_prjekf7',      // Existing lead template
   publicKey: 'lM3RvJE63x4ZIqmwg'
 }
