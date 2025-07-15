@@ -116,8 +116,8 @@ export const submitAssessment = async (data) => {
 
   // Lead notification data (internal Bluwave focus)
   const leadEmailData = {
-    ...commonData,
-    to_email: 'ja@bluwave.dk'  // Lead template needs recipient
+    ...commonData
+    // Lead template has ja@bluwave.dk hardcoded, no to_email needed
   }
 
   const results = {
