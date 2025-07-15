@@ -106,25 +106,19 @@ export const submitAssessment = async (data) => {
   const customerEmailData = {
     ...commonData,
     to_email: contact.email,
-    to_name: contact.contactPerson,
     phone: contact.phone || 'Ikke angivet',
     may_contact: contact.contactPreference === 'yes' ? 'JA' : 'NEJ',
     contact_preference: contact.contactPreference === 'yes' ? 
       'Ja, I må gerne kontakte mig med rådgivning og tilbud' : 
-      'Nej, jeg ønsker kun at modtage resultatet'
+      'Nej, jeg ønsker kun at modtage resultatet',
+    else: contact.contactPreference === 'yes' ? 'contact_wanted' : 'no_contact'
   }
 
   // Lead notification data (internal Bluwave focus)
   const leadEmailData = {
     ...commonData,
-    to_email: 'ja@bluwave.dk',
-    to_name: 'Jesper',
-    company_name: `[LEAD] ${contact.companyName}`,
-    phone: contact.phone || 'Ikke angivet',
-    contact_preference: contact.contactPreference === 'yes' ? 
-      '🟢 JA - KONTAKT ØNSKET' : 
-      '🔴 NEJ - Kun resultat',
-    may_contact: contact.contactPreference === 'yes' ? 'JA' : 'NEJ'
+    // Lead template doesn't need these extra variables
+    // Only the commonData variables
   }
 
   const results = {
