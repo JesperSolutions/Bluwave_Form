@@ -13,7 +13,7 @@ const EMAILJS_CONFIG = {
   serviceId: 'service_3q3n4lr',
   templateId: 'template_prjekf7', // Use the working template for both
   leadTemplateId: 'template_71juzbb',      // Existing lead template
-  publicKey: 'BCoUz6Ty8c0oza6pZ'
+  publicKey: 'lM3RvJE63x4ZIqmwg'
 }
 
 // Initialize EmailJS
