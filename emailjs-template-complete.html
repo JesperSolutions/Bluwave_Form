@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jeres ESG Selvtest Resultat</title>
+    <title>ESG-resultat for {{company_name}}</title>
 </head>
 <body style="margin: 0; padding: 0; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; line-height: 1.6; color: #333333; background-color: #f8fafc;">
     <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);">
@@ -57,20 +57,12 @@
         <!-- Contact Preference -->
         <div style="padding: 30px; background: white; border-bottom: 1px solid #e2e8f0;">
             <h3 style="color: #89B348; font-size: 18px; font-weight: 600; margin: 0 0 15px 0;">Kontakt præference</h3>
-            <div style="background: #f8fafc; padding: 20px; border-radius: 8px; border-left: 4px solid {{#if (eq may_contact 'JA')}}#10B981{{else}}#6b7280{{/if}};">
+            <div style="background: #f8fafc; padding: 20px; border-radius: 8px; border-left: 4px solid #10B981;">
                 <div style="display: flex; align-items: center; gap: 15px;">
-                    <div style="font-size: 24px;">{{#if (eq may_contact 'JA')}}📞{{else}}📧{{/if}}</div>
+                    <div style="font-size: 24px;">📞</div>
                     <div>
-                        <div style="font-size: 16px; font-weight: 600; color: #1f2937; margin-bottom: 5px;">
-                            {{#if (eq may_contact 'JA')}}Vi kontakter jer snart!{{else}}Kun resultat ønsket{{/if}}
-                        </div>
-                        <div style="font-size: 14px; color: #4a5568; line-height: 1.6;">
-                            {{#if (eq may_contact 'JA')}}
-                            En af vores ESG-eksperter vil kontakte jer på {{email}} inden for 2 arbejdsdage med personlige anbefalinger.
-                            {{else}}
-                            I har valgt kun at modtage resultatet. I kan altid kontakte os på esg@bluwave.dk hvis I senere ønsker rådgivning.
-                            {{/if}}
-                        </div>
+                        <div style="font-size: 16px; font-weight: 600; color: #1f2937; margin-bottom: 5px;">Vi kontakter jer snart!</div>
+                        <div style="font-size: 14px; color: #4a5568; line-height: 1.6;">En af vores ESG-eksperter vil kontakte jer på {{email}} inden for 2 arbejdsdage med personlige anbefalinger.</div>
                     </div>
                 </div>
             </div>
