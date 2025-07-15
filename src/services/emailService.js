@@ -159,7 +159,7 @@ export const submitAssessment = async (data) => {
         console.log('📧 Sending lead notification email...')
         const leadResponse = await emailjs.send(
           EMAILJS_CONFIG.serviceId,
-          EMAILJS_CONFIG.templateId,
+          EMAILJS_CONFIG.leadTemplateId,
           leadEmailData
         )
         console.log('✅ Lead notification sent successfully:', leadResponse)
