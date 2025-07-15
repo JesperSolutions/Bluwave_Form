@@ -81,22 +81,16 @@ export const submitAssessment = async (data) => {
 
   // Prepare email data for Bluwave lead notification
   const emailData = {
-    to_email: 'ja@bluwave.dk',
-    to_name: 'Jesper',
     company_name: contact.companyName,
     contact_person: contact.contactPerson,
     email: contact.email,
-    phone: contact.phone || 'Ikke angivet',
     industry: industryMap[contact.industry] || contact.industry || 'Ikke angivet',
     employees: employeeMap[contact.employees] || contact.employees || 'Ikke angivet',
-    contact_preference: 'Ja, ønsker kontakt',
-    may_contact: 'JA',
     total_score: score,
     max_score: 17,
     score_percentage: Math.round((score / 17) * 100),
     recommendation_title: recommendation.title,
     recommendation_text: recommendation.text,
-    recommendation_level: recommendation.level,
     detailed_responses: formattedResponses,
     submission_date: new Date().toLocaleDateString('da-DK', {
       weekday: 'long',
@@ -106,9 +100,7 @@ export const submitAssessment = async (data) => {
       hour: '2-digit',
       minute: '2-digit'
     }),
-    submission_timestamp: new Date().toISOString(),
     next_steps: getNextStepsText(recommendation.level),
-    score_interpretation: getScoreInterpretation(score),
     score_color: getScoreColor(recommendation.level),
     score_emoji: getScoreEmoji(recommendation.level)
   }
