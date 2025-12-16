@@ -272,7 +272,6 @@ ESG Selvtest - Bluwave
         
         <p className="cta-closing">Kom i gang med ESG – med fokus på både krav og konkrete gevinster.</p>
         <div className="cta-action-box">
-          <p><strong>Denne del må godt være mere tydelig – fx i en boks</strong></p>
           <p className="cta-action">Book en demo 👉 <a href="https://bluwave.dk" target="_blank" rel="noopener noreferrer">bluwave.dk</a></p>
         </div>
       </div>
